@@ -43,6 +43,22 @@ public class Point {
 	}
 	
 	/**
+	 * Setter for x coordinate of point
+	 * @param x the new x coordinate
+	 */
+	public void setX(int x) {
+		xCoord = x;
+	}
+	
+	/**
+	 * Setter for y coordinate of point
+	 * @param y the new y coordinate
+	 */
+	public void setY(int y) {
+		yCoord = y;
+	}
+	
+	/**
 	 * A function to check if 2 points are equal
 	 * @param p the other point to check
 	 * @return true or false based on whether the points are the same

@@ -86,8 +86,18 @@ public class Ship {
 	public void rotateShip() {
 		rotation += 90;
 		rotation = (rotation == 360 ? 0 : rotation);
+<<<<<<< HEAD
+		int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1);
+		for(int i = 0; i < length; i++) {
+			if(i == originIndex)
+				continue;
+			shipCoords[i].setX((int)Math.sin(Math.PI/2) * shipCoords[i].getY());
+			shipCoords[i].setY((int)Math.cos(Math.PI/2) * shipCoords[i].getX());
+		}
+=======
 		//TODO
 		//Apply rotation to shipCoords
+>>>>>>> 1ac48c782045211943a0d7334df21d9752eaf173
 	}
 	
 	/**
