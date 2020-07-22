@@ -39,8 +39,11 @@ public class ComputerPlayer{
 	
 	public void placeShip() { //Not currently functional
 		do {
-			this.getBoard().addShip();
-		}
+			Point select= guess();
+			int tryX=select.getX();
+			int tryY=select.getY();
+			private boolean condition=this.getBoard().addShip(Ship ship,tryX,tryY);
+			}while(condition);
 	}
 
 	private Point guess() {
