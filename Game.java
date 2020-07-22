@@ -4,14 +4,16 @@
  * @version 1.0
  */
 public class Game {
-	private Board board;
+	private Board boardOne;
+	private Board boardTwo;
 	private Referee referee;
 	
 	/**
 	 * Default constructor for game class
 	 */
 	public Game() {
-		board = new Board();
+		boardOne = new Board();
+		boardTwo = new Board();
 		referee = new Referee();
 	}
 	
@@ -21,15 +23,16 @@ public class Game {
 	 */
 	public void initializeGame() {
 		Player playerOne = new Player();
-		Player playerTwo = new Player();
+		ComputerPlayer playerTwo = new Player();
+		playerOne.setBoard(boardOne);
+		playerTwo.setBoard(boardTwo);
 		referee.setPlayerOne(playerOne);
 		referee.setPlayerTwo(playerTwo);
-		referee.setOpponents();
 		referee.runTheGame();
 	}
 	
 	public static void main(String [] args) {
 		Game theGame = new Game();
-		game.initializeGame();
+		theGame.initializeGame();
 	}
 }
