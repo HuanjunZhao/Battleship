@@ -11,7 +11,7 @@ public class Player {
 	private String name;
 	private Ship[] ships;
 	private Player opponent;
-	private Board[] playerboard;
+	private Board playerboard;
 	
 	public Player(String name) {
 		this.name = name;
@@ -43,13 +43,13 @@ public class Player {
 		return name;
 	}
 
-	private Board[] getPlayerboard() {
+	private Board getPlayerboard() {
 		return playerboard;
 	}
 
-	private void setPlayerboard(Board[] playerboard) {
+	private void setPlayerboard(Board playerboard) {
 		this.playerboard = playerboard;
 	}
 	
-	public 
+	
 }
