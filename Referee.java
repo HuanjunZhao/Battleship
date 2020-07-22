@@ -30,6 +30,13 @@ public class Referee {
 		this.playerOne = playerTwo;
 	}
 	
+	public ComputerPlayer getComputerPlayer() {
+		return computerPlayer;
+	}
+
+	public void setComputerPlayer(ComputerPlayer computerPlayer) {
+		this.computerPlayer = computerPlayer;
+	}
 	/**
 	 * run the game, set opponent, place the ship?
 	 * enter the name .etc
@@ -49,7 +56,7 @@ public class Referee {
 				opponentStatus.equalsIgnoreCase("yes")) {
 			
 			opponentIsHuman = true;
-			playerTwo = new Player();	
+			playerTwo = new Player();
 			
 			playerOne.setOpponent(playerTwo);
 			playerTwo.setOpponent(playerOne);
@@ -59,10 +66,10 @@ public class Referee {
 				opponentStatus.equalsIgnoreCase("no")) {
 			
 			opponentIsHuman = false;
-			computerPlayer = new ComputerPlayer();	
+			setComputerPlayer(new ComputerPlayer());	
 			
 			playerOne.setOpponent(playerTwo);
-			computerPlayer.setOpponent(playerOne);
+			getComputerPlayer().setOpponent(playerOne);
 		}
 		
 		//*** set board!
@@ -91,18 +98,12 @@ public class Referee {
 			for (int i = 0; i < 5; i++ ) {	
 				playerOne.placeShip();
 				playerOne.getBoard().display();
-				computerPlayer.placeShip();	
-				computerPlayer.getBoard().display();
+				getComputerPlayer().placeShip();	
+				getComputerPlayer().getBoard().display();
 			}
 			
 			System.out.println("Your opponent is A computer!");
 		}
-		
-//		for (int i = 0; i < 5; i++ ) {
-//			playerOne.placeShip();
-//			playerTwo.placeShip();
-//		}
-		
 		
 	}
 
@@ -142,5 +143,7 @@ public class Referee {
 	public boolean keepGameRunning() {
 		
 	}
+
+	
 	
 }
