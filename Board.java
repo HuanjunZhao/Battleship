@@ -1,24 +1,31 @@
 
 public class Board {
 	
-	private char[][] grid ={{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-							{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'}};
+	private char[][] grid; 
 							
 	private Ship[] ships;
+	
+	private int numShips;
 	
 	public char[][] getGrid(){
 		return grid; 
 	}
+			
+	public Board() {
+		grid = new char[10][10];
+		for (int i = 0; i <10; i++) {
+			for (int j=0; j<10; j++) {
+				grid[i][j]= '~';
+			}
+		}
+		ships = new Ship[5];
+
+	}
 	
-	public boolean checkGuess(int rowGuess, int colGuess) {
+	
+	public boolean checkGuess(Point pointGuess) {
+		int rowGuess = pointGuess.getY();
+		int colGuess = pointGuess.getX();
 		//returns if the guess is valid and whether the guess is a location with a ship
 		if ((rowGuess < getGrid().length) && (colGuess < getGrid().length)){
 			if (getGrid()[rowGuess][colGuess] == '#') {
@@ -40,12 +47,16 @@ public class Board {
 		}
 	}
 	
-	public boolean addShip(Ship ship ,int xCoord, int yCoord) {
+	public boolean addShip(Ship shipAdded) {
+		int xCoord = shipAdded.getOrigin().getX(); 
+		int yCoord = shipAdded.getOrigin().getY(); 
+		
 		//addShip determines if ship placement is valid
 		if ((xCoord < getGrid().length) && (yCoord < getGrid().length)){
 			if (getGrid()[xCoord][yCoord] == '~'){
 				//TODO figure out how to add ships (#) after valid placement is determined
-				getGrid()[xCoord][yCoord] = '#'; //placeholder for the origin(?) from Ship class
+				ships[numShips] = shipAdded;
+				numShips++;
 				return true;
 			}
 			else {
@@ -56,15 +67,39 @@ public class Board {
 			return false;
 		}
 	}
+	private void updateGrid() {
+		for (int i = 0; i <10; i++) {
+			for (int j=0; j<10; j++) {
+				if (grid[i][j] ==  '#') {
+					grid[i][j] = '~';
+				}
+					
+			}
+		}
+
+		for (Ship shipObject: ships) {
+			if (shipObject == null) {
+				return;
+			}
+			Point[] shipLocations = shipObject.getShipCoords();
+			for (Point shipPoint: shipLocations) {
+				if(grid[shipPoint.getX()][shipPoint.getY()] == '~') {
+					grid[shipPoint.getX()][shipPoint.getY()] = '#';
+				}
+		
+			}
+		}
+	}
 	
 	
 	public void display() {
-		System.out.println("\n" + "\t" + "A B C D E F G H I J" +"\n");
+		updateGrid();
+		System.out.println("\n" + "\t" + "0 1 2 3 4 5 6 7 8 9" +"\n");
 		
 		for (int row=0; row<getGrid().length; row++) {
-			System.out.print(row+1 + "\t");
+			System.out.print(row + "\t");
 			for (int col=0; col<getGrid()[row].length; col++) {
-				System.out.print(getGrid()[row][col]+" ");
+				System.out.print(getGrid()[col][row]+" ");
 			}
 			System.out.println();
 		}
