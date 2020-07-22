@@ -5,7 +5,9 @@ public class Referee {
 	
 	private Player playerOne;
 	private Player playerTwo;
-	private Board newBoard; 
+	private ComputerPlayer computerPlayer;
+	private Board BoardOne; 
+	private Board BoardTwo; 
 	
 	/**
 	 * Default constructor
@@ -47,23 +49,23 @@ public class Referee {
 				opponentStatus.equalsIgnoreCase("yes")) {
 			
 			opponentIsHuman = true;
-			playerTwo = new Player();			
+			playerTwo = new Player();	
+			
+			playerOne.setOpponent(playerTwo);
+			playerTwo.setOpponent(playerOne);
 		}
 		
 		if (opponentStatus.equalsIgnoreCase("n") ||
 				opponentStatus.equalsIgnoreCase("no")) {
 			
 			opponentIsHuman = false;
-			playerTwo = new ComputerPlayer();	
+			computerPlayer = new ComputerPlayer();	
+			
+			playerOne.setOpponent(playerTwo);
+			computerPlayer.setOpponent(playerOne);
 		}
 		
-		
-		/**
-		 * set opponent to each other
-		 */
-		playerOne.setOpponent(playerTwo);
-		playerTwo.setOpponent(playerOne);
-		
+		//*** set board!
 		// Set player one's name.
 		System.out.println("Player one, please enter your name~");
 		String playerOneName = scan.next();
@@ -77,31 +79,53 @@ public class Referee {
 			String playerTwoName = scan.next();
 			System.out.println("Player one, your name is: " + playerTwoName);
 			playerTwo.setName(playerTwoName);
+			playerTwo.placeShip();
 		}
 		else {
+			computerPlayer.placeShip();
+			
 			System.out.println("Your opponent is A computer!");
 		}
-		playerTwo.placeShip();
+		
 		
 		
 	}
 
-	
-//	/**
-//	 * set opponent to each other
-//	 */
-//	public void setOpponents() {
-//		
-//	}
+	/**
+	 * Deter
+	 * @param player
+	 * @param computerPlayer
+	 * @param a
+	 * @return
+	 */
+	public boolean nextturn(Player player, ComputerPlayer computerPlayer, Point a) {
+		
+	}
 	
 	/**
 	 * check who is the winner.
 	 */
-	public boolean checkWinner() {
+	public boolean checkWinner() { 
+		
+		 if (playerTwo.getShips().isDestroped()) {
+	            System.out.println(playerOne.getName() + ", you WIN!");
+	            return true;
+	        }
+		 
+		 if (playerOne¡£getShips().isDestroped() == true) {
+			 System.out.println(playerTwo.getName() + ", you WIN!");
+			 return true;
+	        }
+	        
+		 if (computerPlayer¡£getShips().isDestroped() == true) {
+			 System.out.println("You lose!");
+			 return true;
+		 }
+		 return false;
+	}
+	
+	public boolean keepGameRunning() {
 		
 	}
-
-	
-	
 	
 }
