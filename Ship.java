@@ -40,6 +40,17 @@ public class Ship {
 		}
 		origin = new Point(x, y);
 		shipCoords = new Point[length];
+		//Origin index calculated based on position mentioned in javadoc above.
+		int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1) - 1;
+		for(int i = 0; i < length; i++) {
+			if(i == originIndex) {
+				shipCoords[i] = origin;
+				continue;
+			}
+			//Get coordinate based on distance to origin.
+			shipCoords[i] = new Point(origin.getX(), 
+					originIndex + origin.getY() - i);
+		}
 		rotation = 0;
 		shipState = 1.0;
 		shipDamageMultiplier = shipState / length;
@@ -58,6 +69,7 @@ public class Ship {
 	 */
 	public Ship(ShipType type, Point point, Player player) {
 		shipType = type;
+		//Assign length based on shipType
 		switch(type) {
 			case CARRIER:
 				length = 5;
@@ -72,6 +84,17 @@ public class Ship {
 		}
 		origin = new Point(point);
 		shipCoords = new Point[length];
+		//Origin index calculated based on position mentioned in javadoc above.
+		int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1) - 1;
+		for(int i = 0; i < length; i++) {
+			if(i == originIndex) {
+				shipCoords[i] = origin;
+				continue;
+			}
+			//Get coordinate based on distance to origin.
+			shipCoords[i] = new Point(origin.getX(), 
+					originIndex + origin.getY() - i);
+		}
 		rotation = 0;
 		shipState = 1.0;
 		shipDamageMultiplier = shipState / length;
@@ -84,20 +107,57 @@ public class Ship {
 	 * Changes the coordinates of the ship's slots accordingly.
 	 */
 	public void rotateShip() {
-		rotation += 90;
-		rotation = (rotation == 360 ? 0 : rotation);
-<<<<<<< HEAD
-		int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1);
-		for(int i = 0; i < length; i++) {
-			if(i == originIndex)
-				continue;
-			shipCoords[i].setX((int)Math.sin(Math.PI/2) * shipCoords[i].getY());
-			shipCoords[i].setY((int)Math.cos(Math.PI/2) * shipCoords[i].getX());
+		//Rotation if ship is upright.
+		//Swap x and y coordinates.
+		if(rotation == 0) {
+			for(Point p : shipCoords) {
+				if(p.equals(origin))
+					continue;
+				p.swapCoordinates();
+			}
 		}
-=======
-		//TODO
-		//Apply rotation to shipCoords
->>>>>>> 1ac48c782045211943a0d7334df21d9752eaf173
+		//Rotation if ship has been rotated 90 degrees.
+		//Swap coordinates then move coordinates on with respect to the origin
+		//To conserve the order and location of the points
+		else if (rotation == 90) {
+			int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1) - 1;
+			for(int i = 0; i < length; i++) {
+				if(i == originIndex)
+					continue;
+				shipCoords[i].swapCoordinates();
+				shipCoords[i].setX(origin.getX());
+				shipCoords[i].setY(origin.getY() - originIndex + i);
+			}
+		}
+		//Rotation if ship has been rotated 180 degrees.
+		//Swap coordinates then move coordinates on respect to the origin
+		//To conserve the order and location of the points
+		else if (rotation == 180) {
+			int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1) - 1;
+			for(int i = 0; i < length; i++) {
+				if(i == originIndex)
+					continue;
+				shipCoords[i].swapCoordinates();
+				shipCoords[i].setY(origin.getY());
+				shipCoords[i].setX(origin.getX() - originIndex + i);
+			}
+		} 
+		//Rotation if ship has been rotated 270 degrees.
+		//Swap coordinates then move coordinates on respect to the origin
+		//To conserve the order and location of the points
+		else {
+			int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1) - 1;
+			for(int i = 0; i < length; i++) {
+				if(i == originIndex)
+					continue;
+				shipCoords[i].swapCoordinates();
+				shipCoords[i].setX(origin.getX());
+				shipCoords[i].setY(origin.getY() + originIndex - i);
+			}
+		}
+		rotation += 90;
+		//Limit rotation to 360 degrees (when it reaches 360, it will reset to 0)
+		rotation = (rotation == 360 ? 0 : rotation);
 	}
 	
 	/**
