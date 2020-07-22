@@ -71,7 +71,7 @@ public class Referee {
 		String playerOneName = scan.next();
 		System.out.println("Player one, your name is: " + playerOneName);
 		playerOne.setName(playerOneName);
-		playerOne.placeShip();
+		
 		
 		//if second player is human, set player two's name
 		if (opponentIsHuman == true) {
@@ -82,11 +82,18 @@ public class Referee {
 			playerTwo.placeShip();
 		}
 		else {
-			computerPlayer.placeShip();
+			for (int i = 0; i < 5; i++ ) {
+				playerOne.placeShip();
+				computerPlayer.placeShip();
+			}
 			
 			System.out.println("Your opponent is A computer!");
 		}
 		
+//		for (int i = 0; i < 5; i++ ) {
+//			playerOne.placeShip();
+//			playerTwo.placeShip();
+//		}
 		
 		
 	}
