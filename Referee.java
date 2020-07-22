@@ -79,12 +79,20 @@ public class Referee {
 			String playerTwoName = scan.next();
 			System.out.println("Player one, your name is: " + playerTwoName);
 			playerTwo.setName(playerTwoName);
-			playerTwo.placeShip();
+			
+			for (int i = 0; i < 5; i++ ) {	
+				playerOne.placeShip();
+				playerOne.getboard.display();
+				playerTwo.placeShip();
+				playerTwo.getboard.display();
+			}
 		}
 		else {
-			for (int i = 0; i < 5; i++ ) {
+			for (int i = 0; i < 5; i++ ) {	
 				playerOne.placeShip();
-				computerPlayer.placeShip();
+				playerOne.getboard.display();
+				computerPlayer.placeShip();	
+				computerPlayer.getboard.display();
 			}
 			
 			System.out.println("Your opponent is A computer!");
