@@ -7,9 +7,15 @@ public class Player {
 /**
  * Instance variables
  */
+	
 	private String name;
 	private Ship[] ships;
 	private Player opponent;
+	private Board[] playerboard;
+	
+	public Player(String name) {
+		this.name = name;
+	}
 	
 	public void placeShip() {
 		
@@ -19,8 +25,31 @@ public class Player {
 		
 	}
 	
-	public void play() {
+	public void play(Point point, Player opponent) {
 		
 		
 	}
+	
+	public void ComputerPlayer setOpponent(Player newOpponent) {
+		this.opponent = newOpponent;
+		
+	}
+	
+	public void setPlayer(Player newPlayer) {
+		this.name = newPlayer;
+	}
+	
+	private String getName() {
+		return name;
+	}
+
+	private Board[] getPlayerboard() {
+		return playerboard;
+	}
+
+	private void setPlayerboard(Board[] playerboard) {
+		this.playerboard = playerboard;
+	}
+	
+	public 
 }
