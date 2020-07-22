@@ -186,6 +186,14 @@ public class Ship {
 	}
 	
 	/**
+	 * Getter function for ship coordinates
+	 * @return the cooridnates of the ship
+	 */
+	public Point[] getShipCoords() {
+		return shipCoords;
+	}
+	
+	/**
 	 * A function to check if the ship has been destroyed.
 	 * @return true if the ship has been destoryed, false otherwise.
 	 */
