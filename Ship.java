@@ -26,18 +26,14 @@ public class Ship {
 	 */
 	public Ship(ShipType type, int x, int y, Player player) {
 		shipType = type;
-		switch(type) {
-			case CARRIER:
-				length = 5;
-			case BATTLESHIP:
-				length = 4;
-			case CRUISER:
-				length = 3;
-			case SUBMARINE:
-				length = 3;
-			case DESTROYER:
-				length = 2;
-		}
+		if(type == ShipType.CARRIER)
+			length = 5;
+		else if(type == ShipType.BATTLESHIP)
+			length = 4;
+		else if(type == ShipType.DESTROYER)
+			length = 2;
+		else
+			length = 3;
 		origin = new Point(x, y);
 		shipCoords = new Point[length];
 		//Origin index calculated based on position mentioned in javadoc above.
@@ -70,18 +66,14 @@ public class Ship {
 	public Ship(ShipType type, Point point, Player player) {
 		shipType = type;
 		//Assign length based on shipType
-		switch(type) {
-			case CARRIER:
-				length = 5;
-			case BATTLESHIP:
-				length = 4;
-			case CRUISER:
-				length = 3;
-			case SUBMARINE:
-				length = 3;
-			case DESTROYER:
-				length = 2;
-		}
+		if(type == ShipType.CARRIER)
+			length = 5;
+		else if(type == ShipType.BATTLESHIP)
+			length = 4;
+		else if(type == ShipType.DESTROYER)
+			length = 2;
+		else
+			length = 3;
 		origin = new Point(point);
 		shipCoords = new Point[length];
 		//Origin index calculated based on position mentioned in javadoc above.
@@ -201,5 +193,13 @@ public class Ship {
 		if(shipState == 0)
 			return true;
 		return false;
+	}
+	
+	public static void main(String [] args) {
+		Ship ship = new Ship(ShipType.CARRIER, 5, 3, new Player("test"));
+		Point [] points = ship.getShipCoords();
+		for(Point p : points) {
+			System.out.println("(" + p.getX() + ", " + p.getY() + ")");
+		}
 	}
 }
