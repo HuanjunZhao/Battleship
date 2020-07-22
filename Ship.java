@@ -194,12 +194,4 @@ public class Ship {
 			return true;
 		return false;
 	}
-	
-	public static void main(String [] args) {
-		Ship ship = new Ship(ShipType.CARRIER, 5, 3, new Player("test"));
-		Point [] points = ship.getShipCoords();
-		for(Point p : points) {
-			System.out.println("(" + p.getX() + ", " + p.getY() + ")");
-		}
-	}
 }
