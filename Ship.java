@@ -178,6 +178,14 @@ public class Ship {
 	}
 	
 	/**
+	 * Getter function for ship origin
+	 * @return origin of the ship
+	 */
+	public Point getOrigin() {
+		return new Point(origin);
+	}
+	
+	/**
 	 * A function to check if the ship has been destroyed.
 	 * @return true if the ship has been destoryed, false otherwise.
 	 */
