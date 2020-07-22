@@ -82,17 +82,17 @@ public class Referee {
 			
 			for (int i = 0; i < 5; i++ ) {	
 				playerOne.placeShip();
-				playerOne.getboard.display();
+				playerOne.getBoard().display();
 				playerTwo.placeShip();
-				playerTwo.getboard.display();
+				playerTwo.getBoard().display();
 			}
 		}
 		else {
 			for (int i = 0; i < 5; i++ ) {	
 				playerOne.placeShip();
-				playerOne.getboard.display();
+				playerOne.getBoard().display();
 				computerPlayer.placeShip();	
-				computerPlayer.getboard.display();
+				computerPlayer.getBoard().display();
 			}
 			
 			System.out.println("Your opponent is A computer!");

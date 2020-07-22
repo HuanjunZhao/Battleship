@@ -11,7 +11,7 @@ public class Player {
 	private String name;
 	private Ship[] ships;
 	private Player opponent;
-	private Board playerboard;
+	private Board playerBoard;
 	
 	public Player(String name) {
 		this.name = name;
@@ -39,16 +39,16 @@ public class Player {
 		this.name = newPlayer;
 	}
 	
-	private String getName() {
+	public String getName() {
 		return name;
 	}
 
-	private Board getPlayerboard() {
-		return playerboard;
+	public Board getPlayerBoard() {
+		return playerBoard;
 	}
 
-	private void setPlayerboard(Board playerboard) {
-		this.playerboard = playerboard;
+	public void setPlayerBoard(Board playerBoard) {
+		this.playerBoard = playerBoard;
 	}
 	
 	
