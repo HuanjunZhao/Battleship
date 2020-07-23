@@ -115,8 +115,4 @@ public class Board {
 		return "";
 	}
 
-	public static void main(String[] args) {
-
-	}
-
 }

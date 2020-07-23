@@ -23,8 +23,6 @@ public class Player {
 	}
 	
 	public void placeShip() {
-		
-		
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter an x-coordinate for CARRIER");
 		int x = input.nextInt();
@@ -101,6 +99,10 @@ public class Player {
 		
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public void guess() {
 		
 	}
@@ -115,7 +117,8 @@ public class Player {
 		
 	}
 	
-
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -126,10 +129,6 @@ public class Player {
 
 	public void setPlayerBoard(Board playerBoard) {
 		this.playerBoard = playerBoard;
-	}
-
-	private void setName(String name) {
-		this.name = name;
 	}
 	
 	
