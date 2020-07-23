@@ -1,5 +1,5 @@
 /**
- * Battleship (Player Class): Skeleton
+ * Battleship (Player Class): Alpha
  * @author Taimur Rizwan
  *UCID: 30078941
  */
