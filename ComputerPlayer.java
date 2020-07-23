@@ -6,17 +6,16 @@
 import java.util.Random;
 public class ComputerPlayer{
 	
-	private String name= "CPU";
+	private String name;
 	private Ship[] ships;
 	private Player opponent;// code taken from Player class
 	private Board board;
 	
-	public ComputerPlayer(ComputerPlayer toCopy) {
-		this.name=toCopy.getName();
-		this.ships=toCopy.getShips();
-		this.opponent=toCopy.getOpponent();
-		this.board=toCopy.getBoard();
+	public ComputerPlayer() {
+		this.name="CPU";
+		this.ships=new Ship[5];
 	}
+		
 	public String getName() {
 		return name;
 	}
@@ -29,21 +28,39 @@ public class ComputerPlayer{
 	public Board getBoard() {
 		return board;
 	}
-	board
 	public void setName(String newName) {
 		name=new String (newName);
 	}
+	
 	public void setOpponent(Player newOpponent) {
-		opponent= new Player(newOpponent);
+		opponent=newOpponent;
+	}
+	public void setBoard(Board insertBoardHere) {
+		board=insertBoardHere;
 	}
 	
-	public void placeShip() { //Not currently functional
-		do {
-			Point select= guess();
-			int tryX=select.getX();
-			int tryY=select.getY();
-			private boolean condition=this.getBoard().addShip(Ship ship,tryX,tryY);
-			}while(condition);
+	public void placeShip() { //currently functional
+		Ship carrier = new Ship(ShipType.CARRIER, guess(), opponent); //copy for all ship types
+		ships[0] = carrier;
+		board.addShip(carrier);
+		
+		Ship battleship = new Ship(ShipType.BATTLESHIP, guess(), opponent);
+		ships[1] = battleship;
+		board.addShip(battleship);
+		
+		Ship cruiser = new Ship(ShipType.CRUISER, guess(), opponent);
+		ships[2] = cruiser;
+		board.addShip(cruiser);
+		
+		Ship submarine = new Ship(ShipType.SUBMARINE, guess(), opponent);
+		ships[3] = submarine;
+		board.addShip(submarine);
+		
+		Ship destroyer = new Ship(ShipType.DESTROYER, guess(), opponent);
+		ships[4] = destroyer;
+		board.addShip(destroyer);
+		System.out.println("CPU Board");
+		board.display();
 	}
 
 	private Point guess() {
