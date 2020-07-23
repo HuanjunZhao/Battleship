@@ -1,5 +1,5 @@
 /**
- * Battleship (Player Class): Skeleton
+ * Battleship (Player Class): Alpha version
  * @author Taimur Rizwan
  *UCID: 30078941
  */
@@ -32,7 +32,7 @@ public class Player {
 		System.out.println("Enter an y-coordinate for CARRIER");
 		int y = input.nextInt();
 		
-		Ship carrier = new Ship(ShipType.CARRIER, x, y, this); //copy for all ship types
+		Ship carrier = new Ship(ShipType.CARRIER, x, y, this); 
 		
 		ships[0] = carrier;
 		
