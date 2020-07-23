@@ -1,5 +1,5 @@
 /**
- * Battleship (Player Class): Alpha
+ * Battleship (Player Class): Skeleton
  * @author Taimur Rizwan
  *UCID: 30078941
  */
@@ -115,8 +115,7 @@ public class Player {
 		
 	}
 	
-	
-	
+
 	public String getName() {
 		return name;
 	}
@@ -127,6 +126,10 @@ public class Player {
 
 	public void setPlayerBoard(Board playerBoard) {
 		this.playerBoard = playerBoard;
+	}
+
+	private void setName(String name) {
+		this.name = name;
 	}
 	
 	
