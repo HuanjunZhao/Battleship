@@ -52,24 +52,23 @@ public class Referee {
 		
 		
 		// Set the Second player is human or computer.
-		if (opponentStatus.equalsIgnoreCase("y") ||
-				opponentStatus.equalsIgnoreCase("yes")) {
-			
-			opponentIsHuman = true;
-			playerTwo = new Player();
-			
-			playerOne.setOpponent(playerTwo);
-			playerTwo.setOpponent(playerOne);
-		}
+//		if (opponentStatus.equalsIgnoreCase("y") ||
+//				opponentStatus.equalsIgnoreCase("yes")) {
+//			
+//			opponentIsHuman = true;
+//			playerTwo = new Player();
+//			
+//			playerOne.setOpponent(playerTwo);
+//			playerTwo.setOpponent(playerOne);
+//		}
 		
 		if (opponentStatus.equalsIgnoreCase("n") ||
 				opponentStatus.equalsIgnoreCase("no")) {
 			
 			opponentIsHuman = false;
-			setComputerPlayer(new ComputerPlayer());	
-			
-			playerOne.setOpponent(playerTwo);
-			getComputerPlayer().setOpponent(playerOne);
+						
+			playerOne.setOpponent(computerPlayer);
+			computerPlayer.setOpponent(playerOne);
 		}
 		
 		//*** set board!
@@ -81,29 +80,31 @@ public class Referee {
 		
 		
 		//if second player is human, set player two's name
-		if (opponentIsHuman == true) {
-			System.out.println("Player two, please enter your name~");
-			String playerTwoName = scan.next();
-			System.out.println("Player one, your name is: " + playerTwoName);
-			playerTwo.setName(playerTwoName);
-			
-			for (int i = 0; i < 5; i++ ) {	
-				playerOne.placeShip();
-				playerOne.getBoard().display();
-				playerTwo.placeShip();
-				playerTwo.getBoard().display();
-			}
-		}
-		else {
-			for (int i = 0; i < 5; i++ ) {	
-				playerOne.placeShip();
-				playerOne.getBoard().display();
-				getComputerPlayer().placeShip();	
-				getComputerPlayer().getBoard().display();
-			}
+//		if (opponentIsHuman == true) {
+//			System.out.println("Player two, please enter your name~");
+//			String playerTwoName = scan.next();
+//			System.out.println("Player one, your name is: " + playerTwoName);
+//			playerTwo.setName(playerTwoName);
+//			
+//			for (int i = 0; i < 5; i++ ) {	
+//				playerOne.placeShip();
+//				playerOne.getBoard().display();
+//				playerTwo.placeShip();
+//				playerTwo.getBoard().display();
+//			}
+//		}
+//		else {
+//			for (int i = 0; i < 5; i++ ) {	
+//				playerOne.placeShip();
+//				playerOne.getBoard().display();
+//				getComputerPlayer().placeShip();	
+//				getComputerPlayer().getBoard().display();
+//			}
 			
 			System.out.println("Your opponent is A computer!");
-		}
+			playerOne.placeShip();
+//			computerPlayer.placeShip();
+//		}
 		
 	}
 
@@ -114,36 +115,36 @@ public class Referee {
 	 * @param a
 	 * @return
 	 */
-	public boolean nextturn(Player player, ComputerPlayer computerPlayer, Point a) {
-		
-	}
+//	public boolean nextturn(Player player, ComputerPlayer computerPlayer, Point a) {
+//		
+//	}
 	
 	/**
 	 * check who is the winner.
 	 */
-	public boolean checkWinner() { 
-		
-		 if (playerTwo.getShips().isDestroped()) {
-	            System.out.println(playerOne.getName() + ", you WIN!");
-	            return true;
-	        }
-		 
-		 if (playerOne。getShips().isDestroped() == true) {
-			 System.out.println(playerTwo.getName() + ", you WIN!");
-			 return true;
-	        }
-	        
-		 if (computerPlayer。getShips().isDestroped() == true) {
-			 System.out.println("You lose!");
-			 return true;
-		 }
-		 return false;
-	}
-	
-	public boolean keepGameRunning() {
-		
-	}
-
-	
-	
+//	public boolean checkWinner() { 
+//		
+//		 if (playerTwo.getShips().isDestroped()) {
+//	            System.out.println(playerOne.getName() + ", you WIN!");
+//	            return true;
+//	        }
+//		 
+//		 if (playerOne。getShips().isDestroped() == true) {
+//			 System.out.println(playerTwo.getName() + ", you WIN!");
+//			 return true;
+//	        }
+//	        
+//		 if (computerPlayer。getShips().isDestroped() == true) {
+//			 System.out.println("You lose!");
+//			 return true;
+//		 }
+//		 return false;
+//	}
+//	
+//	public boolean keepGameRunning() {
+//		
+//	}
+//
+//	
+//	
 }
