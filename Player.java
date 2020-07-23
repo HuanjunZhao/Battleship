@@ -23,6 +23,8 @@ public class Player {
 	}
 	
 	public void placeShip() {
+		
+		
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter an x-coordinate for CARRIER");
 		int x = input.nextInt();
@@ -37,6 +39,8 @@ public class Player {
 		playerBoard.addShip(carrier);
 		playerBoard.display();
 		
+		//-----------------------------------------------------------------------------
+		
 		System.out.println("Enter an x-coordinate for BATTLESHIP");
 		x = input.nextInt();
 		
@@ -44,6 +48,57 @@ public class Player {
 		y = input.nextInt();
 		
 		Ship battleship = new Ship(ShipType.BATTLESHIP, x, y, this);
+		
+		ships[1] = battleship;
+		
+		playerBoard.addShip(battleship);
+		playerBoard.display();
+		
+		//-----------------------------------------------------------------------------
+		
+		System.out.println("Enter an x-coordinate for CRUISER");
+		x = input.nextInt();
+				
+		System.out.println("Enter an y-coordinate for CRUISER");
+		y = input.nextInt();
+				
+		Ship cruiser = new Ship(ShipType.CRUISER, x, y, this);
+				
+		ships[2] = cruiser;
+				
+		playerBoard.addShip(cruiser);
+		playerBoard.display();
+		
+		//-----------------------------------------------------------------------------
+		
+		System.out.println("Enter an x-coordinate for SUBMARINE");
+		x = input.nextInt();
+				
+		System.out.println("Enter an y-coordinate for SUBMARINE");
+		y = input.nextInt();
+				
+		Ship submarine = new Ship(ShipType.SUBMARINE, x, y, this);
+				
+		ships[3] = submarine;
+				
+		playerBoard.addShip(submarine);
+		playerBoard.display();
+		
+		//-----------------------------------------------------------------------------
+		
+		System.out.println("Enter an x-coordinate for DESTROYER");
+		x = input.nextInt();
+				
+		System.out.println("Enter an y-coordinate for DESTROYER");
+		y = input.nextInt();
+				
+		Ship destroyer = new Ship(ShipType.DESTROYER, x, y, this);
+				
+		ships[4] = destroyer;
+				
+		playerBoard.addShip(destroyer);
+		playerBoard.display();
+		
 	}
 	
 	public void guess() {
