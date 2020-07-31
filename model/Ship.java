@@ -1,3 +1,4 @@
+package model;
 /**
  * Skeleton for ship class for battleships team battle royal
  * @author Dillon Sahadevan, UCID 30075927

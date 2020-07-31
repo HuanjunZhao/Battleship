@@ -1,3 +1,4 @@
+package model;
 import java.util.Scanner;
 
 
@@ -6,8 +7,6 @@ public class Referee {
 	private Player playerOne;
 	private Player playerTwo;
 	private ComputerPlayer computerPlayer;
-	private Board BoardOne; 
-	private Board BoardTwo; 
 	
 	/**
 	 * Default constructor
@@ -103,7 +102,7 @@ public class Referee {
 			
 			System.out.println("Your opponent is A computer!");
 			playerOne.placeShip();
-//			computerPlayer.placeShip();
+			computerPlayer.placeShip();
 //		}
 		
 	}

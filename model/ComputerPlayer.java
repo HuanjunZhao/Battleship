@@ -1,3 +1,4 @@
+package model;
 /**
  * AI data for a computer player.
  * @author Tristan Richardson
