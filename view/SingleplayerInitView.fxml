@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: MIDNIGHTBLUE;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SingleplayerInitController">
+   <top>
+      <Label text="SINGLEPLAYER VS CPU" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="72.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <TextField fx:id="nameTextField" alignment="CENTER" prefHeight="25.0" prefWidth="1074.0" text="PLEASE ENTER YOUR NAME" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </TextField>
+   </center>
+   <bottom>
+      <Button fx:id="continueButton" mnemonicParsing="false" text="CONTINUE" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="40.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="50.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+</BorderPane>

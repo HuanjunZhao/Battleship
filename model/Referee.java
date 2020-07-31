@@ -1,3 +1,4 @@
+package model;
 import java.util.Scanner;
 
 
@@ -6,8 +7,6 @@ public class Referee {
 	private Player playerOne;
 	private Player playerTwo;
 	private ComputerPlayer computerPlayer;
-	private Board BoardOne; 
-	private Board BoardTwo; 
 	
 	/**
 	 * Default constructor
