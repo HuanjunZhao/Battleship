@@ -37,6 +37,11 @@ public class GameController {
     }
     
     @FXML
+    void multiplayerInitialise(ActionEvent event) {
+    	gameApp.initialiseMultiplayer();
+    }
+    
+    @FXML
     void initialize() {
         assert borderPane != null : "fx:id=\"borderPane\" was not injected: check your FXML file 'GameView.fxml'.";
         assert singleplayerButton != null : "fx:id=\"singleplayerButton\" was not injected: check your FXML file 'GameView.fxml'.";

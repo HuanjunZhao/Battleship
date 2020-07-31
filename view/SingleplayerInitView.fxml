@@ -23,9 +23,9 @@
       </TextField>
    </center>
    <bottom>
-      <Button fx:id="continueButton" mnemonicParsing="false" text="CONTINUE" BorderPane.alignment="CENTER">
+      <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueClicked" text="CONTINUE" BorderPane.alignment="CENTER">
          <font>
-            <Font size="40.0" />
+            <Font name="System Bold" size="40.0" />
          </font>
          <BorderPane.margin>
             <Insets bottom="50.0" />

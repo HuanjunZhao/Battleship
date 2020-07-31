@@ -25,6 +25,9 @@ public class GameApplication extends Application{
 	private Referee referee;
 	private Stage primaryStage;
 	
+	static final int WINDOWWIDTH = 1280;
+	static final int WINDOWHEIGHT = 720;
+	
 	/**
 	 * Default constructor for game class
 	 */
@@ -49,6 +52,13 @@ public class GameApplication extends Application{
 		referee.runTheGame();
 	}
 	
+	public void initializeGame(String name1, String name2) {
+		Player playerOne = new Player();
+		playerOne.setName(name1);
+		Player playerTwo = new Player();
+		playerTwo.setName(name2);
+	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -62,11 +72,9 @@ public class GameApplication extends Application{
 		}
 		GameController controller = (GameController)loader.getController();
 		controller.setGameApp(this);
-		Scene scene = new Scene(root, 1280, 720);
+		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		GameApplication theGame = new GameApplication();
-		//theGame.initializeGame();
 	}
 	
 	public void initialiseSingleplayer() {
@@ -77,10 +85,25 @@ public class GameApplication extends Application{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Scene scene = new Scene(root, 1280, 720);
+		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		SingleplayerInitController controller = (SingleplayerInitController)loader.getController();
+		controller.setGameApp(this);
+	}
+	
+	public void initialiseMultiplayer() {
+		BorderPane root = new BorderPane();
+		FXMLLoader loader =  new FXMLLoader();
+		try {
+			root = (BorderPane) loader.load(new FileInputStream("src/view/MultiplayerInitView.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		MultiplayerInitController controller = (MultiplayerInitController)loader.getController();
 		controller.setGameApp(this);
 	}
 	
