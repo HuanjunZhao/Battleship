@@ -38,9 +38,12 @@ public class ComputerPlayer{
 	public void setBoard(Board insertBoardHere) {
 		board=insertBoardHere;
 	}
-	
-	public void placeShip() { //currently functional
-		Ship carrier = new Ship(ShipType.CARRIER, guess(), opponent); //copy for all ship types
+	/*The same code as in Player, except randomized.
+	When we're ready for inheritance, much of this method will be its own method in Player
+	for which this class will override selections with a randomizer.
+	*/
+	public void placeShip() {
+		Ship carrier = new Ship(ShipType.CARRIER, guess(), opponent); 
 		ships[0] = carrier;
 		board.addShip(carrier);
 		

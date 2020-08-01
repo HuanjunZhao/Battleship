@@ -1,4 +1,8 @@
-
+/**
+ * Skeleton for board class for battleships team battle royal
+ * @author Joshua Fine, UCID 30011448
+ * @version 1.0
+ */
 public class Board {
 	
 	private char[][] grid; 
@@ -10,7 +14,10 @@ public class Board {
 	public char[][] getGrid(){
 		return grid; 
 	}
-			
+	
+	/**
+	 * Creates 2D array for the board used for the text base application
+	 */
 	public Board() {
 		grid = new char[10][10];
 		for (int i = 0; i <10; i++) {
@@ -22,20 +29,27 @@ public class Board {
 
 	}
 	
-	
+	/**
+	 * checkGuess will take a point as a parameter and checks to see if there is a ship(#) there.
+	 * it will update the board to have an 'X' for hits and '?' for misses
+	 * @param pointGuess: the point on the board which the user/player will use to guess if 
+	 * a ship is present
+	 * @return returns a boolean for if the guess was correct, true for hits, false for misses, 
+	 * additionally it returns false if the guess is made on a point that does not exsist on the board.
+	 */
 	public boolean checkGuess(Point pointGuess) {
 		int rowGuess = pointGuess.getY();
 		int colGuess = pointGuess.getX();
 		//returns if the guess is valid and whether the guess is a location with a ship
 		if ((rowGuess < getGrid().length) && (colGuess < getGrid().length)){
 			if (getGrid()[rowGuess][colGuess] == '#') {
-				System.out.println("		HIT");
+				//System.out.println("		HIT");
 				getGrid()[rowGuess][colGuess] = 'X';
 				return true;
 	
 			}
 			else {
-				System.out.println("		MISS");
+				//System.out.println("		MISS");
 				getGrid()[rowGuess][colGuess] = '?';
 				return false;
 
@@ -47,10 +61,17 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Takes the ship class and decides if the point of origin of the ship is a valid placement.
+	 * 
+	 * @param shipAdded: the ship to add, it will be of type ship and should contain a point of origin
+	 * as well as a player (String) associated with the ship 
+	 * @return returns a boolean for valid ship placement, true for valid and false for invalid
+	 */
 	public boolean addShip(Ship shipAdded) {
 		int xCoord = shipAdded.getOrigin().getX(); 
 		int yCoord = shipAdded.getOrigin().getY(); 
-		
+		updateGrid();
 		//addShip determines if ship placement is valid
 		if ((xCoord < getGrid().length) && (yCoord < getGrid().length)){
 			if (getGrid()[xCoord][yCoord] == '~'){
@@ -67,6 +88,10 @@ public class Board {
 			return false;
 		}
 	}
+	
+	/**
+	 * updates the board/grid object after rotaing ships, adding ships, and guesses.
+	 */
 	private void updateGrid() {
 		for (int i = 0; i <10; i++) {
 			for (int j=0; j<10; j++) {
@@ -91,7 +116,9 @@ public class Board {
 		}
 	}
 	
-	
+	/**
+	 * displays the board with a legend for points coordinates
+	 */
 	public void display() {
 		updateGrid();
 		System.out.println("\n" + "\t" + "0 1 2 3 4 5 6 7 8 9" +"\n");
@@ -115,8 +142,6 @@ public class Board {
 		return "";
 	}
 
-	public static void main(String[] args) {
 
-	}
 
 }
