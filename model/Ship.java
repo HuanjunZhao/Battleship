@@ -46,7 +46,7 @@ public class Ship {
 			}
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
-					originIndex + origin.getY() - i);
+					origin.getY() + i - originIndex);
 		}
 		rotation = 0;
 		shipState = 1.0;
@@ -86,7 +86,7 @@ public class Ship {
 			}
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
-					originIndex + origin.getY() - i);
+					origin.getY() - originIndex + i);
 		}
 		rotation = 0;
 		shipState = 1.0;
@@ -103,10 +103,10 @@ public class Ship {
 		//Rotation if ship is upright.
 		//Swap x and y coordinates.
 		if(rotation == 0) {
-			for(Point p : shipCoords) {
-				if(p.equals(origin))
-					continue;
-				p.swapCoordinates();
+			int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1) - 1;
+			for(int i = 0; i < length; i++) {
+				shipCoords[i].setY(origin.getY());
+				shipCoords[i].setX(origin.getX() + originIndex - i);
 			}
 		}
 		//Rotation if ship has been rotated 90 degrees.
@@ -117,9 +117,8 @@ public class Ship {
 			for(int i = 0; i < length; i++) {
 				if(i == originIndex)
 					continue;
-				shipCoords[i].swapCoordinates();
 				shipCoords[i].setX(origin.getX());
-				shipCoords[i].setY(origin.getY() - originIndex + i);
+				shipCoords[i].setY(origin.getY() + originIndex - i);
 			}
 		}
 		//Rotation if ship has been rotated 180 degrees.
@@ -130,7 +129,6 @@ public class Ship {
 			for(int i = 0; i < length; i++) {
 				if(i == originIndex)
 					continue;
-				shipCoords[i].swapCoordinates();
 				shipCoords[i].setY(origin.getY());
 				shipCoords[i].setX(origin.getX() - originIndex + i);
 			}
@@ -145,7 +143,7 @@ public class Ship {
 					continue;
 				shipCoords[i].swapCoordinates();
 				shipCoords[i].setX(origin.getX());
-				shipCoords[i].setY(origin.getY() + originIndex - i);
+				shipCoords[i].setY(origin.getY() + i - originIndex);
 			}
 		}
 		rotation += 90;
