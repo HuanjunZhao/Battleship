@@ -327,518 +327,612 @@ public class SingleplayerGameController {
     	//pointUserChoose = thisPoint;
     	shipHideHere = gameApp.getBoardTwo().checkGuess(thisPoint);
     	if (shipHideHere == false) {
-    		button100.setStyle("-fx-background-color: #ff0000");
+    		buttonUserChoose.setStyle("-fx-background-color: #ff0000");
     	}
     	else {
-    		button100.setStyle("-fx-background-color: #04ff3f");
+    		buttonUserChoose.setStyle("-fx-background-color: #04ff3f");
     	}	
-    	repeatClick = true;
+    	buttonUserChoose.setDisable(true);
     }
 
     @FXML
     void button100click(ActionEvent event) {
-    	if (repeatClick == true) {
-    		return;
-    		//Set some info here.
-    	}
     	Point thisPoint = new Point(0,0);
-    	guessOutcome(button100, thisPoint);
-    	
+    	guessOutcome(button100, thisPoint);	
     }
 
     @FXML
     void button101click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,1);
+    	guessOutcome(button101, thisPoint);	
     }
 
     @FXML
     void button102click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,2);
+    	guessOutcome(button102, thisPoint);	
     }
 
     @FXML
     void button103click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,3);
+    	guessOutcome(button103, thisPoint);	
     }
 
     @FXML
     void button104click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,4);
+    	guessOutcome(button104, thisPoint);	
     }
 
     @FXML
     void button105click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,5);
+    	guessOutcome(button105, thisPoint);	
     }
 
     @FXML
     void button106click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,6);
+    	guessOutcome(button106, thisPoint);	
     }
 
     @FXML
     void button107click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,7);
+    	guessOutcome(button107, thisPoint);	
     }
 
     @FXML
     void button108click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,8);
+    	guessOutcome(button108, thisPoint);	
     }
 
     @FXML
     void button109click(ActionEvent event) {
-
+    	Point thisPoint = new Point(0,9);
+    	guessOutcome(button109, thisPoint);	
     }
 
     @FXML
     void button110click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,0);
+    	guessOutcome(button110, thisPoint);	
     }
 
     @FXML
     void button111click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,1);
+    	guessOutcome(button111, thisPoint);	
     }
 
     @FXML
     void button112click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,2);
+    	guessOutcome(button112, thisPoint);	
     }
 
     @FXML
     void button113click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,3);
+    	guessOutcome(button113, thisPoint);	
     }
 
     @FXML
     void button114click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,4);
+    	guessOutcome(button114, thisPoint);	
     }
 
     @FXML
     void button115click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,5);
+    	guessOutcome(button115, thisPoint);	
     }
 
     @FXML
     void button116click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,6);
+    	guessOutcome(button116, thisPoint);	
     }
 
     @FXML
     void button117click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,7);
+    	guessOutcome(button117, thisPoint);	
     }
 
     @FXML
     void button118click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,8);
+    	guessOutcome(button118, thisPoint);	
     }
 
     @FXML
     void button119click(ActionEvent event) {
-
+    	Point thisPoint = new Point(1,9);
+    	guessOutcome(button119, thisPoint);	
     }
 
     @FXML
     void button120click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,0);
+    	guessOutcome(button120, thisPoint);	
     }
 
     @FXML
     void button121click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,1);
+    	guessOutcome(button121, thisPoint);	
     }
 
     @FXML
     void button122click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,2);
+    	guessOutcome(button122, thisPoint);	
     }
 
     @FXML
     void button123click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,3);
+    	guessOutcome(button123, thisPoint);	
     }
 
     @FXML
     void button124click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,4);
+    	guessOutcome(button124, thisPoint);	
     }
 
     @FXML
     void button125click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,5);
+    	guessOutcome(button125, thisPoint);	
     }
 
     @FXML
     void button126click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,6);
+    	guessOutcome(button126, thisPoint);	
     }
 
     @FXML
     void button127click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,7);
+    	guessOutcome(button127, thisPoint);	
     }
 
     @FXML
     void button128click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,8);
+    	guessOutcome(button128, thisPoint);	
     }
 
     @FXML
     void button129click(ActionEvent event) {
-
+    	Point thisPoint = new Point(2,9);
+    	guessOutcome(button129, thisPoint);	
     }
 
     @FXML
     void button130click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,0);
+    	guessOutcome(button130, thisPoint);	
     }
 
     @FXML
     void button131click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,1);
+    	guessOutcome(button131, thisPoint);	
     }
 
     @FXML
     void button132click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,2);
+    	guessOutcome(button132, thisPoint);	
     }
 
     @FXML
     void button133click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,3);
+    	guessOutcome(button133, thisPoint);	
     }
 
     @FXML
     void button134click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,4);
+    	guessOutcome(button134, thisPoint);	
     }
 
     @FXML
     void button135click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,5);
+    	guessOutcome(button135, thisPoint);	
     }
 
     @FXML
     void button136click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,6);
+    	guessOutcome(button136, thisPoint);	
     }
 
     @FXML
     void button137click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,7);
+    	guessOutcome(button137, thisPoint);	
     }
 
     @FXML
     void button138click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,8);
+    	guessOutcome(button138, thisPoint);	
     }
 
     @FXML
     void button139click(ActionEvent event) {
-
+    	Point thisPoint = new Point(3,9);
+    	guessOutcome(button139, thisPoint);	
     }
 
     @FXML
     void button140click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,0);
+    	guessOutcome(button140, thisPoint);	
     }
 
     @FXML
     void button141click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,1);
+    	guessOutcome(button141, thisPoint);	
     }
 
     @FXML
     void button142click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,2);
+    	guessOutcome(button142, thisPoint);	
     }
 
     @FXML
     void button143click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,3);
+    	guessOutcome(button143, thisPoint);	
     }
 
     @FXML
     void button144click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,4);
+    	guessOutcome(button144, thisPoint);	
     }
 
     @FXML
     void button145click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,5);
+    	guessOutcome(button145, thisPoint);	
     }
 
     @FXML
     void button146click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,6);
+    	guessOutcome(button146, thisPoint);	
     }
 
     @FXML
     void button147click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,7);
+    	guessOutcome(button147, thisPoint);	
     }
 
     @FXML
     void button148click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,8);
+    	guessOutcome(button148, thisPoint);	
     }
 
     @FXML
     void button149click(ActionEvent event) {
-
+    	Point thisPoint = new Point(4,9);
+    	guessOutcome(button149, thisPoint);	
     }
 
     @FXML
     void button150click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,0);
+    	guessOutcome(button150, thisPoint);	
     }
 
     @FXML
     void button151click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,1);
+    	guessOutcome(button151, thisPoint);	
     }
 
     @FXML
     void button152click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,2);
+    	guessOutcome(button152, thisPoint);	
     }
 
     @FXML
     void button153click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,3);
+    	guessOutcome(button153, thisPoint);	
     }
 
     @FXML
     void button154click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,4);
+    	guessOutcome(button154, thisPoint);	
     }
 
     @FXML
     void button155click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,5);
+    	guessOutcome(button155, thisPoint);	
     }
 
     @FXML
     void button156click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,6);
+    	guessOutcome(button156, thisPoint);	
     }
 
     @FXML
     void button157click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,7);
+    	guessOutcome(button157, thisPoint);	
     }
 
     @FXML
     void button158click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,8);
+    	guessOutcome(button158, thisPoint);	
     }
 
     @FXML
     void button159click(ActionEvent event) {
-
+    	Point thisPoint = new Point(5,9);
+    	guessOutcome(button159, thisPoint);	
     }
 
     @FXML
     void button160click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,0);
+    	guessOutcome(button160, thisPoint);	
     }
 
     @FXML
     void button161click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,1);
+    	guessOutcome(button161, thisPoint);	
     }
 
     @FXML
     void button162click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,2);
+    	guessOutcome(button162, thisPoint);	
     }
 
     @FXML
     void button163click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,3);
+    	guessOutcome(button163, thisPoint);	
     }
 
     @FXML
     void button164click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,4);
+    	guessOutcome(button164, thisPoint);	
     }
 
     @FXML
     void button165click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,5);
+    	guessOutcome(button165, thisPoint);	
     }
 
     @FXML
     void button166click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,6);
+    	guessOutcome(button166, thisPoint);	
     }
 
     @FXML
     void button167click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,7);
+    	guessOutcome(button167, thisPoint);	
     }
 
     @FXML
     void button168click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,8);
+    	guessOutcome(button168, thisPoint);	
     }
 
     @FXML
     void button169click(ActionEvent event) {
-
+    	Point thisPoint = new Point(6,9);
+    	guessOutcome(button169, thisPoint);	
     }
 
     @FXML
     void button170click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,0);
+    	guessOutcome(button170, thisPoint);	
     }
 
     @FXML
     void button171click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,1);
+    	guessOutcome(button171, thisPoint);	
     }
 
     @FXML
     void button172click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,2);
+    	guessOutcome(button172, thisPoint);	
     }
 
     @FXML
     void button173click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,3);
+    	guessOutcome(button173, thisPoint);	
     }
 
     @FXML
     void button174click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,4);
+    	guessOutcome(button174, thisPoint);	
     }
 
     @FXML
     void button175click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,5);
+    	guessOutcome(button175, thisPoint);	
     }
 
     @FXML
     void button176click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,6);
+    	guessOutcome(button176, thisPoint);	
     }
 
     @FXML
     void button177click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,7);
+    	guessOutcome(button177, thisPoint);	
     }
 
     @FXML
     void button178click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,8);
+    	guessOutcome(button178, thisPoint);	
     }
 
     @FXML
     void button179click(ActionEvent event) {
-
+    	Point thisPoint = new Point(7,9);
+    	guessOutcome(button179, thisPoint);	
     }
 
     @FXML
     void button180click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,0);
+    	guessOutcome(button180, thisPoint);	
     }
 
     @FXML
     void button181click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,1);
+    	guessOutcome(button181, thisPoint);	
     }
 
     @FXML
     void button182click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,2);
+    	guessOutcome(button182, thisPoint);	
     }
 
     @FXML
     void button183click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,3);
+    	guessOutcome(button183, thisPoint);	
     }
 
     @FXML
     void button184click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,4);
+    	guessOutcome(button184, thisPoint);	
     }
 
     @FXML
     void button185click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,5);
+    	guessOutcome(button185, thisPoint);	
     }
 
     @FXML
     void button186click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,6);
+    	guessOutcome(button186, thisPoint);	
     }
 
     @FXML
     void button187click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,7);
+    	guessOutcome(button187, thisPoint);	
     }
 
     @FXML
     void button188click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,8);
+    	guessOutcome(button188, thisPoint);	
     }
 
     @FXML
     void button189click(ActionEvent event) {
-
+    	Point thisPoint = new Point(8,9);
+    	guessOutcome(button189, thisPoint);	
     }
 
     @FXML
     void button190click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,0);
+    	guessOutcome(button190, thisPoint);	
     }
 
     @FXML
     void button191click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,1);
+    	guessOutcome(button191, thisPoint);	
     }
 
     @FXML
     void button192click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,2);
+    	guessOutcome(button192, thisPoint);	
     }
 
     @FXML
     void button193click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,3);
+    	guessOutcome(button193, thisPoint);	
     }
 
     @FXML
     void button194click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,4);
+    	guessOutcome(button194, thisPoint);	
     }
 
     @FXML
     void button195click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,5);
+    	guessOutcome(button195, thisPoint);	
     }
 
     @FXML
     void button196click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,6);
+    	guessOutcome(button196, thisPoint);	
     }
 
     @FXML
     void button197click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,7);
+    	guessOutcome(button197, thisPoint);	
     }
 
     @FXML
     void button198click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,8);
+    	guessOutcome(button198, thisPoint);	
     }
 
     @FXML
     void button199click(ActionEvent event) {
-
+    	Point thisPoint = new Point(9,9);
+    	guessOutcome(button199, thisPoint);	
     }
 
     @FXML
