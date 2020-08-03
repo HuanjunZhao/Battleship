@@ -103,7 +103,7 @@ public class Referee {
 			
 			System.out.println("Your opponent is A computer!");
 			playerOne.placeShip();
-//			computerPlayer.placeShip();
+			computerPlayer.placeShip();
 //		}
 		
 	}

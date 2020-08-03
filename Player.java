@@ -1,5 +1,5 @@
 /**
- * Battleship (Player Class): Alpha version
+ * Battleship (Player Class): Alpha
  * @author Taimur Rizwan
  *UCID: 30078941
  */
@@ -23,8 +23,6 @@ public class Player {
 	}
 	
 	public void placeShip() {
-		
-		
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter an x-coordinate for CARRIER");
 		int x = input.nextInt();
@@ -32,7 +30,7 @@ public class Player {
 		System.out.println("Enter an y-coordinate for CARRIER");
 		int y = input.nextInt();
 		
-		Ship carrier = new Ship(ShipType.CARRIER, x, y, this); 
+		Ship carrier = new Ship(ShipType.CARRIER, x, y, this); //copy for all ship types
 		
 		ships[0] = carrier;
 		
@@ -101,6 +99,10 @@ public class Player {
 		
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public void guess() {
 		
 	}
@@ -115,7 +117,8 @@ public class Player {
 		
 	}
 	
-
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -126,10 +129,6 @@ public class Player {
 
 	public void setPlayerBoard(Board playerBoard) {
 		this.playerBoard = playerBoard;
-	}
-
-	private void setName(String name) {
-		this.name = name;
 	}
 	
 	

@@ -1,4 +1,3 @@
-package model;
 /**
  * Skeleton for ship class for battleships team battle royal
  * @author Dillon Sahadevan, UCID 30075927
@@ -46,7 +45,7 @@ public class Ship {
 			}
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
-					origin.getY() + i - originIndex);
+					originIndex + origin.getY() - i);
 		}
 		rotation = 0;
 		shipState = 1.0;
@@ -86,7 +85,7 @@ public class Ship {
 			}
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
-					origin.getY() - originIndex + i);
+					originIndex + origin.getY() - i);
 		}
 		rotation = 0;
 		shipState = 1.0;
@@ -103,10 +102,10 @@ public class Ship {
 		//Rotation if ship is upright.
 		//Swap x and y coordinates.
 		if(rotation == 0) {
-			int originIndex = (length % 2 == 0 ? length / 2 : length / 2 + 1) - 1;
-			for(int i = 0; i < length; i++) {
-				shipCoords[i].setY(origin.getY());
-				shipCoords[i].setX(origin.getX() + originIndex - i);
+			for(Point p : shipCoords) {
+				if(p.equals(origin))
+					continue;
+				p.swapCoordinates();
 			}
 		}
 		//Rotation if ship has been rotated 90 degrees.
@@ -117,8 +116,9 @@ public class Ship {
 			for(int i = 0; i < length; i++) {
 				if(i == originIndex)
 					continue;
+				shipCoords[i].swapCoordinates();
 				shipCoords[i].setX(origin.getX());
-				shipCoords[i].setY(origin.getY() + originIndex - i);
+				shipCoords[i].setY(origin.getY() - originIndex + i);
 			}
 		}
 		//Rotation if ship has been rotated 180 degrees.
@@ -129,6 +129,7 @@ public class Ship {
 			for(int i = 0; i < length; i++) {
 				if(i == originIndex)
 					continue;
+				shipCoords[i].swapCoordinates();
 				shipCoords[i].setY(origin.getY());
 				shipCoords[i].setX(origin.getX() - originIndex + i);
 			}
@@ -143,7 +144,7 @@ public class Ship {
 					continue;
 				shipCoords[i].swapCoordinates();
 				shipCoords[i].setX(origin.getX());
-				shipCoords[i].setY(origin.getY() + i - originIndex);
+				shipCoords[i].setY(origin.getY() + originIndex - i);
 			}
 		}
 		rotation += 90;
