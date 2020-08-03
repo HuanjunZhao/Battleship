@@ -13,9 +13,8 @@ public class SingleplayerGameController {
 	
 	private GameApplication gameApp;
 	
-//	private static Point pointUserChoose;
+
 	boolean shipHideHere;
-	boolean repeatClick = false;
     @FXML
     private ResourceBundle resources;
 
