@@ -45,6 +45,14 @@ public class Ship {
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
 					originIndex + origin.getY() - i);
+			if(shipCoords[i].getX() < 0 || shipCoords[i].getX() > 9) {
+				length = -1;
+				return;
+			}
+			if(shipCoords[i].getY() < 0 || shipCoords[i].getY() > 9) {
+				length = -1;
+				return;
+			}
 		}
 		rotation = 0;
 		shipState = 1.0;
@@ -84,10 +92,26 @@ public class Ship {
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
 					originIndex + origin.getY() - i);
+			if(shipCoords[i].getX() < 0 || shipCoords[i].getX() > 9) {
+				length = -1;
+				return;
+			}
+			if(shipCoords[i].getY() < 0 || shipCoords[i].getY() > 9) {
+				length = -1;
+				return;
+			}
 		}
 		rotation = 0;
 		shipState = 1.0;
 		shipDamageMultiplier = shipState / length;
+	}
+	
+	/**
+	 * Getter for length of ship
+	 * @return length of ship : int
+	 */
+	public int getLength() {
+		return length;
 	}
 	
 	/**
