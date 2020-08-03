@@ -10,7 +10,6 @@ public class Ship {
 	private int rotation;
 	private double shipState;
 	private double shipDamageMultiplier;
-	private Player owner;
 	private Point origin;
 	
 	/**
@@ -24,7 +23,7 @@ public class Ship {
 	 * @param y y coordinate for the ship's origin
 	 * @param player the player that owns this ship
 	 */
-	public Ship(ShipType type, int x, int y, Player player) {
+	public Ship(ShipType type, int x, int y) {
 		shipType = type;
 		if(type == ShipType.CARRIER)
 			length = 5;
@@ -50,7 +49,6 @@ public class Ship {
 		rotation = 0;
 		shipState = 1.0;
 		shipDamageMultiplier = shipState / length;
-		owner = player;
 	}
 
 	/**
@@ -63,7 +61,7 @@ public class Ship {
 	 * @param point the origin of the ship
 	 * @param player the player that owns this ship
 	 */
-	public Ship(ShipType type, Point point, Player player) {
+	public Ship(ShipType type, Point point) {
 		shipType = type;
 		//Assign length based on shipType
 		if(type == ShipType.CARRIER)
@@ -90,7 +88,6 @@ public class Ship {
 		rotation = 0;
 		shipState = 1.0;
 		shipDamageMultiplier = shipState / length;
-		owner = player;
 	}
 	
 	/**
