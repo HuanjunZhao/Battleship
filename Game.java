@@ -24,7 +24,7 @@ public class Game {
 	public void initializeGame() {
 		Player playerOne = new Player();
 		ComputerPlayer playerTwo = new Player();
-		playerOne.setBoard(boardOne);
+		playerOne.setPlayerBoard(boardOne);
 		playerTwo.setBoard(boardTwo);
 		referee.setPlayerOne(playerOne);
 		referee.setPlayerTwo(playerTwo);

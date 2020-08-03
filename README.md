@@ -1,5 +1,5 @@
 # CPSC233-C2-TeamProject
 Team Project
 
-Iteration One can be found in IterationOne branch.
-To run the program, run the Game class.
+Text Based version of Battleship.
+Run the Game class to start the game.
