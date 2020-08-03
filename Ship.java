@@ -10,6 +10,7 @@ public class Ship {
 	private int rotation;
 	private double shipState;
 	private double shipDamageMultiplier;
+	private Player owner;
 	private Point origin;
 	
 	/**
@@ -23,7 +24,7 @@ public class Ship {
 	 * @param y y coordinate for the ship's origin
 	 * @param player the player that owns this ship
 	 */
-	public Ship(ShipType type, int x, int y) {
+	public Ship(ShipType type, int x, int y, Player player) {
 		shipType = type;
 		if(type == ShipType.CARRIER)
 			length = 5;
@@ -45,18 +46,11 @@ public class Ship {
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
 					originIndex + origin.getY() - i);
-			if(shipCoords[i].getX() < 0 || shipCoords[i].getX() > 9) {
-				length = -1;
-				return;
-			}
-			if(shipCoords[i].getY() < 0 || shipCoords[i].getY() > 9) {
-				length = -1;
-				return;
-			}
 		}
 		rotation = 0;
 		shipState = 1.0;
 		shipDamageMultiplier = shipState / length;
+		owner = player;
 	}
 
 	/**
@@ -69,7 +63,7 @@ public class Ship {
 	 * @param point the origin of the ship
 	 * @param player the player that owns this ship
 	 */
-	public Ship(ShipType type, Point point) {
+	public Ship(ShipType type, Point point, Player player) {
 		shipType = type;
 		//Assign length based on shipType
 		if(type == ShipType.CARRIER)
@@ -92,26 +86,11 @@ public class Ship {
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
 					originIndex + origin.getY() - i);
-			if(shipCoords[i].getX() < 0 || shipCoords[i].getX() > 9) {
-				length = -1;
-				return;
-			}
-			if(shipCoords[i].getY() < 0 || shipCoords[i].getY() > 9) {
-				length = -1;
-				return;
-			}
 		}
 		rotation = 0;
 		shipState = 1.0;
 		shipDamageMultiplier = shipState / length;
-	}
-	
-	/**
-	 * Getter for length of ship
-	 * @return length of ship : int
-	 */
-	public int getLength() {
-		return length;
+		owner = player;
 	}
 	
 	/**
@@ -215,4 +194,6 @@ public class Ship {
 			return true;
 		return false;
 	}
+	
+	
 }
