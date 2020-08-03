@@ -42,23 +42,19 @@ public class Board {
 		int colGuess = pointGuess.getX();
 		//returns if the guess is valid and whether the guess is a location with a ship
 		if ((rowGuess < getGrid().length) && (colGuess < getGrid().length)){
-			if (getGrid()[rowGuess][colGuess] == '#') {
-				//System.out.println("		HIT");
-				getGrid()[rowGuess][colGuess] = 'X';
-				return true;
-	
-			}
-			else {
-				//System.out.println("		MISS");
-				getGrid()[rowGuess][colGuess] = '?';
-				return false;
-
+			for(Ship ship : ships) {
+				boolean result = ship.attemptHit(new Point(rowGuess, colGuess));
+				if(result) {
+					grid[rowGuess][colGuess] = 'X';
+				} else {
+					grid[rowGuess][colGuess] = '?';
+				}
+				System.out.println(result ? "HIT" : "MISS");
+				return result;
 			}
 		}
-		else  {
-			System.out.println("Not a space on board");
-			return false;
-		}
+		System.out.println("Not a space on board");
+		return false;
 	}
 	
 	/**
