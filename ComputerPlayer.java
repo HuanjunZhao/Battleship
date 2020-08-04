@@ -48,31 +48,31 @@ public class ComputerPlayer{
 		Ship destroyer;
 		do {
 			do {
-				carrier = new Ship(ShipType.CARRIER, guess());
+				carrier = new Ship(ShipType.CARRIER, guess(), guessRotation());
 			} while(carrier.getLength() == -1);
 			ships[0] = carrier;
 		} while(!board.addShip(carrier));
 		do {
 			do {
-				battleship = new Ship(ShipType.BATTLESHIP, guess());
+				battleship = new Ship(ShipType.BATTLESHIP, guess(), guessRotation());
 			} while(battleship.getLength() == -1);
 			ships[1] = battleship;
 		} while(!board.addShip(battleship));
 		do {
 			do {
-				cruiser = new Ship(ShipType.CRUISER, guess());
+				cruiser = new Ship(ShipType.CRUISER, guess(), guessRotation());
 			} while(cruiser.getLength() == -1);
 			ships[2] = cruiser;
 		} while(!board.addShip(cruiser));
 		do {
 			do {
-				submarine = new Ship(ShipType.SUBMARINE, guess());
+				submarine = new Ship(ShipType.SUBMARINE, guess(), guessRotation());
 			} while(submarine.getLength() == -1);
 			ships[3] = submarine;
 		} while(!board.addShip(submarine));
 		do {
 			do {
-				destroyer = new Ship(ShipType.DESTROYER, guess());
+				destroyer = new Ship(ShipType.DESTROYER, guess(), guessRotation());
 			} while(destroyer.getLength() == -1);
 			ships[4] = destroyer;
 		} while(!board.addShip(destroyer));
@@ -87,6 +87,18 @@ public class ComputerPlayer{
 			System.out.println("Computer Missed!");
 		}
 		opponent.getPlayerBoard().display();
+	}
+	
+	private int guessRotation() {
+		Random random = new Random();
+		int rotationGuess = random.nextInt(30);
+		if(rotationGuess > 15)
+			return 90;
+		if(rotationGuess > 10)
+			return 180;
+		if(rotationGuess > 5)
+			return 270;
+		return 0;
 	}
 	
 	private Point guess() {
