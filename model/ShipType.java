@@ -1,4 +1,3 @@
-package model;
 
 public enum ShipType {
 	CARRIER,

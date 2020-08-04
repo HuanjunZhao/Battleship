@@ -1,4 +1,3 @@
-package model;
 /**
  * AI data for a computer player.
  * @author Tristan Richardson
@@ -41,29 +40,67 @@ public class ComputerPlayer{
 	}
 	
 	public void placeShip() { //currently functional
-		Ship carrier = new Ship(ShipType.CARRIER, guess(), opponent); //copy for all ship types
-		ships[0] = carrier;
-		board.addShip(carrier);
 		
-		Ship battleship = new Ship(ShipType.BATTLESHIP, guess(), opponent);
-		ships[1] = battleship;
-		board.addShip(battleship);
-		
-		Ship cruiser = new Ship(ShipType.CRUISER, guess(), opponent);
-		ships[2] = cruiser;
-		board.addShip(cruiser);
-		
-		Ship submarine = new Ship(ShipType.SUBMARINE, guess(), opponent);
-		ships[3] = submarine;
-		board.addShip(submarine);
-		
-		Ship destroyer = new Ship(ShipType.DESTROYER, guess(), opponent);
-		ships[4] = destroyer;
-		board.addShip(destroyer);
+		Ship carrier;
+		Ship battleship;
+		Ship cruiser;
+		Ship submarine;
+		Ship destroyer;
+		do {
+			do {
+				carrier = new Ship(ShipType.CARRIER, guess(), guessRotation());
+			} while(carrier.getLength() == -1);
+			ships[0] = carrier;
+		} while(!board.addShip(carrier));
+		do {
+			do {
+				battleship = new Ship(ShipType.BATTLESHIP, guess(), guessRotation());
+			} while(battleship.getLength() == -1);
+			ships[1] = battleship;
+		} while(!board.addShip(battleship));
+		do {
+			do {
+				cruiser = new Ship(ShipType.CRUISER, guess(), guessRotation());
+			} while(cruiser.getLength() == -1);
+			ships[2] = cruiser;
+		} while(!board.addShip(cruiser));
+		do {
+			do {
+				submarine = new Ship(ShipType.SUBMARINE, guess(), guessRotation());
+			} while(submarine.getLength() == -1);
+			ships[3] = submarine;
+		} while(!board.addShip(submarine));
+		do {
+			do {
+				destroyer = new Ship(ShipType.DESTROYER, guess(), guessRotation());
+			} while(destroyer.getLength() == -1);
+			ships[4] = destroyer;
+		} while(!board.addShip(destroyer));
 		System.out.println("CPU Board");
 		board.display();
 	}
 
+	public void play() {
+		if(opponent.getPlayerBoard().checkGuess(new Point(guess()))) {
+			System.out.println("Computer Hit!");
+		} else {
+			System.out.println("Computer Missed!");
+		}
+		opponent.getPlayerBoard().display();
+	}
+	
+	private int guessRotation() {
+		Random random = new Random();
+		int rotationGuess = random.nextInt(30);
+		if(rotationGuess > 15)
+			return 90;
+		if(rotationGuess > 10)
+			return 180;
+		if(rotationGuess > 5)
+			return 270;
+		return 0;
+	}
+	
 	private Point guess() {
 		Random random=new Random();
 		int guessX=random.nextInt(9);
