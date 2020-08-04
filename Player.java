@@ -1,28 +1,35 @@
-/**
- * Battleship (Player Class): Alpha version
- * @author Taimur Rizwan
- *UCID: 30078941
- */
+
 import java.util.Scanner;
 
-
-public class Player {
+/**
+ * Battleship (Player Class): Beta version
+ * Beta Changelog:
+ * @author Taimur Rizwan
+ *UCID: 30078941	(1st Iteration)<br>
+ *Tristan Richardson UCID:30076898 (connecting with PlayerSlot abstract)
+ *@version Beta
+ */
+/*
+ * Beta changes:
+ * - Made several adaptations for transfer to PlayerSlot.
+ * - 
+ */
+public class Player extends PlayerSlot {
 /**
  * Instance variables
  */
-
-	private String name;
+	private final boolean isPlayer=true;
+	/*private String name;
 	private Ship[] ships;
 	private ComputerPlayer opponent;
-	private Board playerBoard;
-	
+	private Board board;
+	*///Variables moved to 
 	
 	public Player() {
-		this.ships = new Ship[5];
-	
+		super(board);
 	}
-	
-	public void placeShip() {
+
+	public void shipConstructor() {
 		
 		
 		Scanner input = new Scanner(System.in);
@@ -36,8 +43,8 @@ public class Player {
 		
 		ships[0] = carrier;
 		
-		playerBoard.addShip(carrier);
-		playerBoard.display();
+		board.addShip(carrier);
+		board.display();
 		
 		//-----------------------------------------------------------------------------
 		
@@ -51,8 +58,8 @@ public class Player {
 		
 		ships[1] = battleship;
 		
-		playerBoard.addShip(battleship);
-		playerBoard.display();
+		board.addShip(battleship);
+		board.display();
 		
 		//-----------------------------------------------------------------------------
 		
@@ -66,8 +73,8 @@ public class Player {
 				
 		ships[2] = cruiser;
 				
-		playerBoard.addShip(cruiser);
-		playerBoard.display();
+		board.addShip(cruiser);
+		board.display();
 		
 		//-----------------------------------------------------------------------------
 		
@@ -81,8 +88,8 @@ public class Player {
 				
 		ships[3] = submarine;
 				
-		playerBoard.addShip(submarine);
-		playerBoard.display();
+		board.addShip(submarine);
+		board.display();
 		
 		//-----------------------------------------------------------------------------
 		
@@ -96,8 +103,8 @@ public class Player {
 				
 		ships[4] = destroyer;
 				
-		playerBoard.addShip(destroyer);
-		playerBoard.display();
+		board.addShip(destroyer);
+		board.display();
 		
 	}
 	
@@ -110,27 +117,7 @@ public class Player {
 		
 	}
 	
-	public void setOpponent(ComputerPlayer newOpponent) {
-		this.opponent = newOpponent;
-		
-	}
-	
 
-	public String getName() {
-		return name;
-	}
-
-	public Board getPlayerBoard() {
-		return playerBoard;
-	}
-
-	public void setPlayerBoard(Board playerBoard) {
-		this.playerBoard = playerBoard;
-	}
-
-	private void setName(String name) {
-		this.name = name;
-	}
 	
 	
 }
