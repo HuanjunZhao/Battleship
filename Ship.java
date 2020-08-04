@@ -46,14 +46,6 @@ public class Ship {
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
 					originIndex + origin.getY() - i);
-			if(shipCoords[i].getX() < 0 || shipCoords[i].getX() > 9) {
-				length = -1;
-				return;
-			}
-			if(shipCoords[i].getY() < 0 || shipCoords[i].getY() > 9) {
-				length = -1;
-				return;
-			}
 		}
 		rotateShip(rotation);
 		shipState = 1.0;
@@ -94,14 +86,6 @@ public class Ship {
 			//Get coordinate based on distance to origin.
 			shipCoords[i] = new Point(origin.getX(), 
 					originIndex + origin.getY() - i);
-			if(shipCoords[i].getX() < 0 || shipCoords[i].getX() > 9) {
-				length = -1;
-				return;
-			}
-			if(shipCoords[i].getY() < 0 || shipCoords[i].getY() > 9) {
-				length = -1;
-				return;
-			}
 		}
 		rotateShip(rotation);
 		shipState = 1.0;
@@ -117,9 +101,9 @@ public class Ship {
 	}
 	
 	private void rotateShip(int angle) {
-		if(angle == 0)
-			return;
 		Point[] temp = null;
+		if(angle == 0)
+			temp = shipCoords;
 		int numRotations = angle/90;
 		while(numRotations > 0) {
 			temp = rotateShip();
