@@ -35,13 +35,16 @@ public class Player {
 		
 		Scanner input = new Scanner(System.in);
 		do {
+			System.out.println("Enter ship rotation. 0 being North, 90 being East, etc.");
+			int rotation = input.nextInt();
+			
 			System.out.println("Enter an x-coordinate for CARRIER");
 			x = input.nextInt();
 			
 			System.out.println("Enter an y-coordinate for CARRIER");
 			y = input.nextInt();
 			
-			carrier = new Ship(ShipType.CARRIER, x, y); 
+			carrier = new Ship(ShipType.CARRIER, x, y, rotation); 
 		} while (carrier.getLength() == -1);
 		
 		ships[0] = carrier;
@@ -51,13 +54,16 @@ public class Player {
 		
 		//-----------------------------------------------------------------------------
 		do {
+			System.out.println("Enter ship rotation. 0 being North, 90 being East, etc.");
+			int rotation = input.nextInt();
+			
 			System.out.println("Enter an x-coordinate for BATTLESHIP");
 			x = input.nextInt();
 			
 			System.out.println("Enter an y-coordinate for BATTLESHIP");
 			y = input.nextInt();
 			
-			battleship = new Ship(ShipType.BATTLESHIP, x, y);
+			battleship = new Ship(ShipType.BATTLESHIP, x, y, rotation);
 		} while (battleship.getLength() == -1);
 		ships[1] = battleship;
 		
@@ -66,13 +72,16 @@ public class Player {
 		
 		//-----------------------------------------------------------------------------
 		do {
+			System.out.println("Enter ship rotation. 0 being North, 90 being East, etc.");
+			int rotation = input.nextInt();
+			
 			System.out.println("Enter an x-coordinate for CRUISER");
 			x = input.nextInt();
 					
 			System.out.println("Enter an y-coordinate for CRUISER");
 			y = input.nextInt();
 					
-			cruiser = new Ship(ShipType.CRUISER, x, y);
+			cruiser = new Ship(ShipType.CRUISER, x, y, rotation);
 		} while (cruiser.getLength() == -1);	
 		ships[2] = cruiser;
 				
@@ -81,13 +90,16 @@ public class Player {
 		
 		//-----------------------------------------------------------------------------
 		do {
+			System.out.println("Enter ship rotation. 0 being North, 90 being East, etc.");
+			int rotation = input.nextInt();
+			
 			System.out.println("Enter an x-coordinate for SUBMARINE");
 			x = input.nextInt();
 					
 			System.out.println("Enter an y-coordinate for SUBMARINE");
 			y = input.nextInt();
 					
-			submarine = new Ship(ShipType.SUBMARINE, x, y);
+			submarine = new Ship(ShipType.SUBMARINE, x, y, rotation);
 		} while (submarine.getLength() == -1);
 		ships[3] = submarine;
 				
@@ -96,13 +108,16 @@ public class Player {
 		
 		//-----------------------------------------------------------------------------
 		do {
+			System.out.println("Enter ship rotation. 0 being North, 90 being East, etc.");
+			int rotation = input.nextInt();
+			
 			System.out.println("Enter an x-coordinate for DESTROYER");
 			x = input.nextInt();
 					
 			System.out.println("Enter an y-coordinate for DESTROYER");
 			y = input.nextInt();
 					
-			destroyer = new Ship(ShipType.DESTROYER, x, y);
+			destroyer = new Ship(ShipType.DESTROYER, x, y, rotation);
 		} while (destroyer.getLength() == -1);
 		ships[4] = destroyer;
 				
