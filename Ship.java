@@ -188,6 +188,11 @@ public class Ship {
 		for(Point p : shipCoords) {
 			if(p.equals(point)) {
 				shipState -= shipDamageMultiplier;
+				//Fix arithemtic error
+				shipState = (shipState < 0.01 ? 0 : shipState);
+				if(shipState == 0) {
+					System.out.println(toString() + " has been destoryed!!");
+				}
 				return true;
 			}
 		}
@@ -218,5 +223,23 @@ public class Ship {
 		if(shipState == 0)
 			return true;
 		return false;
+	}
+	
+	/**
+	 * toString for ship class
+	 * returns the type of ship as a string
+	 */
+	@Override
+	public String toString() {
+		String type = "Carrier";
+		if(shipType == ShipType.BATTLESHIP)
+			type = "Battleship";
+		else if(shipType == ShipType.CRUISER)
+			type = "Cruiser";
+		else if(shipType == ShipType.DESTROYER)
+			type = "Destoryer";
+		else if(shipType == ShipType.SUBMARINE)
+			type = "Submarine";
+		return type;
 	}
 }

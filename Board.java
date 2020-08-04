@@ -43,16 +43,16 @@ public class Board {
 		//returns if the guess is valid and whether the guess is a location with a ship
 		if ((rowGuess < getGrid().length) && (colGuess < getGrid().length)){
 			for(Ship ship : ships) {
-				boolean result = ship.attemptHit(new Point(colGuess, rowGuess));
-				if(result) {
+				boolean returnResult = ship.attemptHit(new Point(colGuess, rowGuess));
+				if(returnResult) {
 					grid[colGuess][rowGuess] = 'X';
-				} else {
-					grid[colGuess][rowGuess] = '?';
+					return true;
 				}
-				return result;
 			}
+			grid[colGuess][rowGuess] = '?';
+		} else {
+			System.out.println("Not a space on the board!");
 		}
-		System.out.println("Not a space on board");
 		return false;
 	}
 	
@@ -75,7 +75,6 @@ public class Board {
 		//addShip determines if ship placement is valid
 		if ((xCoord < getGrid().length) && (yCoord < getGrid().length)){
 			if (getGrid()[xCoord][yCoord] == '~'){
-				//TODO figure out how to add ships (#) after valid placement is determined
 				ships[numShips] = shipAdded;
 				numShips++;
 				return true;
