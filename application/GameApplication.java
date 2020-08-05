@@ -44,11 +44,12 @@ public class GameApplication extends Application{
 	public void initializeGame(String name) {
         Player playerOne = new Player();
         playerOne.setName(new String(name));
-        ComputerPlayer playerTwo = new ComputerPlayer();
-        playerOne.setPlayerBoard(boardOne);
-        playerTwo.setBoard(boardTwo);
-        referee.setPlayerOne(playerOne);
-        referee.setComputerPlayer(playerTwo);
+        ComputerPlayer computerPlayer = new ComputerPlayer();
+
+        referee = new Referee(playerOne,computerPlayer);
+        
+        boardOne = referee.getPlayerOne().getPlayerBoard();
+        boardTwo = referee.getComputerPlayer().getBoard();
         BorderPane root = new BorderPane();
         FXMLLoader loader =  new FXMLLoader();
         try {
@@ -62,7 +63,7 @@ public class GameApplication extends Application{
         Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
-        //referee.runTheGame();
+        //referee.runTheGUIGame();
     }
 	
 	public void initializeGame(String name1, String name2) {
