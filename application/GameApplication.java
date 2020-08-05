@@ -73,7 +73,7 @@ public class GameApplication extends Application{
         Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
-        referee.runTheGame();
+        playerTwo.placeShip();
     }
 	
 	/**
