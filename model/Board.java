@@ -75,11 +75,13 @@ public class Board {
 				boolean returnResult = ship.attemptHit(new Point(colGuess, rowGuess));
 				if(returnResult) {
 					grid[colGuess][rowGuess] = 'X';
-					gameController.setGuess(colGuess, rowGuess, true, playerOwner);
+					if(gameController != null)
+						gameController.setGuess(colGuess, rowGuess, true, playerOwner);
 					return true;
 				}
 			}
-			gameController.setGuess(colGuess, rowGuess, false, playerOwner);
+			if(gameController != null)
+				gameController.setGuess(colGuess, rowGuess, false, playerOwner);
 			grid[colGuess][rowGuess] = '?';
 		} else {
 			System.out.println("Not a space on the board!");

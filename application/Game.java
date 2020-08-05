@@ -4,7 +4,6 @@ import model.Board;
 import model.ComputerPlayer;
 import model.Player;
 import model.Referee;
-import java.util.Scanner;
 
 /**
  * Skeleton for Game class for battleships team battle royal
@@ -22,7 +21,6 @@ public class Game {
 	public Game() {
 		boardOne = new Board();
 		boardTwo = new Board();
-		referee = new Referee();
 	}
 	
 	/**
@@ -30,19 +28,10 @@ public class Game {
 	 * and calling necessary functions in Referee.
 	 */
 	public void initializeGame() {
-		Player playerOne = new Player();
-		ComputerPlayer playerTwo = new ComputerPlayer();
-		playerOne.setPlayerBoard(boardOne);
-		playerTwo.setBoard(boardTwo);
-		referee.setPlayerOne(playerOne);
-		referee.setComputerPlayer(playerTwo);
-		Scanner input = new Scanner(System.in);
-		System.out.println("Player one, please enter your name~");
-		String playerOneName = input.next();
-		System.out.println("Player one, your name is: " + playerOneName);
-		playerOne.setName(playerOneName);
-		System.out.println("Your opponent is A computer!");
-		input.close();
+		Player playerOne = new Player(boardOne);
+		ComputerPlayer playerTwo = new ComputerPlayer(boardTwo);
+		referee = new Referee(playerOne, playerTwo);
+
 		referee.runTheGame();
 	}
 	

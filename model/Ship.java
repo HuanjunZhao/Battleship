@@ -190,10 +190,10 @@ public class Ship {
 		for(Point p : shipCoords) {
 			if(p.equals(point)) {
 				shipState -= shipDamageMultiplier;
-				//Fix arithemtic error
+				//Fix arithmetic error
 				shipState = (shipState < 0.01 ? 0 : shipState);
 				if(shipState == 0) {
-					System.out.println(toString() + " has been destoryed!!");
+					System.out.println(toString() + " has been destroyed!!");
 				}
 				return true;
 			}

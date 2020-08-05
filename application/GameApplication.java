@@ -3,6 +3,7 @@ package application;
 import model.Board;
 import model.ComputerPlayer;
 import model.Player;
+import model.PlayerSlot;
 import model.Referee;
 
 import java.io.FileInputStream;
@@ -34,7 +35,6 @@ public class GameApplication extends Application{
 	public GameApplication() {
 		boardOne = new Board();
 		boardTwo = new Board();
-		referee = new Referee();
 	}
 	
 	/**
@@ -42,14 +42,14 @@ public class GameApplication extends Application{
 	 * and calling necessary functions in Referee.
 	 */
 	public void initializeGame(String name) {
-        Player playerOne = new Player();
+        Player playerOne = new Player(boardOne);
         playerOne.setName(new String(name));
-        ComputerPlayer playerTwo = new ComputerPlayer();
+        ComputerPlayer playerTwo = new ComputerPlayer(boardTwo);
+        
+        referee = new Referee(playerOne, playerTwo);
         
         //Sets all necessary relationships between classes
         boardOne.setPlayerOwner();
-        playerOne.setPlayerBoard(boardOne);
-        playerTwo.setBoard(boardTwo);
         playerOne.setOpponent(playerTwo);
         playerTwo.setOpponent(playerOne);
         referee.setPlayerOne(playerOne);
@@ -73,7 +73,7 @@ public class GameApplication extends Application{
         Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
-        playerTwo.placeShip();
+        referee.runTheGUIGame();
     }
 	
 	/**
@@ -83,9 +83,9 @@ public class GameApplication extends Application{
 	 * @param name2 name of second player
 	 */
 	public void initializeGame(String name1, String name2) {
-		Player playerOne = new Player();
+		Player playerOne = new Player(boardOne);
 		playerOne.setName(name1);
-		Player playerTwo = new Player();
+		Player playerTwo = new Player(boardTwo);
 		playerTwo.setName(name2);
 	}
 	
@@ -182,7 +182,7 @@ public class GameApplication extends Application{
 	 * Getter for player object
 	 * @return player object
 	 */
-	public Player getPlayerOne() {
+	public PlayerSlot getPlayerOne() {
 		return referee.getPlayerOne();
 	}
 	
