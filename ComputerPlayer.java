@@ -2,28 +2,42 @@ import java.util.Random;
 import java.util.ArrayList;
 /**
  * AI data for a computer player.
- * @author Tristan Richardson (30076898),
+ * @author Tristan Richardson (30076898) - 1st Iteration code
  * Team C2
  *@version Iteration 2
  */
 public class ComputerPlayer extends PlayerSlot{
-	private final boolean isPlayer=false;
-	
+	private boolean isPlayer=false;
 	private byte hitCoef=0;
 	private ArrayList<Point> shots;
 	private Point lastPicked;
 	private Random random;
 	
-	public ComputerPlayer() {
-		super(board);
-		this.name="CPU";
+	public ComputerPlayer(Board board) {
+		super("CPU",board);
 		this.ships=new Ship[5];
 		shots=new ArrayList<Point>(27);//
 	}
 	
-	public Ship shipConstructor(ShipType type,PlayerSlot opponent) {
-		return new Ship(ShipType.CARRIER, constructHit(), opponent); 
+	public Ship shipConstructor(ShipType type) {
+		return new Ship(ShipType.CARRIER, constructHit(), guessRotation()); 
 		
+	}
+	/**
+	 * Randomly rotates ships.
+	 * @author Dillon Sahadevan, UCID 30075927
+	 * @return
+	 */
+	private int guessRotation() {
+		Random random = new Random();
+		int rotationGuess = random.nextInt(30);
+		if(rotationGuess > 15)
+			return 90;
+		if(rotationGuess > 10)
+			return 180;
+		if(rotationGuess > 5)
+			return 270;
+		return 0;
 	}
 	/**
 	 * Guess generator for AI. Generates a point to test in the AI path. Called until a suitable spot is found. The AI then sends this <i>Point</i> to the <i>Referee</i>. 
