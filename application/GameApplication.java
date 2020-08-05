@@ -42,28 +42,29 @@ public class GameApplication extends Application{
 	 * and calling necessary functions in Referee.
 	 */
 	public void initializeGame(String name) {
-		Player playerOne = new Player();
-		playerOne.setName(new String(name));
-		ComputerPlayer playerTwo = new ComputerPlayer();
-		playerOne.setPlayerBoard(boardOne);
-		playerTwo.setBoard(boardTwo);
-		referee.setPlayerOne(playerOne);
-		referee.setComputerPlayer(playerTwo);
-		BorderPane root = new BorderPane();
-		FXMLLoader loader =  new FXMLLoader();
-		try {
-			root = (BorderPane) loader.load(new FileInputStream("src/view/SingleplayerGameView.fxml"));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		SingleplayerGameController controller = (SingleplayerGameController)loader.getController();
-		controller.setGameApp(this);
-		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		//referee.runTheGame();
-	}
+        Player playerOne = new Player();
+        playerOne.setName(new String(name));
+        ComputerPlayer computerPlayer = new ComputerPlayer();
+
+        referee = new Referee(playerOne,computerPlayer);
+        
+        boardOne = referee.getPlayerOne().getPlayerBoard();
+        boardTwo = referee.getComputerPlayer().getBoard();
+        BorderPane root = new BorderPane();
+        FXMLLoader loader =  new FXMLLoader();
+        try {
+            root = (BorderPane) loader.load(new FileInputStream("src/view/SingleplayerGameView.fxml"));
+           
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SingleplayerGameController controller = (SingleplayerGameController)loader.getController();
+        controller.setGameApp(this);
+        Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        //referee.runTheGUIGame();
+    }
 	
 	public void initializeGame(String name1, String name2) {
 		Player playerOne = new Player();
@@ -118,6 +119,18 @@ public class GameApplication extends Application{
 		primaryStage.show();
 		MultiplayerInitController controller = (MultiplayerInitController)loader.getController();
 		controller.setGameApp(this);
+	}
+	
+	public Board getBoardOne() {
+		return boardOne;
+	}
+	
+	public Board getBoardTwo() {
+		return boardTwo;
+	}
+	
+	public Player getPlayerOne() {
+		return referee.getPlayerOne();
 	}
 	
 	public static void main(String [] args) {

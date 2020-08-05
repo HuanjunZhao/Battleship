@@ -1,17 +1,57 @@
 package model;
-import java.util.Scanner;
 
+import java.util.Scanner;
+/**
+ * This class will initialize the game and setup necessary environment for the player.
+ * @author Huanjun Zhao 30102350
+ *
+ * 
+ */
 
 public class Referee {
 	
 	private Player playerOne;
 	private Player playerTwo;
 	private ComputerPlayer computerPlayer;
-	
+	private Board boardOne; 
+	private Board boardTwo; 
 	/**
 	 * Default constructor
 	 */
 	public Referee() {}
+	
+	/**
+	 * Constructor for create Human VS Human game
+	 * @param playerOne
+	 * @param playerTwo
+	 */
+	public Referee(Player playerOne, Player playerTwo) {
+		 this.playerOne =  playerOne;
+		 this.playerTwo = playerTwo;
+		 computerPlayer = null;
+		 //this.playerOne.setOpponent(this.playerTwo);
+		 //this.playerTwo.setOpponent(this.playerOne);
+	}
+	
+	/**
+	 * Constructor for create Human VS CPU game
+	 * @param playerOne
+	 * @param computerPlayer
+	 */
+	public Referee(Player playerOne, ComputerPlayer computerPlayer) {
+		this.playerOne = playerOne;
+		this.computerPlayer = computerPlayer;
+		playerTwo = null;
+		
+		this.playerOne.setOpponent(this.computerPlayer);
+		this.computerPlayer.setOpponent(this.playerOne);
+		
+		boardOne = new Board();
+		boardTwo = new Board();
+		this.playerOne.setPlayerBoard(boardOne);
+        this.computerPlayer.setBoard(boardTwo);
+		
+	}
 	
 	public Player getPlayerOne() {
 		return playerOne;
@@ -37,8 +77,8 @@ public class Referee {
 		this.computerPlayer = computerPlayer;
 	}
 	/**
-	 * run the game, set opponent, place the ship?
-	 * enter the name .etc
+	 * Run the text-base game, set opponent, place the ship
+	 * 
 	 */
 	public void runTheGame() {
 		
@@ -49,18 +89,6 @@ public class Referee {
 		System.out.println("Would you like to play with A friend?(y/n)");
 		String opponentStatus = scan.next();
 		
-		
-		// Set the Second player is human or computer.
-//		if (opponentStatus.equalsIgnoreCase("y") ||
-//				opponentStatus.equalsIgnoreCase("yes")) {
-//			
-//			opponentIsHuman = true;
-//			playerTwo = new Player();
-//			
-//			playerOne.setOpponent(playerTwo);
-//			playerTwo.setOpponent(playerOne);
-//		}
-		
 		if (opponentStatus.equalsIgnoreCase("n") ||
 				opponentStatus.equalsIgnoreCase("no")) {
 			
@@ -70,80 +98,45 @@ public class Referee {
 			computerPlayer.setOpponent(playerOne);
 		}
 		
-		//*** set board!
-		// Set player one's name.
 		System.out.println("Player one, please enter your name~");
 		String playerOneName = scan.next();
 		System.out.println("Player one, your name is: " + playerOneName);
 		playerOne.setName(playerOneName);
+		System.out.println("Your opponent is A computer!");
 		
+		computerPlayer.placeShip();
+		playerOne.placeShip();
 		
-		//if second player is human, set player two's name
-//		if (opponentIsHuman == true) {
-//			System.out.println("Player two, please enter your name~");
-//			String playerTwoName = scan.next();
-//			System.out.println("Player one, your name is: " + playerTwoName);
-//			playerTwo.setName(playerTwoName);
-//			
-//			for (int i = 0; i < 5; i++ ) {	
-//				playerOne.placeShip();
-//				playerOne.getBoard().display();
-//				playerTwo.placeShip();
-//				playerTwo.getBoard().display();
-//			}
-//		}
-//		else {
-//			for (int i = 0; i < 5; i++ ) {	
-//				playerOne.placeShip();
-//				playerOne.getBoard().display();
-//				getComputerPlayer().placeShip();	
-//				getComputerPlayer().getBoard().display();
-//			}
-			
-			System.out.println("Your opponent is A computer!");
-			playerOne.placeShip();
-			computerPlayer.placeShip();
-//		}
-		
+		while(true) {
+			playerOne.play();
+			if(computerPlayer.getBoard().checkWinner()) {
+				System.out.println("You have won!");
+				return;
+			}
+			computerPlayer.play();
+			if(playerOne.getPlayerBoard().checkWinner()) {
+				System.out.println("Computer won!");
+				return;
+			}
+		}
 	}
-
-	/**
-	 * Deter
-	 * @param player
-	 * @param computerPlayer
-	 * @param a
-	 * @return
-	 */
-//	public boolean nextturn(Player player, ComputerPlayer computerPlayer, Point a) {
-//		
-//	}
 	
 	/**
-	 * check who is the winner.
+	 * Keep GUI game running
 	 */
-//	public boolean checkWinner() { 
-//		
-//		 if (playerTwo.getShips().isDestroped()) {
-//	            System.out.println(playerOne.getName() + ", you WIN!");
-//	            return true;
-//	        }
-//		 
-//		 if (playerOne¡£getShips().isDestroped() == true) {
-//			 System.out.println(playerTwo.getName() + ", you WIN!");
-//			 return true;
-//	        }
-//	        
-//		 if (computerPlayer¡£getShips().isDestroped() == true) {
-//			 System.out.println("You lose!");
-//			 return true;
-//		 }
-//		 return false;
-//	}
-//	
-//	public boolean keepGameRunning() {
-//		
-//	}
-//
-//	
-//	
+	public void runTheGUIGame() {		
+		
+		while(true) {
+			playerOne.play();
+			if(computerPlayer.getBoard().checkWinner()) {
+				System.out.println("You have won!");
+				return;
+			}
+			computerPlayer.play();
+			if(playerOne.getPlayerBoard().checkWinner()) {
+				System.out.println("Computer won!");
+				return;
+			}
+		}
+	}
 }
