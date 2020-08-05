@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import model.*;
+import model.Ship;
 
 public class SingleplayerGameController {
 	
@@ -661,6 +662,7 @@ public class SingleplayerGameController {
     @FXML
     void rotatePlacedShip(ActionEvent event) {
     	//method for rotating ship
+    	
 
     }
     
@@ -694,8 +696,8 @@ public class SingleplayerGameController {
     	String buttonLoc = ((Button) event.getSource()).getId();
       	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
     	int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
-    	Player player = gameApp.getPlayerOne();
-    	Ship placedShip = new Ship(type, x, y, player);
+    	//Player player = gameApp.getPlayerOne();
+    	Ship placedShip = new Ship(type, x, y);
     	gameApp.getBoardOne().addShip(placedShip);
     	Point[] shipLocations = placedShip.getShipCoords(); 
     	for (Point p: shipLocations) {
@@ -703,6 +705,7 @@ public class SingleplayerGameController {
     		int pointY = p.getY();
     		Button buttonToChange = getButton(pointX,pointY);
     		buttonToChange.setStyle("-fx-background-color: black; ");
+    		buttonToChange.setDisable(true);
     	}
     	numShips++;
     	
