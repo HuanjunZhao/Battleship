@@ -10,8 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import model.*;
-import model.Ship;
-import javafx.scene.control.Label;
 
 public class SingleplayerGameController {
 	
@@ -21,7 +19,6 @@ public class SingleplayerGameController {
 	boolean shipHideHere;
 	boolean repeatClick = false;
 	private int numShips;
-	private int currentShipRotate = 0;
 
     @FXML
     private ResourceBundle resources;
@@ -31,9 +28,9 @@ public class SingleplayerGameController {
     
     @FXML
     private GridPane boardOneGrid;
-
+    
     @FXML
-    private Label shipDirectionLabel;
+    private GridPane boardTwoGrid;
     
     @FXML
     private Button rotateButton;
@@ -640,663 +637,103 @@ public class SingleplayerGameController {
     @FXML
     private Button button170;
     
-
-    private void guessOutcome(Button buttonUserChoose, Point thisPoint) {
-    	//pointUserChoose = thisPoint;
-    	shipHideHere = gameApp.getBoardTwo().checkGuess(thisPoint);
-    	if (shipHideHere == false) {
-    		button100.setStyle("-fx-background-color: #ff0000");
-    	}
-    	else {
-    		button100.setStyle("-fx-background-color: #04ff3f");
-    	}	
-    	repeatClick = true;
-    }
-
-    @FXML
-    void button100click(ActionEvent event) {
-    	if (repeatClick == true) {
-    		return;
-    		//Set some info here.
-    	}
-    	Point thisPoint = new Point(0,0);
-    	guessOutcome(button100, thisPoint);
-    	
-    }
-    
-    
     /**
-     * @param event: when the "rotate" button clicked will add 90 to the int that determines ship rotation 
-     * before placement. Displays the direction the ship is facing
+     * Makes a guess, updates the guess to the board GUI and asks the computer player to play
+     * @param event the action event that triggers the function
      */
+    @FXML
+    void makeGuess(ActionEvent event) {
+    	String buttonLoc = ((Button) event.getSource()).getId();
+      	int y = Integer.parseInt(String.valueOf(buttonLoc.substring(6,8)));
+      	y -= 10;
+    	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(8)));
+    	gameApp.getBoardTwo().checkGuess(new Point(x, y));
+    	gameApp.getPlayerOne().getOpponent().play();
+    }
+
     @FXML
     void rotatePlacedShip(ActionEvent event) {
-    	currentShipRotate += 90;
-    	
-    	if (currentShipRotate == 360) {
-    		currentShipRotate = 0;
-    	}
-    	if (currentShipRotate == 0) {
-    		shipDirectionLabel.setText("Ship Direction: UP");
-    	}
-    	else if (currentShipRotate == 90) {
-    		shipDirectionLabel.setText("Ship Direction: LEFT");
-    	}
-    	else if (currentShipRotate == 180) {
-    		shipDirectionLabel.setText("Ship Direction: DOWN");//TODO ask Dillon why this orients the ships as if they were facing 
-    		//up like in shipRotation === 0. 
-    	}
-    	else if (currentShipRotate == 270){
-    		shipDirectionLabel.setText("Ship Direction: RIGHT");
-    		
-    	}
-    	
-
+    	//method for rotating ship
     	
     }
     
-	
-    //activates on any button clicked during ship setup
-    /**
-     * @param event: when a button on a board of type GridPane is pressed, will grab the grid index of the 
-     * pressed button from the button ID (which corresponds to the grid location). 
-     * 
-     * Iterates through the ship types from largest to smallest using numShips.
-     * 
-     * Disables the Rotation button and label when the last ship is placed.
-     * 
-     * Determines if the points a ship is about to be placed in are valid or not, throws exception to the 
-     * class that calls the function. 
-     */
+	/**
+	 * Places a ship with origin at the buttons location
+	 * @param event the action event that triggered the method
+	 */
     @FXML
-    void putShipDown(ActionEvent event) { // TODO throw an exception here for overlapping ship placement?
-    	
-    	//setting up ship type for the rest of the method to use. Iterating through based on numShips.
+    void putShipDown(ActionEvent event) {
     	ShipType type = ShipType.CARRIER;
     	
     	if (numShips == 1) {
     		type = ShipType.BATTLESHIP;
     	}
+    	
 		if (numShips == 2) {
 			type = ShipType.CRUISER;	
 		}
+		
 		if (numShips == 3) {
 			 type = ShipType.SUBMARINE;
 		}
+		
 		if (numShips == 4) {
 			 type = ShipType.DESTROYER;
-			 // sub-function on last ship placed will remove the rotate ship button and label
-			 shipDirectionLabel.setVisible(false);
-			 rotateButton.setVisible(false);
-			 rotateButton.setDisable(true);	
+			
 		}
+		
 		if (numShips == 5) {
     		return;
     	}
 		
-		//declare boolean for the valid placement of ships, true == valid, false == invalid.
-		boolean validSelection = true;
-		
-		//Grabbing the index location of the pressed button, based on the character at locations
-		//6 and 7 for the clicked button (correspond to the row and columns)
     	String buttonLoc = ((Button) event.getSource()).getId();
       	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
     	int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
-    	Ship placedShip = new Ship(type, x, y, currentShipRotate);
- 
-    	//placing ships on the correct board
+    	Ship placedShip = new Ship(type, x, y, 0);
     	gameApp.getBoardOne().addShip(placedShip);
-    	
-    	//generalized variable called shipLocations containing an array of every location on the board
-    	//currently containing a ship. 
     	Point[] shipLocations = placedShip.getShipCoords(); 
-    
-    	Button buttonToChange = null;
-
-    	//for loop determining if the placement of every segment of the points in ship is valid.
     	for (Point p: shipLocations) {
-    		System.out.println("for loop 1");
     		int pointX = p.getX();
     		int pointY = p.getY();
-    		buttonToChange = getButton(pointX,pointY);
-    		if (buttonToChange.isDisabled()) {
-    			System.out.println("button sucks");
-    			validSelection = false;
-    			// Here is where the exception would be thrown I guess, we could solve it with a while loop where the
-    			// function is called in the Player(?) class. it also needs to move back one iteration on numShips. 
-    		}
-	    	
+    		Button buttonToChange = getButton(pointX,pointY);
+    		buttonToChange.setStyle("-fx-background-color: black;");
     	}
-    	// for loop that runs when the previous for loop determines all the points are valid to place a ship.
-    	if (validSelection == true) {
-	    	for (Point p: shipLocations) {
-	    		System.out.println("for loop 2");
-	    		int pointX = p.getX();
-	    		int pointY = p.getY();
-	    		buttonToChange = getButton(pointX,pointY);
-	    		buttonToChange.setDisable(true);
-		    	buttonToChange.setStyle("-fx-background-color: black; ");
-	    	}
-    		
-    	}
-    	
-		numShips++;
+    	numShips++;
     }
     
-    
-    /**
-     * @param x : X coordinates of the GridPane that you are trying to get the button from.
-     * @param y : Y coordinates of the GridPane that you are trying to get the button from.
-     * @return Returns the button object from the X and Y coordinates of the node on a GridPane 
-     */
+    //Returns the button object in the player's grid
     private Button getButton(int x, int y) {
     	Button result = null;
     	ObservableList<Node> children = boardOneGrid.getChildren();
-    	for (Node gridXY: children) {
-    		if (GridPane.getRowIndex(gridXY)==y && GridPane.getColumnIndex(gridXY)==x) {
-    			result = (Button)gridXY;
+    	for (Node node: children) {
+    		if (GridPane.getRowIndex(node)==y && GridPane.getColumnIndex(node)==x) {
+    			result = (Button)node;
     			break;
     		}
     	}
     	
     	return result;
     }
-
-    @FXML
-    void button101click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button102click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button103click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button104click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button105click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button106click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button107click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button108click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button109click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button110click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button111click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button112click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button113click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button114click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button115click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button116click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button117click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button118click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button119click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button120click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button121click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button122click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button123click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button124click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button125click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button126click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button127click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button128click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button129click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button130click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button131click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button132click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button133click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button134click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button135click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button136click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button137click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button138click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button139click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button140click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button141click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button142click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button143click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button144click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button145click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button146click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button147click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button148click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button149click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button150click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button151click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button152click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button153click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button154click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button155click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button156click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button157click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button158click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button159click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button160click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button161click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button162click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button163click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button164click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button165click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button166click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button167click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button168click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button169click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button170click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button171click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button172click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button173click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button174click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button175click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button176click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button177click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button178click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button179click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button180click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button181click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button182click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button183click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button184click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button185click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button186click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button187click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button188click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button189click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button190click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button191click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button192click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button193click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button194click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button195click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button196click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button197click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button198click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button199click(ActionEvent event) {
-
-    }
-
+    
+    //Returns the button object in the opponent's grid
+    private Button getButtonOpponent(int x, int y) {
+    	Button result = null;
+    	ObservableList<Node> children = boardTwoGrid.getChildren();
+    	for (Node node: children) {
+    		if (GridPane.getRowIndex(node)==y && GridPane.getColumnIndex(node)==x) {
+    			result = (Button)node;
+    			break;
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    /**
+     * Initializes the controller
+     * Checks that all objects were injected correctly
+     * Initializes the buttons' default color
+     */
     @FXML
     void initialize() {
     	assert button25 != null : "fx:id=\"button25\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
@@ -1400,7 +837,6 @@ public class SingleplayerGameController {
         assert button39 != null : "fx:id=\"button39\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button30 != null : "fx:id=\"button30\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert rotateButton != null : "fx:id=\"RotateButton\" was not injected: check your FXML file 'ShipSetupVeiwTest.fxml'.";
-        assert shipDirectionLabel != null : "fx:id=\"shipDirectionLabel\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         //end of board 1
     	
         assert button119 != null : "fx:id=\"button119\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
@@ -1503,12 +939,42 @@ public class SingleplayerGameController {
         assert button172 != null : "fx:id=\"button172\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button171 != null : "fx:id=\"button171\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button170 != null : "fx:id=\"button170\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
-
+        
+        //Sets default colour for the buttons
+        for(int i = 0; i < 10; i++) {
+        	for(int j = 0; j < 10; j++) {
+        		Button button = getButton(i, j);
+        		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
+        				+ "-fx-border-color: black");
+        		button = getButtonOpponent(i, j);
+        		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
+        				+ "-fx-border-color: black");
+        	}
+        }
+        
     }
+    
+    /**
+     * Sets the color of a button on the relative grid based on whether
+     * the guess was a hit or a miss
+     * @param x x coordinate of button
+     * @param y y coordinate of button
+     * @param hit whether or not the guess was a hit or miss
+     * @param player whether the guess belongs to the player or computer
+     */
+    public void setGuess(int x, int y, boolean hit, boolean player) {
+    	Button buttonToChange = getButton(x, y);
+    	if(!player)
+    		buttonToChange = getButtonOpponent(x, y);
+    	String color = (hit ? "red" : "blue");
+    	buttonToChange.setStyle("-fx-background-color: " + color + ";");
+    }
+    
+    /**
+     * Setter for game app object
+     * @param app the game application object
+     */
 	public void setGameApp(GameApplication app) {
 		gameApp = app;
 	}
-	
-	
-	
 }

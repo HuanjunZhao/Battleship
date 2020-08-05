@@ -1,3 +1,5 @@
+import model.ComputerPlayer;
+
 /**
  * Skeleton for Game class for battleships team battle royal
  * @author Dillon Sahadevan, UCID 30075927

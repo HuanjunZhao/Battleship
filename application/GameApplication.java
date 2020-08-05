@@ -44,12 +44,18 @@ public class GameApplication extends Application{
 	public void initializeGame(String name) {
         Player playerOne = new Player();
         playerOne.setName(new String(name));
-        ComputerPlayer computerPlayer = new ComputerPlayer();
-
-        referee = new Referee(playerOne,computerPlayer);
+        ComputerPlayer playerTwo = new ComputerPlayer();
         
-        boardOne = referee.getPlayerOne().getPlayerBoard();
-        boardTwo = referee.getComputerPlayer().getBoard();
+        //Sets all necessary relationships between classes
+        boardOne.setPlayerOwner();
+        playerOne.setPlayerBoard(boardOne);
+        playerTwo.setBoard(boardTwo);
+        playerOne.setOpponent(playerTwo);
+        playerTwo.setOpponent(playerOne);
+        referee.setPlayerOne(playerOne);
+        referee.setComputerPlayer(playerTwo);
+        
+        //Get the controller and set relationships for controller
         BorderPane root = new BorderPane();
         FXMLLoader loader =  new FXMLLoader();
         try {
@@ -60,12 +66,22 @@ public class GameApplication extends Application{
         }
         SingleplayerGameController controller = (SingleplayerGameController)loader.getController();
         controller.setGameApp(this);
+        boardOne.setSingleplayerGameController(controller);
+        boardTwo.setSingleplayerGameController(controller);
+        
+        //Show scene
         Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
-        //referee.runTheGUIGame();
+        referee.runTheGame();
     }
 	
+	/**
+	 * Initializes game for local multiplayer
+	 * NOT FUNCTIONAL YET
+	 * @param name1 name of first player
+	 * @param name2 name of second player
+	 */
 	public void initializeGame(String name1, String name2) {
 		Player playerOne = new Player();
 		playerOne.setName(name1);
@@ -73,6 +89,10 @@ public class GameApplication extends Application{
 		playerTwo.setName(name2);
 	}
 	
+	/**
+	 * Start function
+	 * Initializes view with main menu
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -84,13 +104,21 @@ public class GameApplication extends Application{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Set controller relationship
 		GameController controller = (GameController)loader.getController();
 		controller.setGameApp(this);
+		
+		//Show scene
 		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 	
+	/**
+	 * Singleplayer initialisation method
+	 * Gets necessary information to start a singleplayer game
+	 */
 	public void initialiseSingleplayer() {
 		BorderPane root = new BorderPane();
 		FXMLLoader loader =  new FXMLLoader();
@@ -99,13 +127,22 @@ public class GameApplication extends Application{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Show scene
 		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		//Set controller relationship
 		SingleplayerInitController controller = (SingleplayerInitController)loader.getController();
 		controller.setGameApp(this);
 	}
 	
+	/**
+	 * Multiplayer initialisation method
+	 * Gets necessary information to start a local multiplayer game
+	 * NOT FUNCTIONAL
+	 */
 	public void initialiseMultiplayer() {
 		BorderPane root = new BorderPane();
 		FXMLLoader loader =  new FXMLLoader();
@@ -114,21 +151,37 @@ public class GameApplication extends Application{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Show scene
 		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		//Set controller relationship
 		MultiplayerInitController controller = (MultiplayerInitController)loader.getController();
 		controller.setGameApp(this);
 	}
 	
+	/**
+	 * Getter for player's board
+	 * @return player's board object
+	 */
 	public Board getBoardOne() {
 		return boardOne;
 	}
 	
+	/**
+	 * Getter for computer's board
+	 * @return computer's board object
+	 */
 	public Board getBoardTwo() {
 		return boardTwo;
 	}
 	
+	/**
+	 * Getter for player object
+	 * @return player object
+	 */
 	public Player getPlayerOne() {
 		return referee.getPlayerOne();
 	}

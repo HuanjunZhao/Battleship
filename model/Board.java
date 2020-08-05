@@ -1,9 +1,16 @@
+package model;
+
 /**
  * Skeleton for board class for battleships team battle royal
  * @author Joshua Fine, UCID 30011448
  * @version 1.0
  */
+
+import application.SingleplayerGameController;
+
 public class Board {
+	
+	private boolean playerOwner;
 	
 	private char[][] grid; 
 							
@@ -11,14 +18,29 @@ public class Board {
 	
 	private int numShips;
 	
+	SingleplayerGameController gameController;
+	
+	
+	/**
+	 * Returns the grid of characters that make up the board
+	 * @return
+	 */
 	public char[][] getGrid(){
 		return grid; 
+	}
+	
+	/**
+	 * Sets the board to be owned by a player
+	 */
+	public void setPlayerOwner() {
+		playerOwner = true;
 	}
 	
 	/**
 	 * Creates 2D array for the board used for the text base application
 	 */
 	public Board() {
+		playerOwner = false;
 		grid = new char[10][10];
 		for (int i = 0; i <10; i++) {
 			for (int j=0; j<10; j++) {
@@ -26,7 +48,14 @@ public class Board {
 			}
 		}
 		ships = new Ship[5];
-
+	}
+	
+	/**
+	 * Setter for game controller for button updates
+	 * @param controller the game controller
+	 */
+	public void setSingleplayerGameController(SingleplayerGameController controller) {
+		gameController = controller;
 	}
 	
 	/**
@@ -46,9 +75,11 @@ public class Board {
 				boolean returnResult = ship.attemptHit(new Point(colGuess, rowGuess));
 				if(returnResult) {
 					grid[colGuess][rowGuess] = 'X';
+					gameController.setGuess(colGuess, rowGuess, true, playerOwner);
 					return true;
 				}
 			}
+			gameController.setGuess(colGuess, rowGuess, false, playerOwner);
 			grid[colGuess][rowGuess] = '?';
 		} else {
 			System.out.println("Not a space on the board!");

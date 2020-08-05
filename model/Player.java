@@ -1,9 +1,13 @@
+package model;
+
 /**
  * Battleship (Player Class): Beta
  * @author Taimur Rizwan
  *UCID: 30078941
  */
 import java.util.Scanner;
+
+import model.ComputerPlayer;
 
 
 
@@ -126,7 +130,17 @@ public class Player {
 		
 	}
 	
-
+	public Ship[] getShips() {
+		return ships;
+	}
+	
+	/**
+	 * Getter for the opponent
+	 * @return the computer player object
+	 */
+	public ComputerPlayer getOpponent() {
+		return opponent;
+	}
 	
 	@SuppressWarnings("resource")
 	/**

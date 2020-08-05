@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Skeleton for Point class for battleships team battle royal
  * @author Dillon Sahadevan, UCID 30075927

@@ -1,9 +1,17 @@
+package model;
+
 /**
  * AI data for a computer player.
  * @author Tristan Richardson
  *@version Alpha
  */
 import java.util.Random;
+
+import model.Board;
+import model.Player;
+import model.Point;
+import model.Ship;
+import model.ShipType;
 public class ComputerPlayer{
 	
 	private String name;
@@ -46,12 +54,14 @@ public class ComputerPlayer{
 		Ship cruiser;
 		Ship submarine;
 		Ship destroyer;
+		boolean result;
 		do {
 			do {
 				carrier = new Ship(ShipType.CARRIER, guess(), guessRotation());
 			} while(carrier.getLength() == -1);
 			ships[0] = carrier;
-		} while(!board.addShip(carrier));
+			result = board.addShip(carrier);
+		} while(!result);
 		do {
 			do {
 				battleship = new Ship(ShipType.BATTLESHIP, guess(), guessRotation());
@@ -81,7 +91,7 @@ public class ComputerPlayer{
 	}
 
 	public void play() {
-		if(opponent.getPlayerBoard().checkGuess(new Point(guess()))) {
+		if(opponent.getPlayerBoard().checkGuess(guess())) {
 			System.out.println("Computer Hit!");
 		} else {
 			System.out.println("Computer Missed!");

@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Skeleton for ship class for battleships team battle royal
  * @author Dillon Sahadevan, UCID 30075927
@@ -237,7 +239,7 @@ public class Ship {
 		else if(shipType == ShipType.CRUISER)
 			type = "Cruiser";
 		else if(shipType == ShipType.DESTROYER)
-			type = "Destoryer";
+			type = "Destroyer";
 		else if(shipType == ShipType.SUBMARINE)
 			type = "Submarine";
 		return type;
