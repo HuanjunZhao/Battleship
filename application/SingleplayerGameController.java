@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import model.*;
 
@@ -19,6 +20,7 @@ public class SingleplayerGameController {
 	boolean shipHideHere;
 	boolean repeatClick = false;
 	private int numShips;
+	private int currentShipRotate = 0;
 
     @FXML
     private ResourceBundle resources;
@@ -28,6 +30,9 @@ public class SingleplayerGameController {
     
     @FXML
     private GridPane boardOneGrid;
+    
+    @FXML
+    private Label shipDirectionLabel;
     
     @FXML
     private GridPane boardTwoGrid;
@@ -651,10 +656,35 @@ public class SingleplayerGameController {
     	gameApp.getPlayerOne().getOpponent().play();
     }
 
+    /**
+     * Method to rotate the next placed ship
+     * @param event: when the "rotate" button clicked will add 90 to the int that determines ship rotation 
+     * before placement. Displays the direction the ship is facing
+     */
     @FXML
     void rotatePlacedShip(ActionEvent event) {
-    	//method for rotating ship
-    	
+        currentShipRotate += 90;
+        
+        if (currentShipRotate == 360) {
+            currentShipRotate = 0;
+        }
+        if (currentShipRotate == 0) {
+            shipDirectionLabel.setText("Ship Direction: UP");
+        }
+        else if (currentShipRotate == 90) {
+            shipDirectionLabel.setText("Ship Direction: LEFT");
+        }
+        else if (currentShipRotate == 180) {
+            shipDirectionLabel.setText("Ship Direction: DOWN");//TODO ask Dillon why this orients the ships as if they were facing 
+            //up like in shipRotation === 0. 
+        }
+        else if (currentShipRotate == 270){
+            shipDirectionLabel.setText("Ship Direction: RIGHT");
+            
+        }
+        
+
+        
     }
     
 	/**
@@ -662,43 +692,79 @@ public class SingleplayerGameController {
 	 * @param event the action event that triggered the method
 	 */
     @FXML
-    void putShipDown(ActionEvent event) {
-    	ShipType type = ShipType.CARRIER;
-    	
-    	if (numShips == 1) {
-    		type = ShipType.BATTLESHIP;
-    	}
-    	
-		if (numShips == 2) {
-			type = ShipType.CRUISER;	
-		}
-		
-		if (numShips == 3) {
-			 type = ShipType.SUBMARINE;
-		}
-		
-		if (numShips == 4) {
-			 type = ShipType.DESTROYER;
-			
-		}
-		
-		if (numShips == 5) {
-    		return;
-    	}
-		
-    	String buttonLoc = ((Button) event.getSource()).getId();
-      	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
-    	int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
-    	Ship placedShip = new Ship(type, x, y, 0);
-    	gameApp.getBoardOne().addShip(placedShip);
-    	Point[] shipLocations = placedShip.getShipCoords(); 
-    	for (Point p: shipLocations) {
-    		int pointX = p.getX();
-    		int pointY = p.getY();
-    		Button buttonToChange = getButton(pointX,pointY);
-    		buttonToChange.setStyle("-fx-background-color: black;");
-    	}
-    	numShips++;
+    void putShipDown(ActionEvent event) { // TODO throw an exception here for overlapping ship placement?
+        
+        //setting up ship type for the rest of the method to use. Iterating through based on numShips.
+        ShipType type = ShipType.CARRIER;
+        
+        if (numShips == 1) {
+            type = ShipType.BATTLESHIP;
+        }
+        if (numShips == 2) {
+            type = ShipType.CRUISER;    
+        }
+        if (numShips == 3) {
+             type = ShipType.SUBMARINE;
+        }
+        if (numShips == 4) {
+             type = ShipType.DESTROYER;
+             // sub-function on last ship placed will remove the rotate ship button and label
+             shipDirectionLabel.setVisible(false);
+             rotateButton.setVisible(false);
+             rotateButton.setDisable(true); 
+        }
+        if (numShips == 5) {
+            return;
+        }
+        
+        //declare boolean for the valid placement of ships, true == valid, false == invalid.
+        boolean validSelection = true;
+        
+        //Grabbing the index location of the pressed button, based on the character at locations
+        //6 and 7 for the clicked button (correspond to the row and columns)
+        String buttonLoc = ((Button) event.getSource()).getId();
+        int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
+        int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
+        Ship placedShip = new Ship(type, x, y, currentShipRotate);
+ 
+        //placing ships on the correct board
+        if(gameApp.getBoardOne().addShip(placedShip) == false)
+        	numShips--;
+        
+        //generalized variable called shipLocations containing an array of every location on the board
+        //currently containing a ship. 
+        Point[] shipLocations = placedShip.getShipCoords(); 
+    
+        Button buttonToChange = null;
+
+        //for loop determining if the placement of every segment of the points in ship is valid.
+        for (Point p: shipLocations) {
+            System.out.println("for loop 1");
+            int pointX = p.getX();
+            int pointY = p.getY();
+            buttonToChange = getButton(pointX,pointY);
+            if (buttonToChange.isDisabled()) {
+                System.out.println("button sucks");
+                validSelection = false;
+                // Here is where the exception would be thrown I guess, we could solve it with a while loop where the
+                // function is called in the Player(?) class. it also needs to move back one iteration on numShips. 
+            }
+            
+        }
+        // for loop that runs when the previous for loop determines all the points are valid to place a ship.
+        if (validSelection == true) {
+            for (Point p: shipLocations) {
+                System.out.println("for loop 2");
+                int pointX = p.getX();
+                int pointY = p.getY();
+                buttonToChange = getButton(pointX,pointY);
+                buttonToChange.setDisable(true);
+                buttonToChange.setStyle("-fx-background-color: black; ");
+            }
+            
+        }
+        
+        numShips++;
     }
     
     //Returns the button object in the player's grid
