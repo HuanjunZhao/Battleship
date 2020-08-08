@@ -675,7 +675,7 @@ public class SingleplayerGameController {
             shipDirectionLabel.setText("Ship Direction: LEFT");
         }
         else if (currentShipRotate == 180) {
-            shipDirectionLabel.setText("Ship Direction: DOWN");//TODO ask Dillon why this orients the ships as if they were facing 
+            shipDirectionLabel.setText("Ship Direction: DOWN");
             //up like in shipRotation === 0. 
         }
         else if (currentShipRotate == 270){
@@ -692,7 +692,7 @@ public class SingleplayerGameController {
 	 * @param event the action event that triggered the method
 	 */
     @FXML
-    void putShipDown(ActionEvent event) { // TODO throw an exception here for overlapping ship placement?
+    void putShipDown(ActionEvent event) { 
         
         //setting up ship type for the rest of the method to use. Iterating through based on numShips.
         ShipType type = ShipType.CARRIER;
@@ -712,6 +712,13 @@ public class SingleplayerGameController {
              shipDirectionLabel.setVisible(false);
              rotateButton.setVisible(false);
              rotateButton.setDisable(true); 
+             for(int i = 0; i < 10; i++) {
+             	for(int j = 0; j < 10; j++) {
+             		Button button = getButtonOpponent(i, j);
+             		
+             		button.setDisable(false); 
+             	}
+             }
         }
         if (numShips == 5) {
             return;
@@ -739,12 +746,12 @@ public class SingleplayerGameController {
 
         //for loop determining if the placement of every segment of the points in ship is valid.
         for (Point p: shipLocations) {
-            System.out.println("for loop 1");
+            //System.out.println("for loop 1");
             int pointX = p.getX();
             int pointY = p.getY();
             buttonToChange = getButton(pointX,pointY);
             if (buttonToChange.isDisabled()) {
-                System.out.println("button sucks");
+               // System.out.println("button sucks");
                 validSelection = false;
                 // Here is where the exception would be thrown I guess, we could solve it with a while loop where the
                 // function is called in the Player(?) class. it also needs to move back one iteration on numShips. 
@@ -754,7 +761,7 @@ public class SingleplayerGameController {
         // for loop that runs when the previous for loop determines all the points are valid to place a ship.
         if (validSelection == true) {
             for (Point p: shipLocations) {
-                System.out.println("for loop 2");
+                //System.out.println("for loop 2");
                 int pointX = p.getX();
                 int pointY = p.getY();
                 buttonToChange = getButton(pointX,pointY);
@@ -772,7 +779,7 @@ public class SingleplayerGameController {
     	Button result = null;
     	ObservableList<Node> children = boardOneGrid.getChildren();
     	for (Node node: children) {
-    		if (GridPane.getRowIndex(node)==y && GridPane.getColumnIndex(node)==x) {
+    		if (GridPane.getRowIndex(node) == y && GridPane.getColumnIndex(node) == x) {
     			result = (Button)node;
     			break;
     		}
@@ -1013,6 +1020,7 @@ public class SingleplayerGameController {
         		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
         				+ "-fx-border-color: black");
         		button = getButtonOpponent(i, j);
+        		getButtonOpponent(i,j).setDisable(true);
         		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
         				+ "-fx-border-color: black");
         	}
