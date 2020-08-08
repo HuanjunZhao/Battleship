@@ -59,12 +59,14 @@ public class GameApplication extends Application{
         BorderPane root = new BorderPane();
         FXMLLoader loader =  new FXMLLoader();
         try {
-            root = (BorderPane) loader.load(new FileInputStream("src/view/SingleplayerGameView.fxml"));
+            root = (BorderPane) loader.load(
+            		new FileInputStream("src/view/SingleplayerGameView.fxml"));
            
         } catch (IOException e) {
             e.printStackTrace();
         }
-        SingleplayerGameController controller = (SingleplayerGameController)loader.getController();
+        SingleplayerGameController controller = 
+        		(SingleplayerGameController)loader.getController();
         controller.setGameApp(this);
         boardOne.setSingleplayerGameController(controller);
         boardTwo.setSingleplayerGameController(controller);
@@ -99,14 +101,16 @@ public class GameApplication extends Application{
 		BorderPane root = new BorderPane();
 		FXMLLoader loader =  new FXMLLoader();
 		try {
-			root = (BorderPane) loader.load(new FileInputStream("src/view/GameView.fxml"));
+			root = (BorderPane) loader.load(
+					new FileInputStream("src/view/GameView.fxml"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		//Set controller relationship
-		GameController controller = (GameController)loader.getController();
+		GameController controller = 
+				(GameController)loader.getController();
 		controller.setGameApp(this);
 		
 		//Show scene
@@ -123,7 +127,8 @@ public class GameApplication extends Application{
 		BorderPane root = new BorderPane();
 		FXMLLoader loader =  new FXMLLoader();
 		try {
-			root = (BorderPane) loader.load(new FileInputStream("src/view/SingleplayerInitView.fxml"));
+			root = (BorderPane) loader.load(
+					new FileInputStream("src/view/SingleplayerInitView.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -134,7 +139,8 @@ public class GameApplication extends Application{
 		primaryStage.show();
 		
 		//Set controller relationship
-		SingleplayerInitController controller = (SingleplayerInitController)loader.getController();
+		SingleplayerInitController controller = 
+				(SingleplayerInitController)loader.getController();
 		controller.setGameApp(this);
 	}
 	
@@ -147,7 +153,8 @@ public class GameApplication extends Application{
 		BorderPane root = new BorderPane();
 		FXMLLoader loader =  new FXMLLoader();
 		try {
-			root = (BorderPane) loader.load(new FileInputStream("src/view/MultiplayerInitView.fxml"));
+			root = (BorderPane) loader.load(
+					new FileInputStream("src/view/MultiplayerInitView.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -158,7 +165,8 @@ public class GameApplication extends Application{
 		primaryStage.show();
 		
 		//Set controller relationship
-		MultiplayerInitController controller = (MultiplayerInitController)loader.getController();
+		MultiplayerInitController controller = 
+				(MultiplayerInitController)loader.getController();
 		controller.setGameApp(this);
 	}
 	

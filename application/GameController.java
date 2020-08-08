@@ -27,20 +27,36 @@ public class GameController {
     @FXML
     private Button multiplayerButton;
 
+    /**
+     * Setter for the game application object
+     * @param app the GameApplication object
+     */
     public void setGameApp(GameApplication app) {
     	gameApp = app;
     }
     
+    /**
+     * Method that starts singleplayer initialization
+     * @param event the action that triggered the function call
+     */
     @FXML
     void singleplayerInitialise(ActionEvent event) {
     	gameApp.initialiseSingleplayer();
     }
     
+    /**
+     * Method that starts multiplayer initialization
+     * @param event the action that triggered the function call
+     */
     @FXML
     void multiplayerInitialise(ActionEvent event) {
     	gameApp.initialiseMultiplayer();
     }
     
+    /**
+     * Initializes the fxml file
+     * Checks everything was injected successfully
+     */
     @FXML
     void initialize() {
         assert borderPane != null : "fx:id=\"borderPane\" was not injected: check your FXML file 'GameView.fxml'.";

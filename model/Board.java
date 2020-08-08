@@ -75,11 +75,14 @@ public class Board {
 				boolean returnResult = ship.attemptHit(new Point(colGuess, rowGuess));
 				if(returnResult) {
 					grid[colGuess][rowGuess] = 'X';
+					//Provide feedback to the player
 					if(gameController != null)
 						gameController.setGuess(colGuess, rowGuess, true, playerOwner);
 					return true;
 				}
 			}
+			
+			//Provide feedback to the player
 			if(gameController != null)
 				gameController.setGuess(colGuess, rowGuess, false, playerOwner);
 			grid[colGuess][rowGuess] = '?';

@@ -24,15 +24,28 @@ public class SingleplayerInitController {
     @FXML
     private Button continueButton;
 
+    /**
+     * Setter for the game application object
+     * @param app the GameApplication object
+     */
     public void setGameApp(GameApplication app) {
     	gameApp = app;
     }
     
+    /**
+     * Provides the game application with the entered name
+     * Initializes the game through game application
+     * @param event
+     */
     @FXML
     void continueClicked(ActionEvent event) {
     	gameApp.initializeGame(nameTextField.getText());
     }
     
+    /**
+     * Initializes the fxml file
+     * Checks everything was injected successfully
+     */
     @FXML
     void initialize() {
         assert nameTextField != null : "fx:id=\"nameTextField\" was not injected: check your FXML file 'SingleplayerInitView.fxml'.";

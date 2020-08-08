@@ -60,12 +60,6 @@ public class Point {
 		yCoord = y;
 	}
 	
-	public void swapCoordinates() {
-		int temp = xCoord;
-		xCoord = yCoord;
-		yCoord = temp;
-	}
-	
 	/**
 	 * A function to check if 2 points are equal
 	 * @param p the other point to check
