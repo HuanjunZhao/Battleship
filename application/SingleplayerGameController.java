@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.*;
 
@@ -682,9 +683,73 @@ public class SingleplayerGameController {
             shipDirectionLabel.setText("Ship Direction: RIGHT");
             
         }
+    }
+    
+    /**
+     * Method to clear buttons changed by preview
+     * @param event Mouse exit trigger
+     */
+    @FXML
+    void clearPreview(MouseEvent event) {
+    	for(int i = 0; i < 10; i++) {
+    		for(int j = 0; j < 10; j++) {
+    			Button buttonToChange = getButton(i, j);
+    			String style = buttonToChange.getStyle();
+    			if(style.contains("gray"))
+    				setStyle(buttonToChange, "mediumblue");
+    		}
+    	}
+    }
+    
+    /**
+     * Method to display a ship placement preview
+     * @param event Mouse exit trigger
+     */
+    @FXML
+    void previewShip(MouseEvent event) {
+    	
+    	//setting up ship type for the rest of the method to use. Iterating through based on numShips.
+        ShipType type = ShipType.CARRIER;
         
+        if (numShips == 1) {
+            type = ShipType.BATTLESHIP;
+        }
+        if (numShips == 2) {
+            type = ShipType.CRUISER;    
+        }
+        if (numShips == 3) {
+             type = ShipType.SUBMARINE;
+        }
+        if (numShips == 4) {
+             type = ShipType.DESTROYER;
+             // sub-function on last ship placed will remove the rotate ship button and label
+             shipDirectionLabel.setVisible(false);
+             rotateButton.setVisible(false);
+             rotateButton.setDisable(true); 
+        }
+        if (numShips == 5) {
+            return;
+        }
+        
+    	String buttonLoc = ((Button) event.getSource()).getId();
+    	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
+        int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
+        Ship previewShip = new Ship(type, x, y, currentShipRotate);
+        
+      //generalized variable called shipLocations containing an array of every location on the board
+        //currently containing a ship. 
+        Point[] shipLocations = previewShip.getShipCoords(); 
+    
+        Button buttonToChange = null;
 
-        
+        for (Point p: shipLocations) {
+            int pointX = p.getX();
+            int pointY = p.getY();
+            buttonToChange = getButton(pointX,pointY);
+            if(buttonToChange == null)
+            	break;
+            setStyle(buttonToChange, "darkgray");
+        }
     }
     
 	/**
@@ -692,7 +757,7 @@ public class SingleplayerGameController {
 	 * @param event the action event that triggered the method
 	 */
     @FXML
-    void putShipDown(ActionEvent event) { 
+    void putShipDown(ActionEvent event) { // TODO throw an exception here for overlapping ship placement?
         
         //setting up ship type for the rest of the method to use. Iterating through based on numShips.
         ShipType type = ShipType.CARRIER;
@@ -712,13 +777,6 @@ public class SingleplayerGameController {
              shipDirectionLabel.setVisible(false);
              rotateButton.setVisible(false);
              rotateButton.setDisable(true); 
-             for(int i = 0; i < 10; i++) {
-             	for(int j = 0; j < 10; j++) {
-             		Button button = getButtonOpponent(i, j);
-             		
-             		button.setDisable(false); 
-             	}
-             }
         }
         if (numShips == 5) {
             return;
@@ -746,12 +804,10 @@ public class SingleplayerGameController {
 
         //for loop determining if the placement of every segment of the points in ship is valid.
         for (Point p: shipLocations) {
-            //System.out.println("for loop 1");
             int pointX = p.getX();
             int pointY = p.getY();
             buttonToChange = getButton(pointX,pointY);
             if (buttonToChange.isDisabled()) {
-               // System.out.println("button sucks");
                 validSelection = false;
                 // Here is where the exception would be thrown I guess, we could solve it with a while loop where the
                 // function is called in the Player(?) class. it also needs to move back one iteration on numShips. 
@@ -761,14 +817,12 @@ public class SingleplayerGameController {
         // for loop that runs when the previous for loop determines all the points are valid to place a ship.
         if (validSelection == true) {
             for (Point p: shipLocations) {
-                //System.out.println("for loop 2");
                 int pointX = p.getX();
                 int pointY = p.getY();
                 buttonToChange = getButton(pointX,pointY);
                 buttonToChange.setDisable(true);
-                buttonToChange.setStyle("-fx-background-color: black; ");
+                setStyle(buttonToChange, "black");
             }
-            
         }
         
         numShips++;
@@ -779,7 +833,7 @@ public class SingleplayerGameController {
     	Button result = null;
     	ObservableList<Node> children = boardOneGrid.getChildren();
     	for (Node node: children) {
-    		if (GridPane.getRowIndex(node) == y && GridPane.getColumnIndex(node) == x) {
+    		if (GridPane.getRowIndex(node)==y && GridPane.getColumnIndex(node)==x) {
     			result = (Button)node;
     			break;
     		}
@@ -1017,15 +1071,19 @@ public class SingleplayerGameController {
         for(int i = 0; i < 10; i++) {
         	for(int j = 0; j < 10; j++) {
         		Button button = getButton(i, j);
-        		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
-        				+ "-fx-border-color: black");
+        		setStyle(button, "mediumblue");
         		button = getButtonOpponent(i, j);
-        		getButtonOpponent(i,j).setDisable(true);
-        		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
-        				+ "-fx-border-color: black");
+        		setStyle(button, "mediumblue");
         	}
         }
         
+    }
+    
+    //Helper function to set button style
+    private void setStyle(Button buttonToChange, String color) {
+    	buttonToChange.setStyle("-fx-background-radius: 0px;" +
+    			"-fx-background-color: " + color +
+        		"; -fx-border-color: black");
     }
     
     /**
@@ -1040,8 +1098,8 @@ public class SingleplayerGameController {
     	Button buttonToChange = getButton(x, y);
     	if(!player)
     		buttonToChange = getButtonOpponent(x, y);
-    	String color = (hit ? "red" : "blue");
-    	buttonToChange.setStyle("-fx-background-color: " + color + ";");
+    	String color = (hit ? "red" : "aqua");
+    	setStyle(buttonToChange, color);
     }
     
     /**
