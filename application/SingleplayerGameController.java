@@ -1,12 +1,16 @@
 package application;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
-
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import model.*;
 
 public class SingleplayerGameController {
@@ -15,12 +19,329 @@ public class SingleplayerGameController {
 	
 //	private static Point pointUserChoose;
 	boolean shipHideHere;
-	boolean repeatClick = false;
+	//boolean repeatClick = false;
+	private int numShips;
+	private int currentShipRotate = 0;
+
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
+    
+    @FXML
+    private GridPane boardOneGrid;
+    
+    @FXML
+    private Label shipDirectionLabel;
+    
+    @FXML
+    private GridPane boardTwoGrid;
+    
+    @FXML
+    private Button rotateButton;
+    
+    @FXML
+    private Button button25;
+
+    @FXML
+    private Button button24;
+
+    @FXML
+    private Button button27;
+
+    @FXML
+    private Button button26;
+
+    @FXML
+    private Button button21;
+
+    @FXML
+    private Button button20;
+
+    @FXML
+    private Button button23;
+
+    @FXML
+    private Button button22;
+
+    @FXML
+    private Button button29;
+
+    @FXML
+    private Button button28;
+
+    @FXML
+    private Button button14;
+
+    @FXML
+    private Button button13;
+
+    @FXML
+    private Button button16;
+
+    @FXML
+    private Button button15;
+
+    @FXML
+    private Button button10;
+
+    @FXML
+    private Button button98;
+
+    @FXML
+    private Button button97;
+
+    @FXML
+    private Button button12;
+
+    @FXML
+    private Button button11;
+
+    @FXML
+    private Button button99;
+
+    @FXML
+    private Button button18;
+
+    @FXML
+    private Button button17;
+
+    @FXML
+    private Button button19;
+
+    @FXML
+    private Button button94;
+
+    @FXML
+    private Button button93;
+
+    @FXML
+    private Button button96;
+
+    @FXML
+    private Button button95;
+
+    @FXML
+    private Button button90;
+
+    @FXML
+    private Button button92;
+
+    @FXML
+    private Button button91;
+
+    @FXML
+    private Button button03;
+
+    @FXML
+    private Button button02;
+
+    @FXML
+    private Button button05;
+
+    @FXML
+    private Button button04;
+
+    @FXML
+    private Button button87;
+
+    @FXML
+    private Button button86;
+
+    @FXML
+    private Button button01;
+
+    @FXML
+    private Button button89;
+
+    @FXML
+    private Button button00;
+
+    @FXML
+    private Button button88;
+
+    @FXML
+    private Button button07;
+
+    @FXML
+    private Button button06;
+
+    @FXML
+    private Button button09;
+
+    @FXML
+    private Button button08;
+
+    @FXML
+    private Button button83;
+
+    @FXML
+    private Button button82;
+
+    @FXML
+    private Button button85;
+
+    @FXML
+    private Button button84;
+
+    @FXML
+    private Button button81;
+
+    @FXML
+    private Button button80;
+
+    @FXML
+    private Button button79;
+
+    @FXML
+    private Button button76;
+
+    @FXML
+    private Button button75;
+
+    @FXML
+    private Button button78;
+
+    @FXML
+    private Button button77;
+
+    @FXML
+    private Button button72;
+
+    @FXML
+    private Button button71;
+
+    @FXML
+    private Button button74;
+
+    @FXML
+    private Button button73;
+
+    @FXML
+    private Button button70;
+
+    @FXML
+    private Button button69;
+
+    @FXML
+    private Button button68;
+
+    @FXML
+    private Button button65;
+
+    @FXML
+    private Button button64;
+
+    @FXML
+    private Button button67;
+
+    @FXML
+    private Button button66;
+
+    @FXML
+    private Button button61;
+
+    @FXML
+    private Button button60;
+
+    @FXML
+    private Button button63;
+
+    @FXML
+    private Button button62;
+
+    @FXML
+    private Button button58;
+
+    @FXML
+    private Button button57;
+
+    @FXML
+    private Button button59;
+
+    @FXML
+    private Button button54;
+
+    @FXML
+    private Button button53;
+
+    @FXML
+    private Button button56;
+
+    @FXML
+    private Button button55;
+
+    @FXML
+    private Button button50;
+
+    @FXML
+    private Button button52;
+
+    @FXML
+    private Button button51;
+
+    @FXML
+    private Button button47;
+
+    @FXML
+    private Button button46;
+
+    @FXML
+    private Button button49;
+
+    @FXML
+    private Button button48;
+
+    @FXML
+    private Button button43;
+
+    @FXML
+    private Button button42;
+
+    @FXML
+    private Button button45;
+
+    @FXML
+    private Button button44;
+
+    @FXML
+    private Button button41;
+
+    @FXML
+    private Button button40;
+
+    @FXML
+    private Button button36;
+
+    @FXML
+    private Button button35;
+
+    @FXML
+    private Button button38;
+
+    @FXML
+    private Button button37;
+
+    @FXML
+    private Button button32;
+
+    @FXML
+    private Button button31;
+
+    @FXML
+    private Button button34;
+
+    @FXML
+    private Button button33;
+
+    @FXML
+    private Button button39;
+
+    @FXML
+    private Button button30;
+    
+    //----------------------------------end of board 1 buttons
 
     @FXML
     private Button button119;
@@ -322,527 +643,391 @@ public class SingleplayerGameController {
     @FXML
     private Button button170;
     
+    @FXML
+    private Button randomPlacedButton;
 
-    private void guessOutcome(Button buttonUserChoose, Point thisPoint) {
-    	//pointUserChoose = thisPoint;
-    	shipHideHere = gameApp.getBoardTwo().checkGuess(thisPoint);
-    	if (shipHideHere == false) {
-    		button100.setStyle("-fx-background-color: #ff0000");
-    	}
-    	else {
-    		button100.setStyle("-fx-background-color: #04ff3f");
-    	}	
-    	repeatClick = true;
+    /**
+     * Place the ship randomly for user
+     * @param event the action event that triggers the function
+     */
+    @FXML
+    void randomShipPlaced(ActionEvent event) {
+
+        //setting up ship type for the rest of the method to use. Iterating through based on numShips.
+        ShipType type = ShipType.CARRIER;
+        
+        if (numShips == 1) {
+            type = ShipType.BATTLESHIP;
+        }
+        if (numShips == 2) {
+            type = ShipType.CRUISER;    
+        }
+        if (numShips == 3) {
+             type = ShipType.SUBMARINE;
+        }
+        if (numShips == 4) {
+             type = ShipType.DESTROYER;
+             // sub-function on last ship placed will remove the rotate ship button and label
+             shipDirectionLabel.setVisible(false);
+             rotateButton.setVisible(false);
+             rotateButton.setDisable(true);
+             randomPlacedButton.setVisible(false);
+             for(int i = 0; i < 10; i++) {
+             	for(int j = 0; j < 10; j++) {
+             		Button button = getButtonOpponent(i, j);
+             		
+             		button.setDisable(false); 
+             	}
+             }
+        }
+        if (numShips == 5) {
+            return;
+        }
+        
+        //declare boolean for the valid placement of ships, true == valid, false == invalid.
+        boolean validSelection = true;
+        
+        //Grabbing the index location of the pressed button, based on the character at locations
+        //6 and 7 for the clicked button (correspond to the row and columns)
+        
+        Random random = new Random();
+		  
+        int x = 0;
+        int y = 0;
+        if (numShips == 0) {
+        	x = random.nextInt(9) - 3;
+            y = random.nextInt(9) - 3;
+        }
+        if (numShips == 1) {
+        	x = random.nextInt(9) - 2;
+            y = random.nextInt(9) - 2;
+        }
+        if (numShips == 2) {
+        	x = random.nextInt(9) - 1;
+            y = random.nextInt(9) - 1;
+        }
+        if (numShips == 3) {
+        	x = random.nextInt(9) - 1;
+            y = random.nextInt(9) - 1;
+        }
+        if (numShips == 4) {
+        	x = random.nextInt(9);
+            y = random.nextInt(9);
+        }
+        
+        Ship placedShip = new Ship(type, x, y, currentShipRotate);
+        
+ 
+        //placing ships on the correct board
+        if(gameApp.getBoardOne().addShip(placedShip) == false)
+        	numShips--;
+        
+        //generalized variable called shipLocations containing an array of every location on the board
+        //currently containing a ship. 
+        Point[] shipLocations = placedShip.getShipCoords(); 
+    
+        Button buttonToChange = null;
+
+        //for loop determining if the placement of every segment of the points in ship is valid.
+        for (Point p: shipLocations) {
+            //System.out.println("for loop 1");
+            int pointX = p.getX();
+            int pointY = p.getY();
+            buttonToChange = getButton(pointX,pointY);
+            if (buttonToChange.isDisabled()) {
+               // System.out.println("button sucks");
+                validSelection = false;
+                // Here is where the exception would be thrown I guess, we could solve it with a while loop where the
+                // function is called in the Player(?) class. it also needs to move back one iteration on numShips. 
+            }
+            
+        }
+        // for loop that runs when the previous for loop determines all the points are valid to place a ship.
+        if (validSelection == true) {
+            for (Point p: shipLocations) {
+                //System.out.println("for loop 2");
+                int pointX = p.getX();
+                int pointY = p.getY();
+                buttonToChange = getButton(pointX,pointY);
+                buttonToChange.setDisable(true);
+                buttonToChange.setStyle("-fx-background-color: black; ");
+            }
+            
+        }
+        
+        numShips++;
+    }
+    
+    /**
+     * Makes a guess, updates the guess to the board GUI and asks the computer player to play
+     * @param event the action event that triggers the function
+     */
+    @FXML
+    void makeGuess(ActionEvent event) {
+    	String buttonLoc = ((Button) event.getSource()).getId();
+      	int y = Integer.parseInt(String.valueOf(buttonLoc.substring(6,8)));
+      	y -= 10;
+    	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(8)));
+    	gameApp.getBoardTwo().checkGuess(new Point(x, y));
+    	gameApp.getPlayerOne().getOpponent().play();
     }
 
+    /**
+     * Method to rotate the next placed ship
+     * @param event: when the "rotate" button clicked will add 90 to the int that determines ship rotation 
+     * before placement. Displays the direction the ship is facing
+     */
     @FXML
-    void button100click(ActionEvent event) {
-    	if (repeatClick == true) {
-    		return;
-    		//Set some info here.
+    void rotatePlacedShip(ActionEvent event) {
+        currentShipRotate += 90;
+        
+        if (currentShipRotate == 360) {
+            currentShipRotate = 0;
+        }
+        if (currentShipRotate == 0) {
+            shipDirectionLabel.setText("Ship Direction: UP");
+        }
+        else if (currentShipRotate == 90) {
+            shipDirectionLabel.setText("Ship Direction: LEFT");
+        }
+        else if (currentShipRotate == 180) {
+            shipDirectionLabel.setText("Ship Direction: DOWN");
+            //up like in shipRotation === 0. 
+        }
+        else if (currentShipRotate == 270){
+            shipDirectionLabel.setText("Ship Direction: RIGHT");
+            
+        }
+        
+
+        
+    }
+    
+	/**
+	 * Places a ship with origin at the buttons location
+	 * @param event the action event that triggered the method
+	 */
+    @FXML
+    void putShipDown(ActionEvent event) { 
+        
+        //setting up ship type for the rest of the method to use. Iterating through based on numShips.
+        ShipType type = ShipType.CARRIER;
+        
+        if (numShips == 1) {
+            type = ShipType.BATTLESHIP;
+        }
+        if (numShips == 2) {
+            type = ShipType.CRUISER;    
+        }
+        if (numShips == 3) {
+             type = ShipType.SUBMARINE;
+        }
+        if (numShips == 4) {
+             type = ShipType.DESTROYER;
+             // sub-function on last ship placed will remove the rotate ship button and label
+             shipDirectionLabel.setVisible(false);
+             rotateButton.setVisible(false);
+             rotateButton.setDisable(true); 
+             for(int i = 0; i < 10; i++) {
+             	for(int j = 0; j < 10; j++) {
+             		Button button = getButtonOpponent(i, j);
+             		
+             		button.setDisable(false); 
+             	}
+             }
+        }
+        if (numShips == 5) {
+            return;
+        }
+        
+        //declare boolean for the valid placement of ships, true == valid, false == invalid.
+        boolean validSelection = true;
+        
+        //Grabbing the index location of the pressed button, based on the character at locations
+        //6 and 7 for the clicked button (correspond to the row and columns)
+        String buttonLoc = ((Button) event.getSource()).getId();
+        int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
+        int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
+        Ship placedShip = new Ship(type, x, y, currentShipRotate);
+ 
+        //placing ships on the correct board
+        if(gameApp.getBoardOne().addShip(placedShip) == false)
+        	numShips--;
+        
+        //generalized variable called shipLocations containing an array of every location on the board
+        //currently containing a ship. 
+        Point[] shipLocations = placedShip.getShipCoords(); 
+    
+        Button buttonToChange = null;
+
+        //for loop determining if the placement of every segment of the points in ship is valid.
+        for (Point p: shipLocations) {
+            //System.out.println("for loop 1");
+            int pointX = p.getX();
+            int pointY = p.getY();
+            buttonToChange = getButton(pointX,pointY);
+            if (buttonToChange.isDisabled()) {
+               // System.out.println("button sucks");
+                validSelection = false;
+                // Here is where the exception would be thrown I guess, we could solve it with a while loop where the
+                // function is called in the Player(?) class. it also needs to move back one iteration on numShips. 
+            }
+            
+        }
+        // for loop that runs when the previous for loop determines all the points are valid to place a ship.
+        if (validSelection == true) {
+            for (Point p: shipLocations) {
+                //System.out.println("for loop 2");
+                int pointX = p.getX();
+                int pointY = p.getY();
+                buttonToChange = getButton(pointX,pointY);
+                buttonToChange.setDisable(true);
+                buttonToChange.setStyle("-fx-background-color: black; ");
+            }
+            
+        }
+        
+        numShips++;
+    }
+    
+    //Returns the button object in the player's grid
+    private Button getButton(int x, int y) {
+    	Button result = null;
+    	ObservableList<Node> children = boardOneGrid.getChildren();
+    	for (Node node: children) {
+    		if (GridPane.getRowIndex(node) == y && GridPane.getColumnIndex(node) == x) {
+    			result = (Button)node;
+    			break;
+    		}
     	}
-    	Point thisPoint = new Point(0,0);
-    	guessOutcome(button100, thisPoint);
     	
-    }
-
-    @FXML
-    void button101click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button102click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button103click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button104click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button105click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button106click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button107click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button108click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button109click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button110click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button111click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button112click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button113click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button114click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button115click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button116click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button117click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button118click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button119click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button120click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button121click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button122click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button123click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button124click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button125click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button126click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button127click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button128click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button129click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button130click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button131click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button132click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button133click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button134click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button135click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button136click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button137click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button138click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button139click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button140click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button141click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button142click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button143click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button144click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button145click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button146click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button147click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button148click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button149click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button150click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button151click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button152click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button153click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button154click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button155click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button156click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button157click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button158click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button159click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button160click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button161click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button162click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button163click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button164click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button165click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button166click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button167click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button168click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button169click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button170click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button171click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button172click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button173click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button174click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button175click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button176click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button177click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button178click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button179click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button180click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button181click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button182click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button183click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button184click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button185click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button186click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button187click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button188click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button189click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button190click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button191click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button192click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button193click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button194click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button195click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button196click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button197click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button198click(ActionEvent event) {
-
-    }
-
-    @FXML
-    void button199click(ActionEvent event) {
-
-    }
-
+    	return result;
+    }
+    
+    //Returns the button object in the opponent's grid
+    private Button getButtonOpponent(int x, int y) {
+    	Button result = null;
+    	ObservableList<Node> children = boardTwoGrid.getChildren();
+    	for (Node node: children) {
+    		if (GridPane.getRowIndex(node)==y && GridPane.getColumnIndex(node)==x) {
+    			result = (Button)node;
+    			break;
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    /**
+     * Initializes the controller
+     * Checks that all objects were injected correctly
+     * Initializes the buttons' default color
+     */
     @FXML
     void initialize() {
+    	assert button25 != null : "fx:id=\"button25\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button24 != null : "fx:id=\"button24\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button27 != null : "fx:id=\"button27\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button26 != null : "fx:id=\"button26\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button21 != null : "fx:id=\"button21\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button20 != null : "fx:id=\"button20\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button23 != null : "fx:id=\"button23\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button22 != null : "fx:id=\"button22\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button29 != null : "fx:id=\"button29\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button28 != null : "fx:id=\"button28\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button14 != null : "fx:id=\"button14\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button13 != null : "fx:id=\"button13\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button16 != null : "fx:id=\"button16\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button15 != null : "fx:id=\"button15\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button10 != null : "fx:id=\"button10\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button98 != null : "fx:id=\"button98\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button97 != null : "fx:id=\"button97\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button12 != null : "fx:id=\"button12\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button11 != null : "fx:id=\"button11\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button99 != null : "fx:id=\"button99\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button18 != null : "fx:id=\"button18\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button17 != null : "fx:id=\"button17\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button19 != null : "fx:id=\"button19\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button94 != null : "fx:id=\"button94\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button93 != null : "fx:id=\"button93\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button96 != null : "fx:id=\"button96\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button95 != null : "fx:id=\"button95\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button90 != null : "fx:id=\"button90\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button92 != null : "fx:id=\"button92\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button91 != null : "fx:id=\"button91\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button03 != null : "fx:id=\"button03\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button02 != null : "fx:id=\"button02\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button05 != null : "fx:id=\"button05\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button04 != null : "fx:id=\"button04\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button87 != null : "fx:id=\"button87\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button86 != null : "fx:id=\"button86\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button01 != null : "fx:id=\"button01\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button89 != null : "fx:id=\"button89\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button00 != null : "fx:id=\"button00\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button88 != null : "fx:id=\"button88\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button07 != null : "fx:id=\"button07\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button06 != null : "fx:id=\"button06\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button09 != null : "fx:id=\"button09\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button08 != null : "fx:id=\"button08\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button83 != null : "fx:id=\"button83\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button82 != null : "fx:id=\"button82\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button85 != null : "fx:id=\"button85\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button84 != null : "fx:id=\"button84\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button81 != null : "fx:id=\"button81\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button80 != null : "fx:id=\"button80\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button79 != null : "fx:id=\"button79\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button76 != null : "fx:id=\"button76\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button75 != null : "fx:id=\"button75\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button78 != null : "fx:id=\"button78\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button77 != null : "fx:id=\"button77\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button72 != null : "fx:id=\"button72\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button71 != null : "fx:id=\"button71\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button74 != null : "fx:id=\"button74\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button73 != null : "fx:id=\"button73\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button70 != null : "fx:id=\"button70\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button69 != null : "fx:id=\"button69\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button68 != null : "fx:id=\"button68\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button65 != null : "fx:id=\"button65\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button64 != null : "fx:id=\"button64\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button67 != null : "fx:id=\"button67\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button66 != null : "fx:id=\"button66\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button61 != null : "fx:id=\"button61\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button60 != null : "fx:id=\"button60\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button63 != null : "fx:id=\"button63\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button62 != null : "fx:id=\"button62\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button58 != null : "fx:id=\"button58\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button57 != null : "fx:id=\"button57\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button59 != null : "fx:id=\"button59\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button54 != null : "fx:id=\"button54\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button53 != null : "fx:id=\"button53\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button56 != null : "fx:id=\"button56\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button55 != null : "fx:id=\"button55\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button50 != null : "fx:id=\"button50\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button52 != null : "fx:id=\"button52\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button51 != null : "fx:id=\"button51\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button47 != null : "fx:id=\"button47\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button46 != null : "fx:id=\"button46\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button49 != null : "fx:id=\"button49\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button48 != null : "fx:id=\"button48\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button43 != null : "fx:id=\"button43\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button42 != null : "fx:id=\"button42\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button45 != null : "fx:id=\"button45\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button44 != null : "fx:id=\"button44\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button41 != null : "fx:id=\"button41\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button40 != null : "fx:id=\"button40\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button36 != null : "fx:id=\"button36\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button35 != null : "fx:id=\"button35\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button38 != null : "fx:id=\"button38\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button37 != null : "fx:id=\"button37\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button32 != null : "fx:id=\"button32\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button31 != null : "fx:id=\"button31\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button34 != null : "fx:id=\"button34\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button33 != null : "fx:id=\"button33\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button39 != null : "fx:id=\"button39\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert button30 != null : "fx:id=\"button30\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        assert rotateButton != null : "fx:id=\"RotateButton\" was not injected: check your FXML file 'ShipSetupVeiwTest.fxml'.";
+        //end of board 1
+    	
         assert button119 != null : "fx:id=\"button119\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button118 != null : "fx:id=\"button118\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button117 != null : "fx:id=\"button117\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
@@ -943,8 +1128,42 @@ public class SingleplayerGameController {
         assert button172 != null : "fx:id=\"button172\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button171 != null : "fx:id=\"button171\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button170 != null : "fx:id=\"button170\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
-
+        
+        //Sets default colour for the buttons
+        for(int i = 0; i < 10; i++) {
+        	for(int j = 0; j < 10; j++) {
+        		Button button = getButton(i, j);
+        		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
+        				+ "-fx-border-color: black");
+        		button = getButtonOpponent(i, j);
+        		getButtonOpponent(i,j).setDisable(true);
+        		button.setStyle("-fx-background-radius: 0px; -fx-background-color: aqua;"
+        				+ "-fx-border-color: black");
+        	}
+        }
+        
     }
+    
+    /**
+     * Sets the color of a button on the relative grid based on whether
+     * the guess was a hit or a miss
+     * @param x x coordinate of button
+     * @param y y coordinate of button
+     * @param hit whether or not the guess was a hit or miss
+     * @param player whether the guess belongs to the player or computer
+     */
+    public void setGuess(int x, int y, boolean hit, boolean player) {
+    	Button buttonToChange = getButton(x, y);
+    	if(!player)
+    		buttonToChange = getButtonOpponent(x, y);
+    	String color = (hit ? "red" : "blue");
+    	buttonToChange.setStyle("-fx-background-color: " + color + ";");
+    }
+    
+    /**
+     * Setter for game app object
+     * @param app the game application object
+     */
 	public void setGameApp(GameApplication app) {
 		gameApp = app;
 	}

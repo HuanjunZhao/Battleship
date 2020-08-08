@@ -1,136 +1,69 @@
 package model;
-/**
- * Battleship (Player Class): Alpha
- * @author Taimur Rizwan
- *UCID: 30078941
- */
+
+
 import java.util.Scanner;
 
-
-public class Player {
+/**
+ * Battleship (Player Class): Beta version
+ * Beta Changelog:
+ * @author Taimur Rizwan
+ *UCID: 30078941	(1st Iteration)<br>
+ *Tristan Richardson UCID:30076898 (connecting with PlayerSlot abstract)
+ *@version Beta
+ */
+/*
+ * Beta changes:
+ * - Made several adaptations for transfer to PlayerSlot.
+ * - 
+ */
+public class Player extends PlayerSlot {
 /**
  * Instance variables
  */
-
-	private String name;
+	private final boolean isPlayer=true;
+	/*private String name;
 	private Ship[] ships;
 	private ComputerPlayer opponent;
-	private Board playerBoard;
+	private Board board;
+	*///Variables moved to 
 	
-	
-	public Player() {
-		this.ships = new Ship[5];
-	
+	public Player(Board board) {
+		super("", board);
+		isPlayer();
 	}
 	
-	public void placeShip() {
-		Scanner input = new Scanner(System.in);
-		System.out.println("Enter an x-coordinate for CARRIER");
-		int x = input.nextInt();
-		
-		System.out.println("Enter an y-coordinate for CARRIER");
-		int y = input.nextInt();
-		
-		Ship carrier = new Ship(ShipType.CARRIER, x, y, this); //copy for all ship types
-		
-		ships[0] = carrier;
-		
-		playerBoard.addShip(carrier);
-		playerBoard.display();
-		
-		//-----------------------------------------------------------------------------
-		
-		System.out.println("Enter an x-coordinate for BATTLESHIP");
-		x = input.nextInt();
-		
-		System.out.println("Enter an y-coordinate for BATTLESHIP");
-		y = input.nextInt();
-		
-		Ship battleship = new Ship(ShipType.BATTLESHIP, x, y, this);
-		
-		ships[1] = battleship;
-		
-		playerBoard.addShip(battleship);
-		playerBoard.display();
-		
-		//-----------------------------------------------------------------------------
-		
-		System.out.println("Enter an x-coordinate for CRUISER");
-		x = input.nextInt();
-				
-		System.out.println("Enter an y-coordinate for CRUISER");
-		y = input.nextInt();
-				
-		Ship cruiser = new Ship(ShipType.CRUISER, x, y, this);
-				
-		ships[2] = cruiser;
-				
-		playerBoard.addShip(cruiser);
-		playerBoard.display();
-		
-		//-----------------------------------------------------------------------------
-		
-		System.out.println("Enter an x-coordinate for SUBMARINE");
-		x = input.nextInt();
-				
-		System.out.println("Enter an y-coordinate for SUBMARINE");
-		y = input.nextInt();
-				
-		Ship submarine = new Ship(ShipType.SUBMARINE, x, y, this);
-				
-		ships[3] = submarine;
-				
-		playerBoard.addShip(submarine);
-		playerBoard.display();
-		
-		//-----------------------------------------------------------------------------
-		
-		System.out.println("Enter an x-coordinate for DESTROYER");
-		x = input.nextInt();
-				
-		System.out.println("Enter an y-coordinate for DESTROYER");
-		y = input.nextInt();
-				
-		Ship destroyer = new Ship(ShipType.DESTROYER, x, y, this);
-				
-		ships[4] = destroyer;
-				
-		playerBoard.addShip(destroyer);
-		playerBoard.display();
-		
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void guess() {
-		
-	}
-	
+	/**
+	* we pass in the gameboard as a parameter to this function
+	* make sure that the proper gameboard is passed in from wherever the main game is ran from (Game.java)
+	* and then that will allow you to use the checkGuess function
+	*/
+	@Override
 	public void play() {
-		//
-		
-	}
-	
-	public void setOpponent(ComputerPlayer newOpponent) {
-		this.opponent = newOpponent;
-		
-	}
-	
-	
-	
-	public String getName() {
-		return name;
+		System.out.println("Select a coordinate to attack!");
+		if(getOpponent().getBoard().checkGuess(guess())) {
+			System.out.println("You Hit!");
+		} else {
+			System.out.println("You Missed!");
+		}
+		getOpponent().getBoard().displayToOpponent();
 	}
 
-	public Board getPlayerBoard() {
-		return playerBoard;
+	@Override
+	public Ship shipConstructor(ShipType type) {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Enter ship rotation. 0 being North, 90 being East, etc.");
+		int rotation = input.nextInt();
+		return new Ship(type, guess(), rotation);
 	}
 
-	public void setPlayerBoard(Board playerBoard) {
-		this.playerBoard = playerBoard;
+	@Override
+	public Point guess() {
+		Scanner coord = new Scanner(System.in);
+		System.out.println("Enter x: ");
+		int x = coord.nextInt();
+		System.out.println("Enter y: ");
+		int y = coord.nextInt();
+		return new Point(x, y);
 	}
-	
-	
+
 }
