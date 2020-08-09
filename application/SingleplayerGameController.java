@@ -13,13 +13,21 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import model.*;
 
+/**
+ * Single player game controller, this class is a controller class 
+ * for single player game.
+ * @author Dillon Sahadevan, UCID 30075927
+ * 		   Joshua Fine, UCID 30011448
+ * 		   Huanjun Zhao, UCID 30102350
+ *
+ * @version 2.0
+ */
 public class SingleplayerGameController {
 	
 	private GameApplication gameApp;
 	
-//	private static Point pointUserChoose;
 	boolean shipHideHere;
-	//boolean repeatClick = false;
+	boolean repeatClick = false;
 	private int numShips;
 	private int currentShipRotate = 0;
 
@@ -654,19 +662,26 @@ public class SingleplayerGameController {
     void randomShipPlaced(ActionEvent event) {
 
         //setting up ship type for the rest of the method to use. Iterating through based on numShips.
-        ShipType type = ShipType.CARRIER;
-        
+    	ShipType type = null;
+    	if (numShips == 0) {
+    		type = ShipType.CARRIER;
+    		//text label.setText(Click random button to place CARRIER randomly.);
+    	}
         if (numShips == 1) {
             type = ShipType.BATTLESHIP;
+          //text label.setText(Click random button to place BATTLESHIP randomly.);
         }
         if (numShips == 2) {
             type = ShipType.CRUISER;    
+          //text label.setText(Click random button to place CRUISER randomly.);
         }
         if (numShips == 3) {
              type = ShipType.SUBMARINE;
+           //text label.setText(Click random button to place SUBMARINE randomly.);
         }
         if (numShips == 4) {
              type = ShipType.DESTROYER;
+           //text label.setText(Click random button to place DESTROYER randomly.);
              // sub-function on last ship placed will remove the rotate ship button and label
              shipDirectionLabel.setVisible(false);
              rotateButton.setVisible(false);
@@ -695,24 +710,24 @@ public class SingleplayerGameController {
         int x = 0;
         int y = 0;
         if (numShips == 0) {
-        	x = random.nextInt(9) - 3;
-            y = random.nextInt(9) - 3;
+        	x = random.nextInt(4) + 3;
+            y = random.nextInt(4) + 3;
         }
         if (numShips == 1) {
-        	x = random.nextInt(9) - 2;
-            y = random.nextInt(9) - 2;
+        	x = random.nextInt(4) + 4;
+            y = random.nextInt(4) + 4;
         }
         if (numShips == 2) {
-        	x = random.nextInt(9) - 1;
-            y = random.nextInt(9) - 1;
+        	x = random.nextInt(7) + 1;
+            y = random.nextInt(7) + 1;
         }
         if (numShips == 3) {
-        	x = random.nextInt(9) - 1;
-            y = random.nextInt(9) - 1;
+        	x = random.nextInt(7) + 1;
+            y = random.nextInt(7) + 1;
         }
         if (numShips == 4) {
-        	x = random.nextInt(9);
-            y = random.nextInt(9);
+        	x = random.nextInt(8);
+            y = random.nextInt(8);
         }
         
         Ship placedShip = new Ship(type, x, y, currentShipRotate);
@@ -1128,6 +1143,7 @@ public class SingleplayerGameController {
         assert button172 != null : "fx:id=\"button172\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button171 != null : "fx:id=\"button171\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button170 != null : "fx:id=\"button170\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        // End of board two
         
         //Sets default colour for the buttons
         for(int i = 0; i < 10; i++) {
