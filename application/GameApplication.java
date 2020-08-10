@@ -6,6 +6,7 @@ import model.Player;
 import model.PlayerSlot;
 import model.Referee;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -13,6 +14,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 /**
@@ -112,7 +115,11 @@ public class GameApplication extends Application{
 		GameController controller = 
 				(GameController)loader.getController();
 		controller.setGameApp(this);
-		
+		//Kone - The Verkkars-EZ4ENCE £¨Bootleg£©£¨Kone remix£©
+		String backgroundMusic = "resources/EZ4ENCE.mp3";
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File(backgroundMusic).toURI().toString()));  
+        mediaPlayer.setAutoPlay(true); 
+        
 		//Show scene
 		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
 		primaryStage.setScene(scene);
