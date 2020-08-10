@@ -20,6 +20,7 @@ public class Player extends PlayerSlot {
 /**
  * Instance variables
  */
+	private final boolean isPlayer=true;
 	/*private String name;
 	private Ship[] ships;
 	private ComputerPlayer opponent;
