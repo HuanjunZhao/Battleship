@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.*;
 
@@ -773,6 +774,73 @@ public class SingleplayerGameController {
         }
     }
     
+    /**
+     * Method to clear buttons changed by preview
+     * @param event Mouse exit trigger
+     */
+    @FXML
+    void clearPreview(MouseEvent event) {
+    	for(int i = 0; i < 10; i++) {
+    		for(int j = 0; j < 10; j++) {
+    			Button buttonToChange = getButton(i, j, boardOneGrid);
+    			String style = buttonToChange.getStyle();
+    			if(style.contains("gray"))
+    				setButtonColor(buttonToChange, "mediumblue");
+    		}
+    	}
+    }
+    
+    /**
+     * Method to display a ship placement preview
+     * @param event Mouse exit trigger
+     */
+    @FXML
+    void previewShip(MouseEvent event) {
+    	
+    	//setting up ship type for the rest of the method to use. Iterating through based on numShips.
+        ShipType type = ShipType.CARRIER;
+        
+        if (numShips == 1) {
+            type = ShipType.BATTLESHIP;
+        }
+        if (numShips == 2) {
+            type = ShipType.CRUISER;    
+        }
+        if (numShips == 3) {
+             type = ShipType.SUBMARINE;
+        }
+        if (numShips == 4) {
+             type = ShipType.DESTROYER;
+             // sub-function on last ship placed will remove the rotate ship button and label
+             shipDirectionLabel.setVisible(false);
+             rotateButton.setVisible(false);
+             rotateButton.setDisable(true); 
+        }
+        if (numShips == 5) {
+            return;
+        }
+        
+    	String buttonLoc = ((Button) event.getSource()).getId();
+    	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
+        int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
+        Ship previewShip = new Ship(type, x, y, currentShipRotate);
+        
+      //generalized variable called shipLocations containing an array of every location on the board
+        //currently containing a ship. 
+        Point[] shipLocations = previewShip.getShipCoords(); 
+    
+        Button buttonToChange = null;
+
+        for (Point p: shipLocations) {
+            int pointX = p.getX();
+            int pointY = p.getY();
+            buttonToChange = getButton(pointX, pointY, boardOneGrid);
+            if(buttonToChange == null)
+            	break;
+            setButtonColor(buttonToChange, "darkgray");
+        }
+    }
+    
 	/**
 	 * Places a ship with origin at the buttons location
 	 * @param event the action event that triggered the method
@@ -1064,11 +1132,11 @@ public class SingleplayerGameController {
         	for(int j = 0; j < 10; j++) {
         		Button button = getButton(i, j, boardOneGrid);
         		button.setStyle("-fx-background-radius: 0px; -fx-border-color: black");
-        		setButtonColor(button, "aqua");
+        		setButtonColor(button, "mediumblue");
         		button = getButton(i, j, boardTwoGrid);
         		getButton(i,j, boardTwoGrid).setDisable(true);
         		button.setStyle("-fx-background-radius: 0px; -fx-border-color: black");
-        		setButtonColor(button, "aqua");
+        		setButtonColor(button, "mediumblue");
         	}
         }
     }
@@ -1085,15 +1153,16 @@ public class SingleplayerGameController {
     	Button buttonToChange = getButton(x, y, boardOneGrid);
     	if(!player)
     		buttonToChange = getButton(x, y, boardTwoGrid);
-    	String color = (hit ? "red" : "blue");
+    	String color = (hit ? "red" : "aqua");
     	setButtonColor(buttonToChange, color);
     	buttonToChange.setDisable(true);
     }
     
     //Helper method to set the colour of a button
     private void setButtonColor(Button buttonToChange, String color) {
-    	buttonToChange.setStyle("-fx-background-color : " + color + 
-    			 "; -fx-background-radius: 0px; + -fx-border-color: black;");
+    	buttonToChange.setStyle("-fx-background-radius: 0px;" + 
+    				"-fx-border-color: black; -fx-background-color : " 
+    				+ color +";");
     }
     
     /**
