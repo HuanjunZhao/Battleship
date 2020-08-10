@@ -10,12 +10,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import model.*;
 
 /**
@@ -32,7 +35,6 @@ public class SingleplayerGameController {
 	private GameApplication gameApp;
 	
 	boolean shipHideHere;
-	boolean repeatClick;
 	private int numShips;
 	private int currentShipRotate;
 
@@ -42,6 +44,8 @@ public class SingleplayerGameController {
     @FXML
     private URL location;
     
+    @FXML
+    private Label playerBoard;
     @FXML
     private GridPane boardOneGrid;
     
@@ -789,7 +793,7 @@ public class SingleplayerGameController {
     			Button buttonToChange = getButton(i, j, boardOneGrid);
     			String style = buttonToChange.getStyle();
     			if(style.contains("gray"))
-    				setButtonColor(buttonToChange, "mediumblue");
+    				setButtonColor(buttonToChange, "white");
     		}
     	}
     }
@@ -815,13 +819,13 @@ public class SingleplayerGameController {
         }
         if (numShips == 4) {
              type = ShipType.DESTROYER;
-              
-        }
-        // sub-function on last ship placed will remove the rotate ship button and label
-        if (numShips == 5) {
+             // sub-function on last ship placed will remove the rotate ship button and label
              shipDirectionLabel.setVisible(false);
              rotateButton.setVisible(false);
-             rotateButton.setDisable(true);
+             rotateButton.setDisable(true); 
+             
+        }
+        if (numShips == 5) {
             return;
         }
         
@@ -895,7 +899,7 @@ public class SingleplayerGameController {
                 int pointY = p.getY();
                 buttonToChange = getButton(pointX,pointY, boardOneGrid);
                 buttonToChange.setDisable(true);
-                setButtonColor(buttonToChange, "black");
+                setButtonColor(buttonToChange, "blue");
             }
             
         }
@@ -1128,8 +1132,8 @@ public class SingleplayerGameController {
         assert button170 != null : "fx:id=\"button170\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         // End of board two
         
-        //Default start values
-        repeatClick = false;
+       
+        //Default start value
         currentShipRotate = 0;
         
         //Sets default color for the buttons
@@ -1137,11 +1141,11 @@ public class SingleplayerGameController {
         	for(int j = 0; j < 10; j++) {
         		Button button = getButton(i, j, boardOneGrid);
         		button.setStyle("-fx-background-radius: 0px; -fx-border-color: black");
-        		setButtonColor(button, "mediumblue");
+        		setButtonColor(button, "white");
         		button = getButton(i, j, boardTwoGrid);
         		getButton(i,j, boardTwoGrid).setDisable(true);
         		button.setStyle("-fx-background-radius: 0px; -fx-border-color: black");
-        		setButtonColor(button, "mediumblue");
+        		setButtonColor(button, "white");
         	}
         }
     }
@@ -1172,7 +1176,7 @@ public class SingleplayerGameController {
             try {
                 isMiss = new Image(new FileInputStream("resources/hit and miss/miss.jpg"), 40, 40, false, false);
             } catch (FileNotFoundException e) {
-            	System.out.println("Problem loading picture hit");
+            	System.out.println("Problem loading picture miss");
             }
         
 
@@ -1184,6 +1188,22 @@ public class SingleplayerGameController {
 
         buttonToChange.setGraphic(new ImageView(color));
         
+        if(gameApp.getBoardOne().checkWinner()) {
+        	set("                You Loose");
+		}
+        
+        if(gameApp.getBoardTwo().checkWinner()) {
+        	set("                You Win!!");
+        }
+    }
+    
+    public void set(String massage) {
+    	Alert win = new Alert(Alert.AlertType.INFORMATION);
+		    
+		    Pane pane = new Pane();
+		    pane.getChildren().add(new Label(massage));
+		    win.getDialogPane().setExpandableContent(pane);
+		    win.show();
     }
     
     //Helper method to set the colour of a button
@@ -1230,7 +1250,7 @@ public class SingleplayerGameController {
             		 Button button = getButton(i, j, boardTwoGrid);
             		 //Button button1 = getButton(i, j, boardOneGrid );
             		 //button1.setDisable(true);
-            		 button.setDisable(false); 
+            		 button.setDisable(false);
             	 }
              }
         }
