@@ -811,12 +811,13 @@ public class SingleplayerGameController {
         }
         if (numShips == 4) {
              type = ShipType.DESTROYER;
-             // sub-function on last ship placed will remove the rotate ship button and label
+              
+        }
+        // sub-function on last ship placed will remove the rotate ship button and label
+        if (numShips == 5) {
              shipDirectionLabel.setVisible(false);
              rotateButton.setVisible(false);
-             rotateButton.setDisable(true); 
-        }
-        if (numShips == 5) {
+             rotateButton.setDisable(true);
             return;
         }
         
