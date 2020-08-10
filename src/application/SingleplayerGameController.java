@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -10,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.*;
@@ -1150,12 +1154,35 @@ public class SingleplayerGameController {
      * @param player whether the guess belongs to the player or computer
      */
     public void setGuess(int x, int y, boolean hit, boolean player) {
-    	Button buttonToChange = getButton(x, y, boardOneGrid);
-    	if(!player)
-    		buttonToChange = getButton(x, y, boardTwoGrid);
-    	String color = (hit ? "red" : "aqua");
-    	setButtonColor(buttonToChange, color);
-    	buttonToChange.setDisable(true);
+        Button buttonToChange = getButton(x, y, boardOneGrid);
+        if(!player)
+            buttonToChange = getButton(x, y, boardTwoGrid);
+        //help setting hit and miss icons 
+        Image isHit = null;
+        
+            try {
+                isHit = new Image(new FileInputStream("resources/hit and miss/hit.jpg"), 40, 40, false, false);
+            } catch (FileNotFoundException e1) {
+                System.out.println("Problem loading picture hit");
+            }
+         
+        Image isMiss = null;
+        
+            try {
+                isMiss = new Image(new FileInputStream("resources/hit and miss/miss.jpg"), 40, 40, false, false);
+            } catch (FileNotFoundException e) {
+            	System.out.println("Problem loading picture hit");
+            }
+        
+
+ 
+
+        Image color = (hit ? isHit : isMiss);
+
+ 
+
+        buttonToChange.setGraphic(new ImageView(color));
+        
     }
     
     //Helper method to set the colour of a button
@@ -1199,7 +1226,7 @@ public class SingleplayerGameController {
              randomPlacedButton.setVisible(false);
              for(int i = 0; i < 10; i++) {
             	 for(int j = 0; j < 10; j++) {
-            		 Button button = getButton(i, j, boardTwoGrid );
+            		 Button button = getButton(i, j, boardTwoGrid);
             		 //Button button1 = getButton(i, j, boardOneGrid );
             		 //button1.setDisable(true);
             		 button.setDisable(false); 

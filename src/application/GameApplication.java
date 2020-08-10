@@ -119,6 +119,7 @@ public class GameApplication extends Application{
 		String backgroundMusic = "resources/EZ4ENCE.mp3";
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File(backgroundMusic).toURI().toString()));  
         mediaPlayer.setAutoPlay(true); 
+        mediaPlayer.setVolume(0.02);
         
 		//Show scene
 		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);

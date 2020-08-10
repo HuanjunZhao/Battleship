@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *@version Iteration 2
  */
 public class ComputerPlayer extends PlayerSlot{
-	private byte hitCoef;
+	private int hitCoef;
 	private ArrayList<Point> shots;
 	private Point lastPicked;
 	private Random random;
@@ -17,20 +17,39 @@ public class ComputerPlayer extends PlayerSlot{
 	
 	public ComputerPlayer(Board board) {
 		super("CPU",board);
-		shots = new ArrayList<Point>(27);
-		hitCoef = 0;
+		shots=new ArrayList<Point>(27);
+		setHitCoef(0);
 		random = new Random();
 	}
 	
+	private int getHitCoef() {
+		return hitCoef;
+	}
+
+	private void setHitCoef(int hitCoef) {
+		this.hitCoef = hitCoef;
+	}
+
+	private ArrayList<Point> getShots() {
+		return shots;
+	}
+
+	private void addShots(Point shot) {
+		this.shots.add(shot);
+	}
+	/**Computer player's ship constructor. Overrides an abstract method in superclass PlayerSlot. Creates a new ship object on the computer player's board. 
+	 * While there are types of ship left to call, it continues to return new ship placements until a valid ship is returned.
+	 * @param type The type of ship requested from placeShip() in the PlayerSlot class.
+	 */
 	public Ship shipConstructor(ShipType type) {
 		return new Ship(type, guessPlacement(), guessRotation()); 
 	}
+
+	private Point guessPlacement() {
+		Random random = new Random();
+		return new Point(random.nextInt(10), random.nextInt(10));
+	}
 	
-	/**
-	 * Randomly rotates ships.
-	 * @author Dillon Sahadevan, UCID 30075927
-	 * @return
-	 */
 	private int guessRotation() {
 		int rotationGuess = random.nextInt(30);
 		if(rotationGuess > 15)
@@ -42,49 +61,52 @@ public class ComputerPlayer extends PlayerSlot{
 		return 0;
 	}
 	/**
-	 * Guess generator for AI. Generates a point to test in the AI path. Called until a suitable spot is found. The AI then sends this <i>Point</i> to the <i>Referee</i>. 
+	 * Guess generator for AI. Generates a point to test in the AI path. It runs a test on each of its previous turns. Called until a suitable spot is found. The AI then sends this <i>Point</i> to the <i>Referee</i>. 
 	 * <p>Meant to be run on AI paths chosen by <i>hitCoef</i> and rerun if the path rejects the point it got before. 
 	 * The method will rerun itself if it rolls a spot it hit before (Recorded in <i>shots</i>).
 	 * @return Coordinates of type Point to attempt to fire upon.
 	 */	
 	private Point constructHit() {
-		int guessX=random.nextInt(9);
-		int guessY=random.nextInt(9);
+		int guessX=random.nextInt(10);
+		int guessY=random.nextInt(10);
 		Point newP=new Point(guessX,guessY);
-		if (shots.indexOf(newP)==-1) {
+		int matching = 0;
+		for (Point p : shots) {
+			if (newP.equals(p)) matching++;
+		}
+		if (matching==0) {
 			return newP;
 		}else {return constructHit();}
+
 	}
 	//hit and miss considerations for feedback.
 	private void hit() {
-		if(hitCoef<=-1) {hitCoef=1;}
-		else if(hitCoef!=3){hitCoef++;}
+		if(getHitCoef()<=-1) {setHitCoef(2);}
+		else if(getHitCoef()!=3){setHitCoef(getHitCoef() + 1);}
 	}
 	private void miss() {
-		if(hitCoef!=-3){hitCoef--;}
+		if(getHitCoef()!=-3){setHitCoef(getHitCoef() - 1);}
 	}
 	//----------------------------------------
 	/**
-	 * Algorithm for next decision.
-	 * <br><b>nextHit()</b> If the AI lands a hit, it will target nearby tiles.
-	 * <br><b>avoidance()</b> If the AI misses, it will avoid attacking tiles near the missed shot for one turn.
+	 * Algorithm for next decision. Uses an integer hitCoef to decide what to do next. 
+	 * A positive hitCoef places the AI's focus directly within the four adjacent tiles.
 	 * <br><b>firstShot()</b> Default. Runs hit constructor.
 	 * @return The results from the attack.
 	 */
 	@Override
 	public Point guess(){
 		Point path;
-		if (hitCoef>=1 && prevHit) {path= nextHit();}
-		else if(hitCoef<=-1){path=avoidance();}
-		else {path=firstShot();}
+		
+		if (getHitCoef()>=1/* && prevHit*/) {path = activeAI(1,false);}
+		else if(getHitCoef()<=-1){path = activeAI(3,true);}
+		else {path=inactiveAI();}
 		lastPicked=path;
-		shots.add(path);
+		if(getOpponent().getBoard().checkGuess(lastPicked)) {
+			setHitCoef(1);
+		}else {setHitCoef(-1);}
+		addShots(path);
 		return path;
-	}
-	
-	public Point guessPlacement() {
-		Random random = new Random();
-		return new Point(random.nextInt(9), random.nextInt(9));
 	}
 	
 	private Point nextHit(){
@@ -107,36 +129,42 @@ public class ComputerPlayer extends PlayerSlot{
 		}
 		return tryP;
 	}
-	private Point firstShot(){
+	private Point inactiveAI(){
 		Point tryP = constructHit();
 		return tryP;
 	}
-	
+	/**
+	 * Computer player's turn.
+	 */
 	@Override
 	public void play() {
 		if(getOpponent().getBoard().checkGuess(guess())) {
 			System.out.println("Computer Hit!");
 			prevHit = true;
+			setHitCoef(1);
 		} else {
 			System.out.println("Computer Missed!");
 			prevHit = false;
+			setHitCoef(-1);
 		}
 		getOpponent().getBoard().display();
 	}
 	
-	/*
-	private Point shot(){
-		Point tryP=guess();
-		int range=0;
-		if (hitCoef!=0) {
-			boolean rangeTest = true;
-			if(hitCoef<=-1) {rangeTest=(range<=3);}
-			if(hitCoef>=1) {rangeTest=(range>=3);}
-			while (rangeTest) {
-			tryP=guess();
-			range=Math.abs(lastPicked.getX()-tryP.getX())+Math.abs(lastPicked.getY()-tryP.getY());
+	
+	private Point activeAI(int range,boolean inverted){
+		Point tryP=constructHit();
+		int attempt=0;
+		int dist = Math.abs(lastPicked.getX() - tryP.getX()) +
+					Math.abs(lastPicked.getY() - tryP.getY());
+		if (hitCoef != 0) {
+			while (inverted ? dist<=range : dist>range ) {
+			attempt++;
+			tryP=constructHit();
+			dist = Math.abs(lastPicked.getX()-tryP.getX()) +
+					Math.abs(lastPicked.getY()-tryP.getY());
+			
 			}
 		}
 		return tryP;
-	}*/
+	}
 }
