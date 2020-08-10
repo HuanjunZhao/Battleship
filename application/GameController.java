@@ -45,15 +45,6 @@ public class GameController {
     }
     
     /**
-     * Method that starts multiplayer initialization
-     * @param event the action that triggered the function call
-     */
-    @FXML
-    void multiplayerInitialise(ActionEvent event) {
-    	gameApp.initialiseMultiplayer();
-    }
-    
-    /**
      * Initializes the fxml file
      * Checks everything was injected successfully
      */

@@ -145,32 +145,6 @@ public class GameApplication extends Application{
 	}
 	
 	/**
-	 * Multiplayer initialisation method
-	 * Gets necessary information to start a local multiplayer game
-	 * NOT FUNCTIONAL
-	 */
-	public void initialiseMultiplayer() {
-		BorderPane root = new BorderPane();
-		FXMLLoader loader =  new FXMLLoader();
-		try {
-			root = (BorderPane) loader.load(
-					new FileInputStream("src/view/MultiplayerInitView.fxml"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		//Show scene
-		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		
-		//Set controller relationship
-		MultiplayerInitController controller = 
-				(MultiplayerInitController)loader.getController();
-		controller.setGameApp(this);
-	}
-	
-	/**
 	 * Getter for player's board
 	 * @return player's board object
 	 */
