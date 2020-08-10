@@ -654,14 +654,8 @@ public class SingleplayerGameController {
     @FXML
     private Button randomPlacedButton;
 
-    /**
-     * Place the ship randomly for user
-     * @param event the action event that triggers the function
-     */
-    @FXML
-    void randomShipPlaced(ActionEvent event) {
-
-        //setting up ship type for the rest of the method to use. Iterating through based on numShips.
+    public ShipType getPresentShip() {
+    	//setting up ship type for the rest of the method to use. Iterating through based on numShips.
     	ShipType type = null;
     	if (numShips == 0) {
     		type = ShipType.CARRIER;
@@ -696,15 +690,24 @@ public class SingleplayerGameController {
              }
         }
         if (numShips == 5) {
-            return;
+            return null;
         }
+		return type;
+        
+    }
+    /**
+     * Place the ship randomly for user
+     * @param event the action event that triggers the function
+     */
+    @FXML
+    void randomShipPlaced(ActionEvent event) {
+    	//Get Ship type
+    	ShipType type = getPresentShip();
         
         //declare boolean for the valid placement of ships, true == valid, false == invalid.
         boolean validSelection = true;
         
-        //Grabbing the index location of the pressed button, based on the character at locations
-        //6 and 7 for the clicked button (correspond to the row and columns)
-        
+        //Random place the ship
         Random random = new Random();
 		  
         int x = 0;
@@ -729,7 +732,7 @@ public class SingleplayerGameController {
         	x = random.nextInt(8);
             y = random.nextInt(8);
         }
-        
+            
         Ship placedShip = new Ship(type, x, y, currentShipRotate);
         
  
@@ -768,8 +771,7 @@ public class SingleplayerGameController {
                 buttonToChange.setStyle("-fx-background-color: black; ");
             }
             
-        }
-        
+        } 
         numShips++;
     }
     
@@ -810,12 +812,8 @@ public class SingleplayerGameController {
             //up like in shipRotation === 0. 
         }
         else if (currentShipRotate == 270){
-            shipDirectionLabel.setText("Ship Direction: RIGHT");
-            
+            shipDirectionLabel.setText("Ship Direction: RIGHT");           
         }
-        
-
-        
     }
     
 	/**
@@ -824,37 +822,9 @@ public class SingleplayerGameController {
 	 */
     @FXML
     void putShipDown(ActionEvent event) { 
-        
-        //setting up ship type for the rest of the method to use. Iterating through based on numShips.
-        ShipType type = ShipType.CARRIER;
-        
-        if (numShips == 1) {
-            type = ShipType.BATTLESHIP;
-        }
-        if (numShips == 2) {
-            type = ShipType.CRUISER;    
-        }
-        if (numShips == 3) {
-             type = ShipType.SUBMARINE;
-        }
-        if (numShips == 4) {
-             type = ShipType.DESTROYER;
-             // sub-function on last ship placed will remove the rotate ship button and label
-             shipDirectionLabel.setVisible(false);
-             rotateButton.setVisible(false);
-             rotateButton.setDisable(true); 
-             for(int i = 0; i < 10; i++) {
-             	for(int j = 0; j < 10; j++) {
-             		Button button = getButtonOpponent(i, j);
-             		
-             		button.setDisable(false); 
-             	}
-             }
-        }
-        if (numShips == 5) {
-            return;
-        }
-        
+        //Get Ship type
+    	ShipType type = getPresentShip();
+    	
         //declare boolean for the valid placement of ships, true == valid, false == invalid.
         boolean validSelection = true;
         
