@@ -79,19 +79,12 @@ public class ComputerPlayer extends PlayerSlot{
 		}else {return constructHit();}
 
 	}
-	//hit and miss considerations for feedback.
-	private void hit() {
-		if(getHitCoef()<=-1) {setHitCoef(2);}
-		else if(getHitCoef()!=3){setHitCoef(getHitCoef() + 1);}
-	}
-	private void miss() {
-		if(getHitCoef()!=-3){setHitCoef(getHitCoef() - 1);}
-	}
+
 	//----------------------------------------
 	/**
-	 * Algorithm for next decision. Uses an integer hitCoef to decide what to do next. 
-	 * A positive hitCoef places the AI's focus directly within the four adjacent tiles.
-	 * <br><b>firstShot()</b> Default. Runs hit constructor.
+	 * Algorithm for next decision. Uses an integer hitCoef to decide what to do next. AI becomes active when hitCoef is not 0.
+	 * A positive hitCoef places the AI's focus directly within the four tiles adjacent to the last point hit. If all four tiles have already been selected, the AI turns 
+	 * <br><b>()</b> Default. Runs hit constructor.
 	 * @return The results from the attack.
 	 */
 	@Override
@@ -108,27 +101,23 @@ public class ComputerPlayer extends PlayerSlot{
 		addShots(path);
 		return path;
 	}
-	
-	private Point nextHit(){
-		Point tryP = constructHit();
-		int range = 0;
-		while (range >= 1) {
-			tryP = constructHit();
-			range = Math.abs(lastPicked.getX()-tryP.getX()) + 
-					Math.abs(lastPicked.getY()-tryP.getY());
+	private Point activeAI(int range,boolean inverted){
+		Point tryP=constructHit();
+		int attempt=0;
+		int dist = Math.abs(lastPicked.getX() - tryP.getX()) +
+					Math.abs(lastPicked.getY() - tryP.getY());
+		if (hitCoef != 0) {
+			while (inverted ? dist<=range : dist>range ) {
+			attempt++;
+			tryP=constructHit();
+			dist = Math.abs(lastPicked.getX() - tryP.getX()) +
+					Math.abs(lastPicked.getY() - tryP.getY());
+			if (attempt>100) break; //If the AI gets railroaded into a few spots it can't access.
+			}
 		}
 		return tryP;
 	}
-	private Point avoidance(){
-		Point tryP = constructHit();
-		int range = 0;
-		while (range <= 3) {
-			tryP = constructHit();
-			range = Math.abs(lastPicked.getX()-tryP.getX()) + 
-					Math.abs(lastPicked.getY()-tryP.getY());
-		}
-		return tryP;
-	}
+
 	private Point inactiveAI(){
 		Point tryP = constructHit();
 		return tryP;
@@ -151,20 +140,5 @@ public class ComputerPlayer extends PlayerSlot{
 	}
 	
 	
-	private Point activeAI(int range,boolean inverted){
-		Point tryP=constructHit();
-		int attempt=0;
-		int dist = Math.abs(lastPicked.getX() - tryP.getX()) +
-					Math.abs(lastPicked.getY() - tryP.getY());
-		if (hitCoef != 0) {
-			while (inverted ? dist<=range : dist>range ) {
-			attempt++;
-			tryP=constructHit();
-			dist = Math.abs(lastPicked.getX()-tryP.getX()) +
-					Math.abs(lastPicked.getY()-tryP.getY());
-			
-			}
-		}
-		return tryP;
-	}
+	
 }
