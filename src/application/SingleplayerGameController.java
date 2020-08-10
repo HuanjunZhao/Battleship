@@ -754,6 +754,15 @@ public class SingleplayerGameController {
     	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(8)));
     	gameApp.getBoardTwo().checkGuess(new Point(x, y));
     	gameApp.getPlayerOne().getOpponent().play();
+    	   if(gameApp.getBoardOne().checkWinner()) {
+           	set("                You Loose");
+           	
+   		}
+           
+           if(gameApp.getBoardTwo().checkWinner()) {
+           	set("                You Win!!");
+           	
+           }
     }
 
     /**
@@ -1187,14 +1196,6 @@ public class SingleplayerGameController {
  
 
         buttonToChange.setGraphic(new ImageView(color));
-        
-        if(gameApp.getBoardOne().checkWinner()) {
-        	set("                You Loose");
-		}
-        
-        if(gameApp.getBoardTwo().checkWinner()) {
-        	set("                You Win!!");
-        }
     }
     
     public void set(String massage) {
@@ -1204,6 +1205,7 @@ public class SingleplayerGameController {
 		    pane.getChildren().add(new Label(massage));
 		    win.getDialogPane().setExpandableContent(pane);
 		    win.show();
+
     }
     
     //Helper method to set the colour of a button
