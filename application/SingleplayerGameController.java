@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -9,19 +10,26 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.*;
 
+/**
+ * Single player game controller, this class is a controller class 
+ * for single player game.
+ * @author Dillon Sahadevan, UCID 30075927
+ * 		   Joshua Fine, UCID 30011448
+ * 		   Huanjun Zhao, UCID 30102350
+ *
+ * @version 2.0
+ */
 public class SingleplayerGameController {
 	
 	private GameApplication gameApp;
 	
-//	private static Point pointUserChoose;
 	boolean shipHideHere;
-	boolean repeatClick = false;
+	boolean repeatClick;
 	private int numShips;
-	private int currentShipRotate = 0;
+	private int currentShipRotate;
 
     @FXML
     private ResourceBundle resources;
@@ -643,6 +651,88 @@ public class SingleplayerGameController {
     @FXML
     private Button button170;
     
+    @FXML
+    private Button randomPlacedButton;
+
+    /**
+     * Place the ship randomly for user
+     * @param event the action event that triggers the function
+     */
+    @FXML
+    void randomShipPlaced(ActionEvent event) {
+    	//Get Ship type
+    	ShipType type = getPresentShip();
+        
+        //declare boolean for the valid placement of ships, true == valid, false == invalid.
+        boolean validSelection = true;
+		  
+        Point point = getPoint();
+            
+        Ship placedShip = new Ship(type, point, currentShipRotate);
+        
+ 
+        //placing ships on the correct board
+        if(gameApp.getBoardOne().addShip(placedShip) == false)
+        	numShips--;
+        
+        //generalized variable called shipLocations containing an array of every location on the board
+        //currently containing a ship. 
+        Point[] shipLocations = placedShip.getShipCoords(); 
+    
+        Button buttonToChange = null;
+
+        //for loop determining if the placement of every segment of the points in ship is valid.
+        for (Point p: shipLocations) {
+            int pointX = p.getX();
+            int pointY = p.getY();
+            buttonToChange = getButton(pointX,pointY, boardOneGrid);
+            if (buttonToChange.isDisabled()) 
+                validSelection = false;
+        }
+        // for loop that runs when the previous for loop determines all the points are valid to place a ship.
+        if (validSelection == true) {
+            for (Point p: shipLocations) {
+                //System.out.println("for loop 2");
+                int pointX = p.getX();
+                int pointY = p.getY();
+                buttonToChange = getButton(pointX, pointY, boardOneGrid);
+                buttonToChange.setDisable(true);
+                setButtonColor(buttonToChange, "black");
+            }
+            
+        } 
+        numShips++;
+    }
+    
+    //Helper method to get a random point
+    // for random ship placement
+    private Point getPoint() {
+    	//Random object to return random integers
+    	Random random = new Random();
+    	int x = 0, y = 0;
+    	if (numShips == 0) {
+        	x = random.nextInt(4) + 3;
+            y = random.nextInt(4) + 3;
+        }
+        if (numShips == 1) {
+        	x = random.nextInt(4) + 4;
+            y = random.nextInt(4) + 4;
+        }
+        if (numShips == 2) {
+        	x = random.nextInt(7) + 1;
+            y = random.nextInt(7) + 1;
+        }
+        if (numShips == 3) {
+        	x = random.nextInt(7) + 1;
+            y = random.nextInt(7) + 1;
+        }
+        if (numShips == 4) {
+        	x = random.nextInt(8);
+            y = random.nextInt(8);
+        }
+    	return new Point(x, y);
+    }
+    
     /**
      * Makes a guess, updates the guess to the board GUI and asks the computer player to play
      * @param event the action event that triggers the function
@@ -677,78 +767,9 @@ public class SingleplayerGameController {
         }
         else if (currentShipRotate == 180) {
             shipDirectionLabel.setText("Ship Direction: DOWN");
-            //up like in shipRotation === 0. 
         }
         else if (currentShipRotate == 270){
-            shipDirectionLabel.setText("Ship Direction: RIGHT");
-            
-        }
-    }
-    
-    /**
-     * Method to clear buttons changed by preview
-     * @param event Mouse exit trigger
-     */
-    @FXML
-    void clearPreview(MouseEvent event) {
-    	for(int i = 0; i < 10; i++) {
-    		for(int j = 0; j < 10; j++) {
-    			Button buttonToChange = getButton(i, j);
-    			String style = buttonToChange.getStyle();
-    			if(style.contains("gray"))
-    				setStyle(buttonToChange, "mediumblue");
-    		}
-    	}
-    }
-    
-    /**
-     * Method to display a ship placement preview
-     * @param event Mouse exit trigger
-     */
-    @FXML
-    void previewShip(MouseEvent event) {
-    	
-    	//setting up ship type for the rest of the method to use. Iterating through based on numShips.
-        ShipType type = ShipType.CARRIER;
-        
-        if (numShips == 1) {
-            type = ShipType.BATTLESHIP;
-        }
-        if (numShips == 2) {
-            type = ShipType.CRUISER;    
-        }
-        if (numShips == 3) {
-             type = ShipType.SUBMARINE;
-        }
-        if (numShips == 4) {
-             type = ShipType.DESTROYER;
-             // sub-function on last ship placed will remove the rotate ship button and label
-             shipDirectionLabel.setVisible(false);
-             rotateButton.setVisible(false);
-             rotateButton.setDisable(true); 
-        }
-        if (numShips == 5) {
-            return;
-        }
-        
-    	String buttonLoc = ((Button) event.getSource()).getId();
-    	int x = Integer.parseInt(String.valueOf(buttonLoc.charAt(6)));
-        int y = Integer.parseInt(String.valueOf(buttonLoc.charAt(7)));
-        Ship previewShip = new Ship(type, x, y, currentShipRotate);
-        
-      //generalized variable called shipLocations containing an array of every location on the board
-        //currently containing a ship. 
-        Point[] shipLocations = previewShip.getShipCoords(); 
-    
-        Button buttonToChange = null;
-
-        for (Point p: shipLocations) {
-            int pointX = p.getX();
-            int pointY = p.getY();
-            buttonToChange = getButton(pointX,pointY);
-            if(buttonToChange == null)
-            	break;
-            setStyle(buttonToChange, "darkgray");
+            shipDirectionLabel.setText("Ship Direction: RIGHT");           
         }
     }
     
@@ -757,31 +778,10 @@ public class SingleplayerGameController {
 	 * @param event the action event that triggered the method
 	 */
     @FXML
-    void putShipDown(ActionEvent event) { // TODO throw an exception here for overlapping ship placement?
-        
-        //setting up ship type for the rest of the method to use. Iterating through based on numShips.
-        ShipType type = ShipType.CARRIER;
-        
-        if (numShips == 1) {
-            type = ShipType.BATTLESHIP;
-        }
-        if (numShips == 2) {
-            type = ShipType.CRUISER;    
-        }
-        if (numShips == 3) {
-             type = ShipType.SUBMARINE;
-        }
-        if (numShips == 4) {
-             type = ShipType.DESTROYER;
-             // sub-function on last ship placed will remove the rotate ship button and label
-             shipDirectionLabel.setVisible(false);
-             rotateButton.setVisible(false);
-             rotateButton.setDisable(true); 
-        }
-        if (numShips == 5) {
-            return;
-        }
-        
+    void putShipDown(ActionEvent event) { 
+        //Get Ship type
+    	ShipType type = getPresentShip();
+    	
         //declare boolean for the valid placement of ships, true == valid, false == invalid.
         boolean validSelection = true;
         
@@ -806,7 +806,7 @@ public class SingleplayerGameController {
         for (Point p: shipLocations) {
             int pointX = p.getX();
             int pointY = p.getY();
-            buttonToChange = getButton(pointX,pointY);
+            buttonToChange = getButton(pointX,pointY, boardOneGrid);
             if (buttonToChange.isDisabled()) {
                 validSelection = false;
                 // Here is where the exception would be thrown I guess, we could solve it with a while loop where the
@@ -817,42 +817,29 @@ public class SingleplayerGameController {
         // for loop that runs when the previous for loop determines all the points are valid to place a ship.
         if (validSelection == true) {
             for (Point p: shipLocations) {
+                //System.out.println("for loop 2");
                 int pointX = p.getX();
                 int pointY = p.getY();
-                buttonToChange = getButton(pointX,pointY);
+                buttonToChange = getButton(pointX,pointY, boardOneGrid);
                 buttonToChange.setDisable(true);
-                setStyle(buttonToChange, "black");
+                setButtonColor(buttonToChange, "black");
             }
+            
         }
         
         numShips++;
     }
     
     //Returns the button object in the player's grid
-    private Button getButton(int x, int y) {
+    private Button getButton(int x, int y, GridPane currentBoard) {
     	Button result = null;
-    	ObservableList<Node> children = boardOneGrid.getChildren();
+    	ObservableList<Node> children = currentBoard.getChildren();
     	for (Node node: children) {
-    		if (GridPane.getRowIndex(node)==y && GridPane.getColumnIndex(node)==x) {
+    		if (GridPane.getRowIndex(node) == y && GridPane.getColumnIndex(node) == x) {
     			result = (Button)node;
     			break;
     		}
     	}
-    	
-    	return result;
-    }
-    
-    //Returns the button object in the opponent's grid
-    private Button getButtonOpponent(int x, int y) {
-    	Button result = null;
-    	ObservableList<Node> children = boardTwoGrid.getChildren();
-    	for (Node node: children) {
-    		if (GridPane.getRowIndex(node)==y && GridPane.getColumnIndex(node)==x) {
-    			result = (Button)node;
-    			break;
-    		}
-    	}
-    	
     	return result;
     }
     
@@ -1066,24 +1053,24 @@ public class SingleplayerGameController {
         assert button172 != null : "fx:id=\"button172\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button171 != null : "fx:id=\"button171\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
         assert button170 != null : "fx:id=\"button170\" was not injected: check your FXML file 'SingleplayerGameView.fxml'.";
+        // End of board two
         
-        //Sets default colour for the buttons
+        //Default start values
+        repeatClick = false;
+        currentShipRotate = 0;
+        
+        //Sets default color for the buttons
         for(int i = 0; i < 10; i++) {
         	for(int j = 0; j < 10; j++) {
-        		Button button = getButton(i, j);
-        		setStyle(button, "mediumblue");
-        		button = getButtonOpponent(i, j);
-        		setStyle(button, "mediumblue");
+        		Button button = getButton(i, j, boardOneGrid);
+        		button.setStyle("-fx-background-radius: 0px; -fx-border-color: black");
+        		setButtonColor(button, "aqua");
+        		button = getButton(i, j, boardTwoGrid);
+        		getButton(i,j, boardTwoGrid).setDisable(true);
+        		button.setStyle("-fx-background-radius: 0px; -fx-border-color: black");
+        		setButtonColor(button, "aqua");
         	}
         }
-        
-    }
-    
-    //Helper function to set button style
-    private void setStyle(Button buttonToChange, String color) {
-    	buttonToChange.setStyle("-fx-background-radius: 0px;" +
-    			"-fx-background-color: " + color +
-        		"; -fx-border-color: black");
     }
     
     /**
@@ -1095,11 +1082,64 @@ public class SingleplayerGameController {
      * @param player whether the guess belongs to the player or computer
      */
     public void setGuess(int x, int y, boolean hit, boolean player) {
-    	Button buttonToChange = getButton(x, y);
+    	Button buttonToChange = getButton(x, y, boardOneGrid);
     	if(!player)
-    		buttonToChange = getButtonOpponent(x, y);
-    	String color = (hit ? "red" : "aqua");
-    	setStyle(buttonToChange, color);
+    		buttonToChange = getButton(x, y, boardTwoGrid);
+    	String color = (hit ? "red" : "blue");
+    	setButtonColor(buttonToChange, color);
+    	buttonToChange.setDisable(true);
+    }
+    
+    //Helper method to set the colour of a button
+    private void setButtonColor(Button buttonToChange, String color) {
+    	buttonToChange.setStyle("-fx-background-color : " + color + 
+    			 "; -fx-background-radius: 0px; + -fx-border-color: black;");
+    }
+    
+    /**
+     * Determine the ship type based on current number of ships.
+     * Set up board ready.
+     * @return currentShipType
+     */
+    private ShipType getPresentShip() {
+    	//setting up ship type for the rest of the method to use. Iterating through based on numShips.
+    	ShipType type = null;
+    	if (numShips == 0) {
+    		type = ShipType.CARRIER;
+    		//text label.setText(Click random button to place CARRIER randomly.);
+    	}
+        if (numShips == 1) {
+            type = ShipType.BATTLESHIP;
+          //text label.setText(Click random button to place BATTLESHIP randomly.);
+        }
+        if (numShips == 2) {
+            type = ShipType.CRUISER;    
+          //text label.setText(Click random button to place CRUISER randomly.);
+        }
+        if (numShips == 3) {
+             type = ShipType.SUBMARINE;
+           //text label.setText(Click random button to place SUBMARINE randomly.);
+        }
+        if (numShips == 4) {
+             type = ShipType.DESTROYER;
+             //text label.setText(Click random button to place DESTROYER randomly.);
+             // sub-function on last ship placed will remove the rotate ship button and label
+             shipDirectionLabel.setVisible(false);
+             rotateButton.setVisible(false);
+             rotateButton.setDisable(true);
+             randomPlacedButton.setVisible(false);
+             for(int i = 0; i < 10; i++) {
+            	 for(int j = 0; j < 10; j++) {
+            		 Button button = getButton(i, j, boardTwoGrid );
+            		 //Button button1 = getButton(i, j, boardOneGrid );
+            		 //button1.setDisable(true);
+            		 button.setDisable(false); 
+            	 }
+             }
+        }
+        if (numShips == 5)
+            return null;
+		return type;
     }
     
     /**
