@@ -115,12 +115,7 @@ public class GameApplication extends Application{
 		GameController controller = 
 				(GameController)loader.getController();
 		controller.setGameApp(this);
-		//Kone - The Verkkars-EZ4ENCE £¨Bootleg£©£¨Kone remix£©
-		String backgroundMusic = "resources/EZ4ENCE.mp3";
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File(backgroundMusic).toURI().toString()));  
-        mediaPlayer.setAutoPlay(true); 
-        mediaPlayer.setVolume(0.02);
-        
+		
 		//Show scene
 		Scene scene = new Scene(root, WINDOWWIDTH, WINDOWHEIGHT);
 		primaryStage.setScene(scene);

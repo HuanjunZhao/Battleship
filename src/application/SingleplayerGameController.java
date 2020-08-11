@@ -45,7 +45,8 @@ public class SingleplayerGameController {
     private URL location;
     
     @FXML
-    private Label playerBoard;
+    private Label currentShipLabel;
+    
     @FXML
     private GridPane boardOneGrid;
     
@@ -706,7 +707,7 @@ public class SingleplayerGameController {
                 int pointY = p.getY();
                 buttonToChange = getButton(pointX, pointY, boardOneGrid);
                 buttonToChange.setDisable(true);
-                setButtonColor(buttonToChange, "black");
+                setButtonColor(buttonToChange, "blue");
             }
             
         } 
@@ -1144,7 +1145,7 @@ public class SingleplayerGameController {
        
         //Default start value
         currentShipRotate = 0;
-        
+        currentShipLabel.setText("Click button on your board to place CARRIER, or click random button to place.");
         //Sets default color for the buttons
         for(int i = 0; i < 10; i++) {
         	for(int j = 0; j < 10; j++) {
@@ -1198,6 +1199,10 @@ public class SingleplayerGameController {
         buttonToChange.setGraphic(new ImageView(color));
     }
     
+    /**
+     * Open a new window for win or loose massages
+     * @param massage
+     */
     public void set(String massage) {
     	Alert win = new Alert(Alert.AlertType.INFORMATION);
 		    
@@ -1222,31 +1227,33 @@ public class SingleplayerGameController {
      */
     private ShipType getPresentShip() {
     	//setting up ship type for the rest of the method to use. Iterating through based on numShips.
+    	
     	ShipType type = null;
     	if (numShips == 0) {
     		type = ShipType.CARRIER;
-    		//text label.setText(Click random button to place CARRIER randomly.);
+    		currentShipLabel.setText("Click button on your board to place BATTLESHIP, or click random button to place.");
     	}
         if (numShips == 1) {
             type = ShipType.BATTLESHIP;
-          //text label.setText(Click random button to place BATTLESHIP randomly.);
+            currentShipLabel.setText("Click button on your board to place CRUISER, or click random button to place.");
         }
         if (numShips == 2) {
             type = ShipType.CRUISER;    
-          //text label.setText(Click random button to place CRUISER randomly.);
+            currentShipLabel.setText("Click button on your board to place SUBMARINE, or click random button to place.");
         }
         if (numShips == 3) {
              type = ShipType.SUBMARINE;
-           //text label.setText(Click random button to place SUBMARINE randomly.);
+             currentShipLabel.setText("Click button on your board to place DESTROYER, or click random button to place.");
         }
         if (numShips == 4) {
              type = ShipType.DESTROYER;
-             //text label.setText(Click random button to place DESTROYER randomly.);
+             
              // sub-function on last ship placed will remove the rotate ship button and label
              shipDirectionLabel.setVisible(false);
              rotateButton.setVisible(false);
              rotateButton.setDisable(true);
              randomPlacedButton.setVisible(false);
+             currentShipLabel.setVisible(false);
              for(int i = 0; i < 10; i++) {
             	 for(int j = 0; j < 10; j++) {
             		 Button button = getButton(i, j, boardTwoGrid);

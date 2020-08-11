@@ -172,6 +172,11 @@
                </font>
             </Label>
             <Button fx:id="randomPlacedButton" layoutX="306.0" mnemonicParsing="false" onAction="#randomShipPlaced" prefHeight="46.0" prefWidth="108.0" text="Random placed" />
+            <Label fx:id="currentShipLabel" layoutX="524.0" layoutY="9.0" prefHeight="45.0" prefWidth="669.0" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </bottom>
