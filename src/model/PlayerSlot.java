@@ -1,92 +1,74 @@
 package model;
-
+/**
+ * Parent class for Player and ComputerPlayer. Contains all methods shared between the classes. 
+ * Methods in this class are for making sure that the player and computer player follow the same rules.
+ * @author Tristan Richardson (30076898)
+ * @team C2
+ * @version Final Iteration
+ */
 public abstract class PlayerSlot {
 	private boolean isPlayer;
 	private String name;
 	private Ship[] ships;
-	private PlayerSlot opponent;
+	private PlayerSlot opponent;// code taken from Player class
 	private Board board;
 	public abstract Ship shipConstructor(ShipType type);
 	public abstract Point guess();
 	
-	/** 
-	 * Constructor for a playerslot object
-	 * @param name name of the player
-	 * @param board the player's board
-	 */
 	public PlayerSlot(String name, Board board) {
 		this.name=name;
 		this.ships = new Ship[5];
 		setBoard(board);
 	}	
 	
-	/**
-	 * Returns whether the player is a human or not.
-	 */
+	/*getters and setters from player class (iteration 1)*/
+	public void setOpponent(ComputerPlayer newOpponent) {
+		this.opponent = newOpponent;	
+	}
+	
 	public void isPlayer() {
 		isPlayer = true;
 	}
 	
-	/**
-	 * Setter for the player's opponent
-	 * @param newOpponent the player's opponent
-	 */
 	public void setOpponent(PlayerSlot opponent) {
 		this.opponent = opponent;
 	}
 	
-	/**
-	 * Getter for the player's opponent
-	 * @return the player's opponent PlayerSlot object
-	 */
 	public PlayerSlot getOpponent() {
 		return opponent;
 	}
 	
-	/**
-	 * Getter for the player's name
-	 * @return player's name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Getter for the player's board
-	 * @return player's board
-	 */
 	public Board getBoard() {
 		return board;
 	}
 	
-	/**
-	 * Getter for the player's ships
-	 * @return an array of the player's ships
-	 */
 	public Ship[] getShips() {
 		return ships;
 	}
+	
+	public void setShip(Ship [] ships) {
+		this.ships = ships;
+	}
 
-	/**
-	 * Setter for player's board
-	 * @param board the player's board object
-	 */
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	
-	/**
-	 * Setter for the player's name
-	 * @param name a string containing the player's name
-	 */
+
 	public void setName(String name) {
-		this.name = new String(name);
+		this.name = name;
 	}
-	
 	/**
-	 * Function to get the player to place ships
+	 * Ship placement algorithm. This method takes data from ShipType and processes the player's ship placement using the abstract method shipConstructor in the inheriting classes.
+	 * While attempts to place ships fail due to a ship being out of bounds or overlapping with another ship, it will retry its ship placement. 
+	 * No exceptions are thrown in the event of a failed ship placement.
+	 * <p> Uses abstract method shipConstructor(ShipType type) in class Player and ComputerPlayer.
 	 */
 	public void placeShip() {
+
 		Ship carrier;
 		Ship battleship;
 		Ship cruiser;
@@ -129,6 +111,8 @@ public abstract class PlayerSlot {
 		System.out.println(name+" Board");
 		board.display();
 	}
-	
+	/**
+	 * Method for for a player's turn. Creates a guess, provides feedback on the hit, passes to the opponent.
+	 */
 	public abstract void play();
 }
