@@ -6,7 +6,6 @@ import model.Player;
 import model.PlayerSlot;
 import model.Referee;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -14,8 +13,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 /**
@@ -56,7 +53,7 @@ public class GameApplication extends Application{
         playerOne.setOpponent(playerTwo);
         playerTwo.setOpponent(playerOne);
         referee.setPlayerOne(playerOne);
-        referee.setComputerPlayer(playerTwo);
+        referee.setPlayerTwo(playerTwo);
         
         //Get the controller and set relationships for controller
         BorderPane root = new BorderPane();

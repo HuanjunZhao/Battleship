@@ -4,8 +4,6 @@ import java.util.Scanner;
 /**
  * This class will initialize the game and setup necessary environment for the player.
  * @author Huanjun Zhao 30102350
- *
- * 
  */
 
 public class Referee {
@@ -25,51 +23,44 @@ public class Referee {
 		 this.computerPlayer.setOpponent(this.playerOne);
 	}
 	
+	/**
+	 * Getter for the first player slot
+	 * @return the first player
+	 */
 	public PlayerSlot getPlayerOne() {
 		return playerOne;
 	}
 
-	public void setPlayerOne(Player playerOne) {
+	/**
+	 * Setter for the first player slot
+	 * @param playerOne a playerSlot's child object
+	 */
+	public void setPlayerOne(PlayerSlot playerOne) {
 		this.playerOne = playerOne;
 	}
 	
+	/**
+	 * Getter for the second player slot
+	 * @return the second player
+	 */
 	public PlayerSlot getPlayerTwo() {
 		return computerPlayer;
 	}
 
-	public void setPlayerTwo(Player playerTwo) {
-		this.playerOne = playerTwo;
+	/**
+	 * Setter for the second player slot
+	 * @param playerTwo a playerSlot's child object
+	 */
+	public void setPlayerTwo(PlayerSlot playerTwo) {
+		this.computerPlayer = playerTwo;
 	}
 	
-	public PlayerSlot getComputerPlayer() {
-		return computerPlayer;
-	}
-
-	public void setComputerPlayer(ComputerPlayer computerPlayer) {
-		this.computerPlayer = computerPlayer;
-	}
 	/**
 	 * Run the text-base game, set opponent, place the ship
-	 * 
 	 */
 	public void runTheGame() {
-		
-//		boolean opponentIsHuman = false;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Welcome to play BattleShip!");
-//		System.out.println();
-//		System.out.println("Would you like to play with A friend?(y/n)");
-//		String opponentStatus = scan.next();
-//		
-//		if (opponentStatus.equalsIgnoreCase("n") ||
-//				opponentStatus.equalsIgnoreCase("no")) {
-//			
-//			opponentIsHuman = false;
-//						
-//			playerOne.setOpponent(computerPlayer);
-//			computerPlayer.setOpponent(playerOne);
-//		}
-		
 		System.out.println("Player one, please enter your name~");
 		String playerOneName = scan.next();
 		System.out.println("Player one, your name is: " + playerOneName);
@@ -97,17 +88,5 @@ public class Referee {
 	 */
 	public void runTheGUIGame() {		
 		computerPlayer.placeShip();
-//		while(true) {
-//			playerOne.play();
-//			if(computerPlayer.getBoard().checkWinner()) {
-//				System.out.println("You have won!");
-//				return;
-//			}
-//			computerPlayer.play();
-//			if(playerOne.getBoard().checkWinner()) {
-//				System.out.println("Computer won!");
-//				return;
-//			}
-//		}
 	}
 }

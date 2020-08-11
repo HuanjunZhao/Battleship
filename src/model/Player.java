@@ -7,35 +7,25 @@ import java.util.Scanner;
  * Battleship (Player Class): Beta version
  * Beta Changelog:
  * @author Taimur Rizwan
- *UCID: 30078941	(1st Iteration)<br>
- *Tristan Richardson UCID:30076898 (connecting with PlayerSlot abstract)
+ * UCID: 30078941	(1st Iteration)<br>
+ * Tristan Richardson UCID:30076898 (connecting with PlayerSlot abstract)
  *@version Beta
  */
-/*
- * Beta changes:
- * - Made several adaptations for transfer to PlayerSlot.
- * - 
- */
+
 public class Player extends PlayerSlot {
-/**
- * Instance variables
- */
-	/*private String name;
-	private Ship[] ships;
-	private ComputerPlayer opponent;
-	private Board board;
-	*///Variables moved to 
 	
+	/**
+	 * Constructor for a player object
+	 * @param board the player's board object
+	 */
 	public Player(Board board) {
 		super("", board);
 		isPlayer();
 	}
 	
 	/**
-	* we pass in the gameboard as a parameter to this function
-	* make sure that the proper gameboard is passed in from wherever the main game is ran from (Game.java)
-	* and then that will allow you to use the checkGuess function
-	*/
+	 * Overridden play function from the playerslot class
+	 */
 	@Override
 	public void play() {
 		System.out.println("Select a coordinate to attack!");
@@ -47,6 +37,10 @@ public class Player extends PlayerSlot {
 		getOpponent().getBoard().displayToOpponent();
 	}
 
+	/**
+	 * Overridden ship connstructor method from the playerSlot class
+	 * Asks users for input to place ships
+	 */
 	@Override
 	public Ship shipConstructor(ShipType type) {
 		Scanner input = new Scanner(System.in);
@@ -55,6 +49,10 @@ public class Player extends PlayerSlot {
 		return new Ship(type, guess(), rotation);
 	}
 
+	/**
+	 * Overridden guess method from the playerSlot class
+	 * Takes input from the user
+	 */
 	@Override
 	public Point guess() {
 		Scanner coord = new Scanner(System.in);
