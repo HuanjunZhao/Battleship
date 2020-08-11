@@ -23,7 +23,7 @@ public class Board {
 	
 	/**
 	 * Returns the grid of characters that make up the board
-	 * @return
+	 * @return Gird The text version of board.
 	 */
 	public char[][] getGrid(){
 		return grid; 
@@ -42,16 +42,16 @@ public class Board {
 	public Board() {
 		playerOwner = false;
 		grid = new char[10][10];
-		for (int i = 0; i <10; i++) {
-			for (int j=0; j<10; j++) {
-				grid[i][j]= '~';
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				grid[i][j] = '~';
 			}
 		}
 		ships = new Ship[5];
 	}
 	
 	/**
-	 * Setter for game controller for button updates
+	 * Setter for game controller for button updates£¬ for GUI version.
 	 * @param controller the game controller
 	 */
 	public void setSingleplayerGameController(SingleplayerGameController controller) {
@@ -128,8 +128,8 @@ public class Board {
 	 * updates the board/grid object after rotating ships, adding ships, and guesses.
 	 */
 	private void updateGrid() {
-		for (int i = 0; i <10; i++) {
-			for (int j=0; j<10; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
 				if (grid[i][j] ==  '#') {
 					grid[i][j] = '~';
 				}	
@@ -150,28 +150,31 @@ public class Board {
 	}
 	
 	/**
-	 * displays the board with a legend for points coordinates
+	 * displays the board with a legend for points coordinates for player
 	 */
 	public void display() {
 		updateGrid();
 		System.out.println("\n" + "\t" + "0 1 2 3 4 5 6 7 8 9" +"\n");
 		
-		for (int row=0; row<getGrid().length; row++) {
+		for (int row = 0; row < getGrid().length; row++) {
 			System.out.print(row + "\t");
-			for (int col=0; col<getGrid()[row].length; col++) {
+			for (int col = 0; col < getGrid()[row].length; col++) {
 				System.out.print(getGrid()[col][row]+" ");
 			}
 			System.out.println();
 		}
 	}
 	
+	/**
+	 * displays the board with a legend for points coordinates for opponent
+	 */
 	public void displayToOpponent() {
 		updateGrid();
 		System.out.println("\n" + "\t" + "0 1 2 3 4 5 6 7 8 9" +"\n");
 		
-		for (int row=0; row<getGrid().length; row++) {
+		for (int row = 0; row < getGrid().length; row++) {
 			System.out.print(row + "\t");
-			for (int col=0; col<getGrid()[row].length; col++) {
+			for (int col = 0; col<getGrid()[row].length; col++) {
 				char c = getGrid()[col][row];
 				if(c == '#')
 					c = '~';
@@ -181,7 +184,10 @@ public class Board {
 		}
 	}
 	
-	//display winner message?
+	/**
+	 * Check who is the winner.
+	 * @return player Who won the game
+	 */
 	public boolean checkWinner() {
 		for(Ship ship : ships) {
 			if(ship.isDestroyed() == false)
@@ -189,5 +195,4 @@ public class Board {
 		}
 		return true;
 	}
-
 }
