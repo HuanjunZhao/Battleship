@@ -15,9 +15,13 @@ public class ComputerPlayer extends PlayerSlot{
 	private Random random;
 	private boolean prevHit;
 	
+	/**
+	 *  Set up computerPlayer
+	 * @param board The board of computer
+	 */
 	public ComputerPlayer(Board board) {
-		super("CPU",board);
-		shots=new ArrayList<Point>(27);
+		super("CPU", board);
+		shots = new ArrayList<Point>(27);
 		setHitCoef(0);
 		random = new Random();
 	}
@@ -37,6 +41,7 @@ public class ComputerPlayer extends PlayerSlot{
 	private void addShots(Point shot) {
 		this.shots.add(shot);
 	}
+	
 	/**Computer player's ship constructor. Overrides an abstract method in superclass PlayerSlot. Creates a new ship object on the computer player's board. 
 	 * While there are types of ship left to call, it continues to return new ship placements until a valid ship is returned.
 	 * @param type The type of ship requested from placeShip() in the PlayerSlot class.
@@ -50,6 +55,10 @@ public class ComputerPlayer extends PlayerSlot{
 		return new Point(random.nextInt(10), random.nextInt(10));
 	}
 	
+	/**
+	 *  Set random rotation
+	 * @return rotation angle
+	 */
 	private int guessRotation() {
 		int rotationGuess = random.nextInt(30);
 		if(rotationGuess > 15)
@@ -60,6 +69,7 @@ public class ComputerPlayer extends PlayerSlot{
 			return 270;
 		return 0;
 	}
+	
 	/**
 	 * Guess generator for AI. Generates a point to test in the AI path. It runs a test on each of its previous turns. Called until a suitable spot is found. The AI then sends this <i>Point</i> to the <i>Referee</i>. 
 	 * <p>Meant to be run on AI paths chosen by <i>hitCoef</i> and rerun if the path rejects the point it got before. 
@@ -67,25 +77,29 @@ public class ComputerPlayer extends PlayerSlot{
 	 * @return Coordinates of type Point to attempt to fire upon.
 	 */	
 	private Point constructHit() {
-		int guessX=random.nextInt(10);
-		int guessY=random.nextInt(10);
-		Point newP=new Point(guessX,guessY);
+		int guessX = random.nextInt(10);
+		int guessY = random.nextInt(10);
+		Point newP = new Point(guessX, guessY);
 		int matching = 0;
 		for (Point p : shots) {
 			if (newP.equals(p)) matching++;
 		}
-		if (matching==0) {
+		if (matching == 0) {
 			return newP;
-		}else {return constructHit();}
+		} 
+		else {
+			return constructHit();
+		}
 
 	}
+	
 	//hit and miss considerations for feedback.
 	private void hit() {
-		if(getHitCoef()<=-1) {setHitCoef(2);}
-		else if(getHitCoef()!=3){setHitCoef(getHitCoef() + 1);}
+		if(getHitCoef() <= -1) {setHitCoef(2);}
+		else if(getHitCoef() != 3) {setHitCoef(getHitCoef() + 1);}
 	}
 	private void miss() {
-		if(getHitCoef()!=-3){setHitCoef(getHitCoef() - 1);}
+		if(getHitCoef() != -3) {setHitCoef(getHitCoef() - 1);}
 	}
 	//----------------------------------------
 	/**
@@ -109,6 +123,10 @@ public class ComputerPlayer extends PlayerSlot{
 		return path;
 	}
 	
+	/**
+	 * For next hit: Smarter AI component
+	 * @return nextPoint
+	 */
 	private Point nextHit(){
 		Point tryP = constructHit();
 		int range = 0;
@@ -119,6 +137,11 @@ public class ComputerPlayer extends PlayerSlot{
 		}
 		return tryP;
 	}
+	
+	/**
+	 * For next hit(avoid): Smarter AI component
+	 * @return !nextPoint
+	 */
 	private Point avoidance(){
 		Point tryP = constructHit();
 		int range = 0;
@@ -129,10 +152,16 @@ public class ComputerPlayer extends PlayerSlot{
 		}
 		return tryP;
 	}
+	
+	/**
+	 * Disable AI: Smarter AI component
+	 * @return guess without smart AI
+	 */
 	private Point inactiveAI(){
 		Point tryP = constructHit();
 		return tryP;
 	}
+	
 	/**
 	 * Computer player's turn.
 	 */
@@ -150,7 +179,13 @@ public class ComputerPlayer extends PlayerSlot{
 		getOpponent().getBoard().display();
 	}
 	
-	
+	/**
+	 * Enable AI: Smarter AI component
+	 * if last is a hit, try a Point beside the last point.
+	 * @param range The range
+	 * @param inverted
+	 * @return Point
+	 */
 	private Point activeAI(int range,boolean inverted){
 		Point tryP=constructHit();
 		int attempt=0;
