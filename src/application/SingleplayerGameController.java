@@ -1195,11 +1195,11 @@ public class SingleplayerGameController {
      * Open a new window for win or loose massages
      * @param massage
      */
-    public void set(String massage) {
+    public void set(String message) {
     	Alert win = new Alert(Alert.AlertType.INFORMATION);
 		    
 		    Pane pane = new Pane();
-		    pane.getChildren().add(new Label(massage));
+		    pane.getChildren().add(new Label(message));
 		    win.getDialogPane().setExpandableContent(pane);
 		    win.show();
 
