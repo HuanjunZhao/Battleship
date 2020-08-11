@@ -1,5 +1,11 @@
 package model;
-
+/**
+ * Parent class for Player and ComputerPlayer. Contains all methods shared between the classes. 
+ * Methods in this class are for making sure that the player and computer player follow the same rules.
+ * @author Tristan Richardson (30076898)
+ * @team C2
+ * @version Final Iteration
+ */
 public abstract class PlayerSlot {
 	private boolean isPlayer;
 	private String name;
@@ -55,6 +61,12 @@ public abstract class PlayerSlot {
 	public void setName(String name) {
 		this.name = name;
 	}
+	/**
+	 * Ship placement algorithm. This method takes data from ShipType and processes the player's ship placement using the abstract method shipConstructor in the inheriting classes.
+	 * While attempts to place ships fail due to a ship being out of bounds or overlapping with another ship, it will retry its ship placement. 
+	 * No exceptions are thrown in the event of a failed ship placement.
+	 * <p> Uses abstract method shipConstructor(ShipType type) in class Player and ComputerPlayer.
+	 */
 	public void placeShip() {
 
 		Ship carrier;
@@ -99,6 +111,8 @@ public abstract class PlayerSlot {
 		System.out.println(name+" Board");
 		board.display();
 	}
-	
+	/**
+	 * Method for for a player's turn. Creates a guess, provides feedback on the hit, passes to the opponent.
+	 */
 	public abstract void play();
 }

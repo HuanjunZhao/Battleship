@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * AI data for a computer player.
  * @author Tristan Richardson (30076898) - 1st Iteration code
  * Team C2
- *@version Iteration 2
+ *@version Final Iteration
  */
 public class ComputerPlayer extends PlayerSlot{
 	private int hitCoef;
@@ -44,7 +44,7 @@ public class ComputerPlayer extends PlayerSlot{
 	public Ship shipConstructor(ShipType type) {
 		return new Ship(type, guessPlacement(), guessRotation()); 
 	}
-
+	
 	private Point guessPlacement() {
 		Random random = new Random();
 		return new Point(random.nextInt(10), random.nextInt(10));
@@ -67,14 +67,14 @@ public class ComputerPlayer extends PlayerSlot{
 	 * @return Coordinates of type Point to attempt to fire upon.
 	 */	
 	private Point constructHit() {
-		int guessX=random.nextInt(10);
-		int guessY=random.nextInt(10);
-		Point newP=new Point(guessX,guessY);
+		int guessX = random.nextInt(10);
+		int guessY = random.nextInt(10);
+		Point newP = new Point(guessX,guessY);
 		int matching = 0;
 		for (Point p : shots) {
 			if (newP.equals(p)) matching++;
 		}
-		if (matching==0) {
+		if (matching == 0) {
 			return newP;
 		}else {return constructHit();}
 
@@ -83,36 +83,48 @@ public class ComputerPlayer extends PlayerSlot{
 	//----------------------------------------
 	/**
 	 * Algorithm for next decision. Uses an integer hitCoef to decide what to do next. AI becomes active when hitCoef is not 0.
-	 * A positive hitCoef places the AI's focus directly within the four tiles adjacent to the last point hit. If all four tiles have already been selected, the AI turns 
-	 * <br><b>()</b> Default. Runs hit constructor.
+	 * A positive hitCoef places the AI's focus directly within the four tiles adjacent to the last point hit. If all four tiles have already been selected, the AI turns off and takes a different spot.
+	 * A negative hitCoef makes the AI avoid tiles within a range of 3 tiles (Cartesian).
+	 * <br>Private methods used by this method:
+	 * <br><b>inactiveAI()</b> Simply runs hit constructor. Outside of the contructor's native condition against selecting the same point twice, no parameters are used.
+	 * <br><b>activeAI()</b> Takes a range of type int and a boolean operator that sets the scope of the Computer's selection standards.
 	 * @return The results from the attack.
 	 */
 	@Override
 	public Point guess(){
 		Point path;
 		
-		if (getHitCoef()>=1/* && prevHit*/) {path = activeAI(1,false);}
-		else if(getHitCoef()<=-1){path = activeAI(3,true);}
-		else {path=inactiveAI();}
-		lastPicked=path;
+		if (getHitCoef() >= 1) {
+			path = activeAI(1,false);
+			}
+		else if(getHitCoef() <= -1){
+			path = activeAI(3,true);
+		}
+		else {
+			path=inactiveAI();
+			}
+		lastPicked = path;
 		if(getOpponent().getBoard().checkGuess(lastPicked)) {
 			setHitCoef(1);
-		}else {setHitCoef(-1);}
+		}
+		else {
+			setHitCoef(-1);
+			}
 		addShots(path);
 		return path;
 	}
 	private Point activeAI(int range,boolean inverted){
-		Point tryP=constructHit();
-		int attempt=0;
+		Point tryP = constructHit();
+		int attempt = 0;
 		int dist = Math.abs(lastPicked.getX() - tryP.getX()) +
 					Math.abs(lastPicked.getY() - tryP.getY());
 		if (hitCoef != 0) {
-			while (inverted ? dist<=range : dist>range ) {
+			while (inverted ? dist <= range : dist > range ) {
 			attempt++;
 			tryP=constructHit();
 			dist = Math.abs(lastPicked.getX() - tryP.getX()) +
 					Math.abs(lastPicked.getY() - tryP.getY());
-			if (attempt>100) break; //If the AI gets railroaded into a few spots it can't access.
+			if (attempt > 100) break; //If the AI gets railroaded into a few spots it can't access.
 			}
 		}
 		return tryP;
@@ -123,7 +135,7 @@ public class ComputerPlayer extends PlayerSlot{
 		return tryP;
 	}
 	/**
-	 * Computer player's turn.
+	 * Computer player's turn. Runs the guessing algorithm, checks for a hit, adapts the AI based on feedback and passes the turn over to the player.
 	 */
 	@Override
 	public void play() {
