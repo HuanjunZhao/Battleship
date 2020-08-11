@@ -829,13 +829,12 @@ public class SingleplayerGameController {
         }
         if (numShips == 4) {
              type = ShipType.DESTROYER;
-             // sub-function on last ship placed will remove the rotate ship button and label
-             shipDirectionLabel.setVisible(false);
-             rotateButton.setVisible(false);
-             rotateButton.setDisable(true); 
-             
         }
         if (numShips == 5) {
+        	// on last ship placed will remove the rotate ship button and label
+        	shipDirectionLabel.setVisible(false);
+            rotateButton.setVisible(false);
+            rotateButton.setDisable(true); 
             return;
         }
         
@@ -1188,14 +1187,8 @@ public class SingleplayerGameController {
             } catch (FileNotFoundException e) {
             	System.out.println("Problem loading picture miss");
             }
-        
-
- 
 
         Image color = (hit ? isHit : isMiss);
-
- 
-
         buttonToChange.setGraphic(new ImageView(color));
     }
     
